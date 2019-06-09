@@ -3,10 +3,12 @@ package com.acueducto.backend.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.acueducto.backend.models.dao.ITarifaDAO;
 import com.acueducto.backend.models.entity.Tarifa;
 
+@Service
 public class TarifaService implements ITarifaService {
 
 	

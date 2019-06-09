@@ -16,7 +16,6 @@ public class SuscriptorService implements ISuscriptorService{
 	@Autowired
 	private ISuscriptorDAO suscriptorDAO;
 	
-	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Suscriptor> findAll() {

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,32 +21,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @Controller
-@RequestMapping("/suscriptores")
 public class SuscriptorController {
 	
 	@Autowired
 	// @Qualifier("suscriptorDAOJPA")
 	private ISuscriptorService suscriptorService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/suscriptores")
 	public @ResponseBody List<Suscriptor> findAll() {
 		return suscriptorService.findAll();
 	}
 	
-	@GetMapping(value="/{id}")
+	@GetMapping("/suscriptores/{id}")
 	public @ResponseBody Suscriptor findByCedula(@PathVariable String id){
 		return suscriptorService.findByCedula(id);
 	}
 	
-	@DeleteMapping(value="/{id}")
+	@DeleteMapping("/suscriptores/{id}")
 	public void deleteSuscriptor(@PathVariable String id) {
 		suscriptorService.delete(id);
 	}
 	
-	@PostMapping(value="/")
-	public void createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
+	@PostMapping("/suscriptores")
+	public ResponseEntity<Suscriptor> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
 		suscriptorService.save(suscriptor);
+		return new ResponseEntity <Suscriptor> (suscriptor, HttpStatus.CREATED);
 	}
 }
