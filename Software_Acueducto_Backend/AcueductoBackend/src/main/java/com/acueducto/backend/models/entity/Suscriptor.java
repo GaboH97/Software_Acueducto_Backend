@@ -2,13 +2,21 @@ package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.acueducto.backend.models.entity.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,8 +31,11 @@ public class Suscriptor implements Serializable {
 
 	@Id
 	private String cedula;
+	
 	private String nombre;
+	
 	private String apellido;
+	
 	private String estado;
 
 	@Column(name = "estado_cuenta")
@@ -32,7 +43,8 @@ public class Suscriptor implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	// Define un patrón para guardar la fecha
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-mm-dd")
+	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
 	private String genero;
@@ -42,6 +54,12 @@ public class Suscriptor implements Serializable {
 	
 	@Column(name="correo_electronico")
 	private String correoElectronico;
+	
+	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	//@JoinTable(inverseJoinColumns=@JoinColumn(name="suscriptor_cedula"))
+	private List<Asignacion> asignaciones;
+	
+	
 
 	public String getCedula() {
 		return cedula;
