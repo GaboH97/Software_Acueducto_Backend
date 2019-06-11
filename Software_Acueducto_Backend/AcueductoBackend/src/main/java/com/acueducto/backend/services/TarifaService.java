@@ -11,7 +11,6 @@ import com.acueducto.backend.models.entity.Tarifa;
 @Service
 public class TarifaService implements ITarifaService {
 
-	
 	@Autowired
 	private ITarifaDAO tarifaDAO;
 	

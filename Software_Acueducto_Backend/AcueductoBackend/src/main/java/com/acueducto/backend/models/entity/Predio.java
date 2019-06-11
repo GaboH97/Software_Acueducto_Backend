@@ -8,13 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "predios")
+@IdClass(PredioID.class)
 public class Predio implements Serializable{
 
 	/**
@@ -22,14 +25,15 @@ public class Predio implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	@Id
 	@Column(name="numero_matricula")
 	private String numeroMatricula;
 	
 	@Id
 	@ManyToOne
-    @JoinColumn(name="lugar_id")
-	private Lugar ubicado;
+	@JoinColumn(name="lugar_id", referencedColumnName = "id")
+	private Lugar lugarId;
 	
 	private String direccion;
 	
@@ -83,9 +87,5 @@ public class Predio implements Serializable{
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
-	
-	
-	
-	
 
 }

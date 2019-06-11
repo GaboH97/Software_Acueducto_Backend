@@ -1,4 +1,4 @@
-/*INSERT SUSCRIPTORES*
+/*INSERT SUSCRIPTORES*/
 
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('206-97-0192', 'Maryl', 'Hischke', '1', 'Y', '2019-03-02', 'F', '523-796-5041', 'mhischke0@opera.com');
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('700-32-6247', 'Davin', 'Alliston', '0', 'Z', '2019-05-05', 'M', '359-455-1871', 'dalliston1@whitehouse.gov');
@@ -34,6 +34,6 @@ insert into predios (numero_matricula, direccion, estrato, latitud, longitud, lu
 
 insert into predios (numero_matricula, direccion, estrato, latitud, longitud, lugar_id) values ('3','hjsdkfhds',1, 1.1,1.2,2)
 
-insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
+--insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
 
-insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'3')
+--insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'3')
