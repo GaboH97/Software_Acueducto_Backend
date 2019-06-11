@@ -11,29 +11,43 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('552-47-9232', 'Vida', 'Fisher', 'C', 'F', '2019-03-26', 'F', '617-216-3643', 'vfisher8@state.gov');
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('529-26-7764', 'Ripley', 'Glaister', 'U', '1', '2018-09-29', 'M', '862-323-8542', 'rglaister9@booking.com');
 
+--Prueba de no duplicado 
+
+--insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('529-26-7764', 'Ripley', 'Glaister', 'U', '1', '2018-09-29', 'M', '862-323-8542', 'rglaister9@booking.com');
+
+
 /*INSERT TARIFAS*/
 
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('revolutionize magnetic eyeballs', '2018-09-01', '2018-08-17', '85.09');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('reintermediate scalable e-business', '2018-11-05', '2018-06-13', '84.52');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('iterate ubiquitous e-business', '2018-12-18', '2018-08-02', '84.69');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('generate clicks-and-mortar e-services', '2019-01-14', '2018-11-22', '12.76');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('incubate ubiquitous e-markets', '2018-08-21', '2018-09-09', '54.99');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('expedite killer schemas', '2019-01-04', '2019-03-17', '40.25');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('optimize clicks-and-mortar synergies', '2019-04-24', '2018-12-16', '44.84');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('enhance revolutionary paradigms', '2019-03-19', '2019-03-05', '66.39');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('cultivate user-centric metrics', '2019-05-16', '2018-10-01', '93.98');
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('repurpose impactful schemas', '2018-11-14', '2019-05-21', '22.44');
+insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('Valor metro cúbico',  '2018-12-31','2018-12-31', '500');
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Jornal', '2018-09-01','2018-12-31',  '27.604');
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Concesión Corpoboyacá',  '2018-12-31','2018-12-31', '5000');
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Compra de predio planta de tratamiento',  '2018-12-31','2018-12-31', '50000');
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Cobro por reconexión',  '2018-12-31','2018-12-31', '25000');
 
+
+
+/*INSERT LUGARES*/
 insert into lugares (id, nombre, tipo, ubicado_id) values (1,'Colombia','P', null)
 
 insert into lugares (id, nombre, tipo, ubicado_id) values (2,'Boyaca','D', 1)
 
 insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 1)
 
+--Prueba de identidad referencial. Mismo ID 
+--insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 2)
+
+--Prueba de duplicados. Mismo Ubicado no existe 
+--insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 1)
+
+/*INSERT PREDIOS*/
+
+
 insert into predios (numero_matricula, direccion, estrato, latitud, longitud, lugar_id) values ('2','hjsdkfhds',1, 1.1,1.2,2)
 
 insert into predios (numero_matricula, direccion, estrato, latitud, longitud, lugar_id) values ('3','hjsdkfhds',1, 1.1,1.2,2)
 
---insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
+/*INSERT ASIGNACIONES*/
 
---insert into asignaciones (fecha_final, fecha_inicial,suscriptor_cedula, predio_lugar_id, predio_numero_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'3')
+insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
+
+insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','700-32-6247',2,'2')

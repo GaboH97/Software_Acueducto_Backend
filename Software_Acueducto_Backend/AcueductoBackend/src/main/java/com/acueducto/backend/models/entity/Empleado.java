@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -28,27 +29,37 @@ public class Empleado implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cedula;
+	
+	@NotNull
 	private String nombre;
+	
+	@NotNull
 	private String apellido;
-
+	
+	@NotNull
 	@Temporal(TemporalType.DATE)
-	// Define un patrón para guardar la fecha
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
-
+	
+	@NotNull
 	@Column(name = "tipo_empleado")
 	private String tipoEmpleado;
-
+	
+	@NotNull
 	private String usuario;
-
+	
+	@NotNull
 	private String contrasena;
-
+	
+	@NotNull
 	private String genero;
-
+	
+	@NotNull
 	@Column(name = "direccion_residencia")
 	private String direccionResidencia;
-	
+		
+	@NotNull
 	@ManyToOne
     @JoinColumn(name="lugar_id")
     private Lugar lugarResidencia;

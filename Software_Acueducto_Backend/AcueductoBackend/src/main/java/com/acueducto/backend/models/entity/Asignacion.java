@@ -8,17 +8,22 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "asignaciones")
 @IdClass(AsignacionID.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler" })
 public class Asignacion implements Serializable{
 	
 	
@@ -27,6 +32,7 @@ public class Asignacion implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name = "fecha_inicial")
@@ -39,10 +45,15 @@ public class Asignacion implements Serializable{
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cedula_suscriptor", referencedColumnName = "cedula")
 	private Suscriptor suscriptor;
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumns({
+		@JoinColumn(name="predio_matricula", referencedColumnName = "numero_matricula"),
+		@JoinColumn(name="lugar_id", referencedColumnName = "lugar_id"),
+	})
 	private Predio predio;
 
 	public Date getFechaInicial() {

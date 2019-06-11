@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.acueducto.backend.models.entity.*;
 
@@ -31,24 +33,31 @@ public class Suscriptor implements Serializable {
 
 	@Id
 	private String cedula;
-	
+		
+	@NotNull
+	@Size(max = 10)
 	private String nombre;
 	
+	@NotNull
 	private String apellido;
 	
+	@NotNull
 	private String estado;
 
+	@NotNull
 	@Column(name = "estado_cuenta")
 	private String estadoCuenta;
 
+	@NotNull
 	@Temporal(TemporalType.DATE)
-	// Define un patrón para guardar la fecha
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
+	@NotNull
 	private String genero;
 	
+	@NotNull
 	@Column(name="numero_telefono")
 	private String numeroTelefono;
 	
