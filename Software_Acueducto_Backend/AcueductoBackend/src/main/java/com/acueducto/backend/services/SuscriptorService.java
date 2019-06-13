@@ -38,4 +38,9 @@ public class SuscriptorService implements ISuscriptorService{
 	public void delete(String cedula) {
 		suscriptorDAO.deleteById(cedula);
 	}
+
+	@Override
+	public Suscriptor fetchByCedulaWithAsignacionesWithPredios(String cedula) {
+		return suscriptorDAO.fetchByCedulaWithAsinacionesWithPredios(cedula);
+	}
 }

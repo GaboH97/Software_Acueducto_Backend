@@ -16,16 +16,6 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 --insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('529-26-7764', 'Ripley', 'Glaister', 'U', '1', '2018-09-29', 'M', '862-323-8542', 'rglaister9@booking.com');
 
 
-/*INSERT TARIFAS*/
-
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('Valor metro cúbico',  '2018-12-31','2018-12-31', '500');
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Jornal', '2018-09-01','2018-12-31',  '27.604');
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Concesión Corpoboyacá',  '2018-12-31','2018-12-31', '5000');
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Compra de predio planta de tratamiento',  '2018-12-31','2018-12-31', '50000');
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Cobro por reconexión',  '2018-12-31','2018-12-31', '25000');
-
-
-
 /*INSERT LUGARES*/
 insert into lugares (id, nombre, tipo, ubicado_id) values (1,'Colombia','P', null)
 
@@ -51,3 +41,24 @@ insert into predios (numero_matricula, direccion, estrato, latitud, longitud, lu
 insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
 
 insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','700-32-6247',2,'2')
+
+
+/*INSERT FACTURAS*/
+
+insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
+insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
+insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
+
+/*INSERT TARIFAS*/
+
+insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('Valor metro cúbico',  '2018-12-31','2018-12-31', 500);
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Jornal', '2018-09-01','2018-12-31',  27.604);
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Concesión Corpoboyacá',  '2018-12-31','2018-12-31', 5000);
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Compra de predio planta de tratamiento',  '2018-12-31','2018-12-31', 50000);
+insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Cobro por reconexión',  '2018-12-31','2018-12-31', 25000);
+
+/*INSERT DETALLES_FACTURA*/
+
+insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (1,1,25.4,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (1,2,null,27.604);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (2,1,25.4,500);

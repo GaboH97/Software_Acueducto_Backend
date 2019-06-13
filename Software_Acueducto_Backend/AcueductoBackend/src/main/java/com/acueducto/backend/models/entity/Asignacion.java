@@ -3,6 +3,7 @@ package com.acueducto.backend.models.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,11 +20,11 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "asignaciones")
 @IdClass(AsignacionID.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler" })
 public class Asignacion implements Serializable{
 	
 	
@@ -44,7 +45,7 @@ public class Asignacion implements Serializable{
 	private Date fechaFinal;
 	
 	@Id
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="cedula_suscriptor", referencedColumnName = "cedula")
 	private Suscriptor suscriptor;
 	

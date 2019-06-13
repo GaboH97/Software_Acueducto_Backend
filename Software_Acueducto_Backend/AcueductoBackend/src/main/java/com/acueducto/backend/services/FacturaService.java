@@ -14,9 +14,9 @@ public class FacturaService implements IFacturaService {
 
 	@Autowired
 	private IFacturaDAO facturaDAO;
-	
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Factura> findAll() {
 		return (List<Factura>) facturaDAO.findAll();
 	}
@@ -28,13 +28,18 @@ public class FacturaService implements IFacturaService {
 	}
 
 	@Override
-	public Factura findById(int id) {
+	public Factura findById(Integer id) {
 		return facturaDAO.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public void delete(int id) {
+	public void delete(Integer id) {
 		facturaDAO.deleteById(id);
+	}
+
+	@Override
+	public Factura fetchByIdWithDetalleFacturaWithTarifa(Integer id) {
+		return facturaDAO.fetchByIdWithClientWithInvoiceItemWithProduct(id);
 	}
 }

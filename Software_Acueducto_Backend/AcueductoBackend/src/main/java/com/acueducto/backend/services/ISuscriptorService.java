@@ -13,4 +13,6 @@ public interface ISuscriptorService {
 	public Suscriptor findByCedula(String cedula);
 	
 	public void delete(String cedula);
+
+	public Suscriptor fetchByCedulaWithAsignacionesWithPredios(String cedula);
 }

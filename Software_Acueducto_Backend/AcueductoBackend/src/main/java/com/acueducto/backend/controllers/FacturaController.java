@@ -41,8 +41,15 @@ public class FacturaController {
 	}
 
 	@PostMapping("/facturas")
-	public ResponseEntity<Factura> createSuscriptor(@Valid @RequestBody Factura factura) {
+	public ResponseEntity<Factura> createFactura(@Valid @RequestBody Factura factura) {
 		facturaService.save(factura);
 		return new ResponseEntity<Factura>(factura, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/facturas/{id}/detalles")
+	public @ResponseBody Factura fetchFacturaByIdWithDetallesFacturaWithTarifas(@PathVariable Integer id){
+		
+		Factura factura =  facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
+		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
 	}
 }

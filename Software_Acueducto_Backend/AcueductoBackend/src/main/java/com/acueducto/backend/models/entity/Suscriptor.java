@@ -1,6 +1,7 @@
 package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,8 +21,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.acueducto.backend.models.entity.*;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "suscriptores")
@@ -34,30 +39,29 @@ public class Suscriptor implements Serializable {
 	@Id
 	private String cedula;
 		
-	@NotNull
-	@Size(max = 10)
+	
 	private String nombre;
 	
-	@NotNull
+	
 	private String apellido;
 	
-	@NotNull
+	
 	private String estado;
 
-	@NotNull
+	
 	@Column(name = "estado_cuenta")
 	private String estadoCuenta;
 
-	@NotNull
+	
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
-	@NotNull
+	
 	private String genero;
 	
-	@NotNull
+	
 	@Column(name="numero_telefono")
 	private String numeroTelefono;
 	
@@ -65,9 +69,25 @@ public class Suscriptor implements Serializable {
 	private String correoElectronico;
 	
 	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JsonIgnore
 	//@JoinTable(inverseJoinColumns=@JoinColumn(name="suscriptor_cedula"))
 	private List<Asignacion> asignaciones;
 	
+	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JsonIgnore
+	private List<Factura> facturas;
+	
+	
+	public Suscriptor() {
+		asignaciones = new ArrayList<Asignacion>();
+		facturas = new ArrayList<Factura>();
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		this.estado="Activo";
+		this.estadoCuenta="Al día";
+	}
 	
 
 	public String getCedula() {
@@ -142,5 +162,12 @@ public class Suscriptor implements Serializable {
 		this.correoElectronico = correoElectronico;
 	}
 	
+	public List<Asignacion> getAsignaciones() {
+		return asignaciones;
+	}
+	
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
 	
 }

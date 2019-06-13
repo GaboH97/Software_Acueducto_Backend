@@ -41,4 +41,10 @@ public class PredioService implements IPredioService{
 		predioDAO.deleteById(predioID);
 	}
 
+	@Override
+	public Predio fetchByIdWithAsignaciones(PredioID predioID) {
+		
+		return predioDAO.fetchByIdWithAsignaciones(predioID.getLugarId(),predioID.getNumeroMatricula());
+	}
+
 }

@@ -23,10 +23,10 @@ import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
 
 @Controller
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class SuscriptorController {
 
 	@Autowired
-	// @Qualifier("suscriptorDAOJPA")
 	private ISuscriptorService suscriptorService;
 
 	@GetMapping("/suscriptores")
@@ -34,14 +34,22 @@ public class SuscriptorController {
 		return suscriptorService.findAll();
 	}
 
-	@GetMapping("/suscriptores/{id}")
-	public @ResponseBody Suscriptor findByCedula(@PathVariable String id) {
-		return suscriptorService.findByCedula(id);
+	@GetMapping("/suscriptores/{cedula}")
+	public @ResponseBody Suscriptor findByCedula(@PathVariable String cedula) {
+		return suscriptorService.findByCedula(cedula);
+	}
+	
+	@GetMapping("/suscriptores/{cedula}/detalles")
+	public @ResponseBody Suscriptor fetchByCedulaWithAsignacionesWithPredios(@PathVariable String cedula) {
+		Suscriptor suscriptor =suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
+		System.out.println(suscriptor.getAsignaciones().size());
+		suscriptor.getAsignaciones().forEach(a->System.out.println("coso"));
+		return suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
 	}
 
-	@DeleteMapping("/suscriptores/{id}")
-	public void deleteSuscriptor(@PathVariable String id) {
-		suscriptorService.delete(id);
+	@DeleteMapping("/suscriptores/{cedula}")
+	public void deleteSuscriptor(@PathVariable String cedula) {
+		suscriptorService.delete(cedula);
 	}
 
 	@PostMapping("/suscriptores")

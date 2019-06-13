@@ -17,7 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "predios")
@@ -49,6 +51,7 @@ public class Predio implements Serializable {
 	private double longitud;
 
 	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Asignacion> asignaciones;
 
 	public Predio() {

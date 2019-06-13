@@ -33,10 +33,9 @@ public class PredioController {
 
 	@GetMapping("/predios/{vereda}/{matricula}")
 	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
+		System.out.println("vereda: "+vereda+" mat "+matricula);
 		PredioID predioID = new PredioID(vereda, matricula);
-		//Predio predio = predioService.findByPredioID(predioID);
-		//predio.getAsignaciones().forEach(System.out::println);
-		return predioService.findByPredioID(predioID);
+		return predioService.fetchByIdWithAsignaciones(predioID);
 	}
 
 	@DeleteMapping("/predios/{vereda}/{matricula}")

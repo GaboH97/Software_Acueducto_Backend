@@ -24,25 +24,30 @@ public class TarifaController {
 	@Autowired
 	// @Qualifier("suscriptorDAOJPA")
 	private ITarifaService tarifaService;
-	
+
 	@GetMapping("/tarifas")
 	public @ResponseBody List<Tarifa> findAll() {
 		return tarifaService.findAll();
 	}
-	
+
 	@GetMapping("/tarifas/{id}")
-	public @ResponseBody Tarifa findById(@PathVariable int id){
+	public @ResponseBody Tarifa findById(@PathVariable int id) {
 		return tarifaService.findById(id);
 	}
-	
+
 	@DeleteMapping("/tarifas/{id}")
 	public void deleteTarifa(@PathVariable int id) {
 		tarifaService.delete(id);
 	}
-	
+
 	@PostMapping("/tarifas")
-	public ResponseEntity<Tarifa> createTarifa(@Valid @RequestBody Tarifa tarifa) {
-		tarifaService.save(tarifa);
-		return new ResponseEntity <Tarifa> (tarifa, HttpStatus.CREATED);
+	public String createTarifa(@Valid @RequestBody Tarifa tarifa) {
+		if(tarifaService.findById(tarifa.getId())==null) {
+			tarifaService.save(tarifa);
+			return "Tarifa creada con éxito";
+		}else {
+			return "Tarifa ya existe";
+		}
 	}
+			
 }

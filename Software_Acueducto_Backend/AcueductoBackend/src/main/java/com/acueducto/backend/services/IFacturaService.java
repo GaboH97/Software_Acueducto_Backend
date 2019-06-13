@@ -10,7 +10,10 @@ public interface IFacturaService {
 
 	public void save(Factura factura);
 
-	public Factura findById(int id);
+	public Factura findById(Integer id);
 
-	public void delete(int id);
+	public void delete(Integer id);
+	
+	public Factura fetchByIdWithDetalleFacturaWithTarifa(Integer id);
+
 }

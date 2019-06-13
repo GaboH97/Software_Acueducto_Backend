@@ -21,9 +21,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tarifas")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Tarifa implements Serializable{
 	
 	/**
@@ -51,10 +53,6 @@ public class Tarifa implements Serializable{
 	@NotNull
 	private String descripcion;
 	
-	@OneToMany(mappedBy="tarifa",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	//@JoinTable(inverseJoinColumns=@JoinColumn(name="suscriptor_cedula"))
-	private List<DetalleFactura> detallesFactura;
-	
 	
 	public Tarifa() {
 	
@@ -63,7 +61,6 @@ public class Tarifa implements Serializable{
 	@PrePersist
 	public void prePersist() {
 		//Ejecuta este método justo antes de persistir el objeto
-		System.out.println("AQUI ENTRA");
 		fechaInicio = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 

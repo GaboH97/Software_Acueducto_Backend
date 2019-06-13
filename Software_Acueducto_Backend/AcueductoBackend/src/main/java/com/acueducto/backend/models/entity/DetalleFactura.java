@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -14,7 +16,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "detalles_factura")
-@IdClass(DetalleFacturaID.class)
 public class DetalleFactura implements Serializable{
 	
 	/**
@@ -23,29 +24,18 @@ public class DetalleFactura implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="factura_id", referencedColumnName = "id")
-	private Factura factura;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
-	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tarifa_id", referencedColumnName = "id")
 	private Tarifa tarifa;
 	
-	@NotNull
 	@Column(name = "consumo_actual")
-	private double consumoActual;
+	private Double consumoActual;
 	
 	@NotNull
-	private double valor;
-
-	public Factura getFactura() {
-		return factura;
-	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
-	}
+	private Double valor;
 
 	public Tarifa getTarifa() {
 		return tarifa;
@@ -55,19 +45,19 @@ public class DetalleFactura implements Serializable{
 		this.tarifa = tarifa;
 	}
 
-	public double getConsumoActual() {
+	public Double getConsumoActual() {
 		return consumoActual;
 	}
 
-	public void setConsumoActual(double consumoActual) {
+	public void setConsumoActual(Double consumoActual) {
 		this.consumoActual = consumoActual;
 	}
 
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}	
 

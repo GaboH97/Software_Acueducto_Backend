@@ -15,4 +15,6 @@ public interface IPredioService {
 	public Predio findByPredioID(PredioID predioID);
 
 	public void delete(PredioID predioID);
+	
+	public Predio fetchByIdWithAsignaciones(PredioID id);
 }
