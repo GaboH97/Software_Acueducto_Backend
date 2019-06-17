@@ -96,7 +96,7 @@ public class SuscriptorController {
 	
 	@PutMapping("/suscriptores/{cedula}")
 	@ResponseBody
-	public Suscriptor updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, String cedula, BindingResult result) {
+	public Suscriptor updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, @PathVariable String cedula, BindingResult result) {
 		
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
