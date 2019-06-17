@@ -94,20 +94,21 @@ public class SuscriptorController {
 		return ResponseEntity.ok(suscriptor);
 	}
 	
-	@PutMapping("/suscriptores")
+	@PutMapping("/suscriptores/{cedula}")
 	@ResponseBody
-	public String updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
+	public Suscriptor updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, String cedula, BindingResult result) {
 		
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
 			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			return builder.toString();
+			builder.toString();
+			return suscriptor;
 		}else { 
-			if (suscriptorService.findByCedula(suscriptor.getCedula()) != null) {
+			if (suscriptorService.findByCedula(cedula) != null) {
 				suscriptorService.save(suscriptor);
-				return "Suscriptor Editado";
+				return suscriptor;
 			} else {
-				return "No existe un cliente con cédula "+suscriptor.getCedula();
+				return null;
 			}
 		}
 	}
