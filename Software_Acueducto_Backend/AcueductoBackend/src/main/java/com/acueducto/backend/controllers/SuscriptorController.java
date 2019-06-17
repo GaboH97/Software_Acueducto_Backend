@@ -61,21 +61,37 @@ public class SuscriptorController {
 		
 	}
 
+//	@PostMapping("/suscriptores")
+//	@ResponseBody
+//	public Suscriptor createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
+//		
+//		if(result.hasErrors()) {
+//			StringBuilder builder = new StringBuilder();
+//			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
+//			return suscriptor;
+//		}else { 
+//			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
+//				suscriptorService.save(suscriptor);
+//				return suscriptor;
+//			}
+//		}
+//		return suscriptor;
+//	}
+	
 	@PostMapping("/suscriptores")
-	@ResponseBody
-	public Suscriptor createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
+	public ResponseEntity<Suscriptor> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
 		
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
 			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			return suscriptor;
+			return ResponseEntity.ok(suscriptor);
 		}else { 
 			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
 				suscriptorService.save(suscriptor);
-				return suscriptor;
+				return ResponseEntity.ok(suscriptor);
 			}
 		}
-		return suscriptor;
+		return ResponseEntity.ok(suscriptor);
 	}
 	
 	@PutMapping("/suscriptores")
