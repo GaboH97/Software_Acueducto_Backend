@@ -84,7 +84,7 @@ public class SuscriptorController {
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
 			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			return ResponseEntity.ok(suscriptor);
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).body(builder.toString());
 		}else { 
 			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
 				suscriptorService.save(suscriptor);

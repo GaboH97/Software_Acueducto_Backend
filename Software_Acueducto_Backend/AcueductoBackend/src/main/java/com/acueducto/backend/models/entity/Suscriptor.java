@@ -37,6 +37,7 @@ public class Suscriptor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Size(max = 10)
 	private String cedula;
 		
 	
