@@ -63,20 +63,19 @@ public class SuscriptorController {
 
 	@PostMapping("/suscriptores")
 	@ResponseBody
-	public String createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
+	public Suscriptor createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
 		
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
 			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			return builder.toString();
+			return suscriptor;
 		}else { 
 			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
 				suscriptorService.save(suscriptor);
-				return "Suscriptor Agregado";
-			} else {
-				return "Ya existe un cliente con cédula "+suscriptor.getCedula();
+				return suscriptor;
 			}
 		}
+		return suscriptor;
 	}
 	
 	@PutMapping("/suscriptores")
