@@ -41,7 +41,6 @@ public class TarifaController {
 	public ResponseEntity<Tarifa> findById(@PathVariable int id) {
 		Tarifa tarifa = tarifaService.findById(id);
 		
-		tarifa.getHistorialTarifa().forEach(e-> System.out.println(e.toString()));
 		if(tarifa!=null) {
 			return ResponseEntity.ok().body(tarifa);
 		}else {
