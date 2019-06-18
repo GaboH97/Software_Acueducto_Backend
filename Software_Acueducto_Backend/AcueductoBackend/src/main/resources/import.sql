@@ -31,12 +31,12 @@ insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 1)
 
 /*INSERT EMPLEADOS*/
 
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0192', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0193', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0194', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0195', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0196', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
-insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_residencia) values ('206-97-0197', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0192', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0193', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0194', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0195', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0196', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
+insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id) values ('206-97-0197', 'Maryl', 'Hischke','2019-03-02', 'A', 'mhischke','123','F','Calle falsa 123', 'mhischke0@opera.com',2);
 
 /*INSERT PREDIOS*/
 
