@@ -56,12 +56,6 @@ public class Tarifa implements Serializable{
 		this.historialTarifa = new ArrayList<HistorialTarifa>();
 	}
 	
-	@PrePersist
-	public void prePersist() {
-		HistorialTarifa historialTarifa = new HistorialTarifa();
-		this.historialTarifa.add(historialTarifa);
-	}
-	
 	
 	public int getId() {
 		return id;
