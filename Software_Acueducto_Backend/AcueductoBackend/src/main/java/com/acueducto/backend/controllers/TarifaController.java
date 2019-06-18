@@ -77,8 +77,10 @@ public class TarifaController {
 	@PutMapping("/tarifas/{id}")
 	public @ResponseBody Tarifa updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id){
 		if(tarifaService.findById(id)!=null) {
+		
+			//Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo registro
+			HistorialTarifa anteriorHistorialTarifa = tarifa.getHistorialTarifa().isEmpty()?new HistorialTarifa():tarifa.getHistorialTarifa().get(tarifa.getHistorialTarifa().size()-1);
 			
-			HistorialTarifa anteriorHistorialTarifa = tarifa.getHistorialTarifa().get(0);
 			anteriorHistorialTarifa.setFechaFinal(Date.from(LocalDate.now().atStartOfDay()
 				      .atZone(ZoneId.systemDefault())
 				      .toInstant()));

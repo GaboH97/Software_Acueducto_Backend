@@ -41,7 +41,7 @@ public class Predio implements Serializable {
 	private Lugar lugar;
 
 	@NotNull
-	private String direccion;
+	private String nombre;
 
 	@NotNull
 	private int estrato;
@@ -66,12 +66,12 @@ public class Predio implements Serializable {
 		this.numeroMatricula = numeroMatricula;
 	}
 
-	public String getDireccion() {
-		return direccion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setDireccion(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public int getEstrato() {

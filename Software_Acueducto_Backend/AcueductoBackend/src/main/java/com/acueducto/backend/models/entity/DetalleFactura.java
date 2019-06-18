@@ -2,7 +2,6 @@ package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +30,7 @@ public class DetalleFactura implements Serializable{
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE) // BORRAR DESPUÉS, SOLO PARA PRUEBAS
 	@JoinColumn(name="tarifa_id", referencedColumnName = "id")
 	private Tarifa tarifa;
 	
