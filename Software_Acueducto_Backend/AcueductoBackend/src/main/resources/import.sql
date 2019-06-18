@@ -1,6 +1,6 @@
 /*INSERT SUSCRIPTORES*/
 
-insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('206-97-0192', 'Maryl', 'Hischke', '1', 'Y', '02-03-2019', 'F', '523-796-5041', 'mhischke0@opera.com');
+insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('206-97-0192', 'Maryl', 'Hischke', '1', 'Y', '2019-03-02', 'F', '523-796-5041', 'mhischke0@opera.com');
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('700-32-6247', 'Davin', 'Alliston', '0', 'Z', '2019-05-05', 'M', '359-455-1871', 'dalliston1@whitehouse.gov');
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('550-47-0813', 'Josefina', 'Sutton', 'R', 'X', '2019-04-16', 'F', '922-928-9954', 'jsutton2@sfgate.com');
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('422-69-2735', 'Bessy', 'Rivard', 'R', 'Q', '2018-10-30', 'F', '742-579-5414', 'brivard3@ezinearticles.com');
@@ -51,11 +51,11 @@ insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192
 
 /*INSERT TARIFAS*/
 
-insert into TARIFAS (descripcion, fecha_inicio, fecha_final, valor_tarifa) values ('Valor metro cúbico',  '2018-12-31','2018-12-31', 500);
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Jornal', '2018-09-01','2018-12-31',  27.604);
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Concesión Corpoboyacá',  '2018-12-31','2018-12-31', 5000);
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Compra de predio planta de tratamiento',  '2018-12-31','2018-12-31', 50000);
-insert into TARIFAS (descripcion, fecha_inicio,fecha_final, valor_tarifa) values ('Cobro por reconexión',  '2018-12-31','2018-12-31', 25000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Valor metro cúbico', 500);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Jornal',  27.604);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Concesión Corpoboyacá', 5000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Compra de predio planta de tratamiento', 50000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión', 25000);
 
 /*INSERT DETALLES_FACTURA*/
 

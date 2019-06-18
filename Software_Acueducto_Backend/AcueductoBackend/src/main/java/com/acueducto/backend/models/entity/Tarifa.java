@@ -3,6 +3,7 @@ package com.acueducto.backend.models.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -37,55 +39,36 @@ public class Tarifa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
-	@Column(name="fecha_inicio")
-	private Date fechaInicio;
-	
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
-	@Column(name="fecha_final")
-	private Date fechaFinal;
 	
 	@NotNull
+	@Column(name ="valor_tarifa")
 	private double valorTarifa;
 	
 	@NotNull
 	private String descripcion;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "tarifa_id")
+	private List<HistorialTarifa> historialTarifa;
+	
 	
 	public Tarifa() {
-	
+		this.historialTarifa = new ArrayList<HistorialTarifa>();
 	}
 	
 	@PrePersist
 	public void prePersist() {
-		//Ejecuta este método justo antes de persistir el objeto
-		fechaInicio = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		HistorialTarifa historialTarifa = new HistorialTarifa();
+		this.historialTarifa.add(historialTarifa);
 	}
-
+	
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public Date getFechaFinal() {
-		return fechaFinal;
-	}
-
-	public void setFechaFinal(Date fechaFinal) {
-		this.fechaFinal = fechaFinal;
 	}
 
 	public double getValorTarifa() {
@@ -104,7 +87,11 @@ public class Tarifa implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	public List<HistorialTarifa> getHistorialTarifa() {
+		return historialTarifa;
+	}
 	
-	
-
+	public void setHistorialTarifa(List<HistorialTarifa> historialTarifa) {
+		this.historialTarifa = historialTarifa;
+	}
 }

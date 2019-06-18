@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.acueducto.backend.models.entity.HistorialTarifa;
+import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Tarifa;
 import com.acueducto.backend.services.ITarifaService;
 
@@ -22,7 +24,6 @@ import com.acueducto.backend.services.ITarifaService;
 public class TarifaController {
 
 	@Autowired
-	// @Qualifier("suscriptorDAOJPA")
 	private ITarifaService tarifaService;
 
 	@GetMapping("/tarifas")
@@ -31,22 +32,36 @@ public class TarifaController {
 	}
 
 	@GetMapping("/tarifas/{id}")
-	public @ResponseBody Tarifa findById(@PathVariable int id) {
-		return tarifaService.findById(id);
+	public ResponseEntity<Tarifa> findById(@PathVariable int id) {
+		Tarifa tarifa = tarifaService.findById(id);
+		if(tarifa!=null) {
+			return ResponseEntity.ok().body(tarifa);
+		}else {
+			return null;
+		}
 	}
 
 	@DeleteMapping("/tarifas/{id}")
-	public void deleteTarifa(@PathVariable int id) {
-		tarifaService.delete(id);
+	public @ResponseBody Tarifa deleteTarifa(@PathVariable int id) {
+		Tarifa tarifa = tarifaService.findById(id);
+		if(tarifa!=null) {
+			tarifaService.delete(id);
+			return tarifa;
+		}else {
+			System.out.println("yaper");
+			return null;
+		}
 	}
 
 	@PostMapping("/tarifas")
-	public String createTarifa(@Valid @RequestBody Tarifa tarifa) {
+	public @ResponseBody Tarifa createTarifa(@Valid @RequestBody Tarifa tarifa) {
 		if(tarifaService.findById(tarifa.getId())==null) {
+			HistorialTarifa historialTarifa = new HistorialTarifa();
+			tarifa.getHistorialTarifa().add(historialTarifa);
 			tarifaService.save(tarifa);
-			return "Tarifa creada con éxito";
+			return tarifa;
 		}else {
-			return "Tarifa ya existe";
+			return tarifa;
 		}
 	}
 			
