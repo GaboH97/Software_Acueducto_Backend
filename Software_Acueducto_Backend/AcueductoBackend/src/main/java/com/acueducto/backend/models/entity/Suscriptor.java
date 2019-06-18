@@ -54,7 +54,7 @@ public class Suscriptor implements Serializable {
 
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
