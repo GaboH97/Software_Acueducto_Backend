@@ -27,8 +27,7 @@ public class Empleado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cedula;
+	private String cedula;
 	
 	@NotNull
 	private String nombre;
@@ -64,11 +63,11 @@ public class Empleado implements Serializable {
     @JoinColumn(name="lugar_id")
     private Lugar lugarResidencia;
 
-	public int getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(int cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 
