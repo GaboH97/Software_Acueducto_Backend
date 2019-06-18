@@ -1,5 +1,8 @@
 package com.acueducto.backend.controllers;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -37,6 +40,8 @@ public class TarifaController {
 	@GetMapping("/tarifas/{id}")
 	public ResponseEntity<Tarifa> findById(@PathVariable int id) {
 		Tarifa tarifa = tarifaService.findById(id);
+		
+		tarifa.getHistorialTarifa().forEach(e-> System.out.println(e.toString()));
 		if(tarifa!=null) {
 			return ResponseEntity.ok().body(tarifa);
 		}else {
@@ -73,8 +78,21 @@ public class TarifaController {
 	@PutMapping("/tarifas/{id}")
 	public @ResponseBody Tarifa updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id){
 		if(tarifaService.findById(id)!=null) {
+			
+			HistorialTarifa anteriorHistorialTarifa = tarifa.getHistorialTarifa().get(0);
+			anteriorHistorialTarifa.setFechaFinal(Date.from(LocalDate.now().atStartOfDay()
+				      .atZone(ZoneId.systemDefault())
+				      .toInstant()));
+			
+			HistorialTarifa nuevaHistorialTarifa = new HistorialTarifa();
+			nuevaHistorialTarifa.setValorTarifa(tarifa.getValorTarifa());
+		
+			tarifa.getHistorialTarifa().add(nuevaHistorialTarifa);
+			
+			tarifaService.save(tarifa);
 			return tarifa;
 		}
+		System.out.println("yaper");
 		return null;
 	}
 			

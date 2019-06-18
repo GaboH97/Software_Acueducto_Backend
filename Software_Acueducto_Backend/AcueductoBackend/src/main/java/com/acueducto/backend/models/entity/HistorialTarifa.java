@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +54,13 @@ public class HistorialTarifa implements Serializable{
 			      .atZone(ZoneId.systemDefault())
 			      .toInstant());
 	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		this.fechaFinal = Date.from(LocalDate.now().atStartOfDay()
+			      .atZone(ZoneId.systemDefault())
+			      .toInstant());
+	}
 
 	public int getId() {
 		return id;
@@ -85,4 +93,21 @@ public class HistorialTarifa implements Serializable{
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("HistorialTarifa [id=");
+		builder.append(id);
+		builder.append(", valorTarifa=");
+		builder.append(valorTarifa);
+		builder.append(", fechaInicio=");
+		builder.append(fechaInicio);
+		builder.append(", fechaFinal=");
+		builder.append(fechaFinal);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }

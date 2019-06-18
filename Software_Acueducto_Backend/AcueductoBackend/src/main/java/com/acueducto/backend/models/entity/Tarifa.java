@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,7 +56,6 @@ public class Tarifa implements Serializable{
 	public Tarifa() {
 		this.historialTarifa = new ArrayList<HistorialTarifa>();
 	}
-	
 	
 	public int getId() {
 		return id;
