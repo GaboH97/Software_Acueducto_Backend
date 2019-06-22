@@ -38,4 +38,9 @@ public class LugarService implements ILugarService {
 		lugarDAO.deleteById(id);
 	}
 
+	@Override
+	public List<Lugar> findByTipo(String tipo) {
+		return lugarDAO.findByTipo(tipo);
+	}
+
 }

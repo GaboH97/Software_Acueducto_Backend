@@ -41,8 +41,22 @@ public class LugaresController {
 	}
 
 	@PostMapping("/lugares")
-	public ResponseEntity<Lugar> createSuscriptor(@Valid @RequestBody Lugar lugar) {
+	public ResponseEntity<Lugar> createLugarMunicipio(@Valid @RequestBody Lugar lugar) {
 		lugarService.save(lugar);
 		return new ResponseEntity<Lugar>(lugar, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/lugares/{idMunicipio}")
+	public ResponseEntity<Lugar> createLugarVereda(@Valid @RequestBody Lugar lugar, @PathVariable int idMunicipio) {
+		Lugar municipio = lugarService.findById(idMunicipio);
+		lugar.setUbicado(municipio);
+		System.out.println("Municipio es "+municipio.getNombre());
+		lugarService.save(lugar);
+		return new ResponseEntity<Lugar>(lugar, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/lugares/tipo/{tipo}")
+	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo){
+		return lugarService.findByTipo(tipo);
 	}
 }

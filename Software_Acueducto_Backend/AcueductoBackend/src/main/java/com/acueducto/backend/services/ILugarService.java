@@ -13,4 +13,6 @@ public interface ILugarService {
 	public Lugar findById(int id);
 
 	public void delete(int id);
+	
+	public List<Lugar> findByTipo(String tipo);
 }

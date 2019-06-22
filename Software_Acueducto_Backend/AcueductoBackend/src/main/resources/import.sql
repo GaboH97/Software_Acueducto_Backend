@@ -17,11 +17,12 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 
 
 /*INSERT LUGARES*/
-insert into lugares (id, nombre, tipo, ubicado_id) values (1,'Colombia','P', null)
 
-insert into lugares (id, nombre, tipo, ubicado_id) values (2,'Boyaca','D', 1)
+insert into lugares (nombre, tipo, ubicado_id) values ('Moniquira','M', null)
 
-insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 1)
+insert into lugares (nombre, tipo, ubicado_id) values ('Pila Grande','V', 1)
+insert into lugares (nombre, tipo, ubicado_id) values ('Potrero Grande','V', 1)
+insert into lugares (nombre, tipo, ubicado_id) values ('La Hoya','V', 1)
 
 --Prueba de identidad referencial. Mismo ID 
 --insert into lugares (id, nombre, tipo, ubicado_id) values (3,'Meta','D', 2)
@@ -61,7 +62,7 @@ insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192
 /*INSERT TARIFAS*/
 
 insert into TARIFAS (descripcion, valor_tarifa) values ('Valor metro cúbico', 500);
-insert into TARIFAS (descripcion, valor_tarifa) values ('Jornal',  27.604);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Jornal',  27604);
 insert into TARIFAS (descripcion, valor_tarifa) values ('Concesión Corpoboyacá', 5000);
 insert into TARIFAS (descripcion, valor_tarifa) values ('Compra de predio planta de tratamiento', 50000);
 insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión', 25000);
