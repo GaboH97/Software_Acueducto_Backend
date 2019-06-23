@@ -36,7 +36,7 @@ public class Predio implements Serializable {
 	@Column(name = "numero_matricula")
 	private String numeroMatricula;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="lugar_id")
 	private Lugar lugar;
 
