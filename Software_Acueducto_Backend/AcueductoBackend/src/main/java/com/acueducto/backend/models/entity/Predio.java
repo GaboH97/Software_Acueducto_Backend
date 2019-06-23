@@ -63,6 +63,7 @@ public class Predio implements Serializable {
 	private List<HistorialPredio> historialPredio;
 
 	public Predio() {
+		historialPredio = new ArrayList<>();
 	}
 
 	public String getNumeroMatricula() {
