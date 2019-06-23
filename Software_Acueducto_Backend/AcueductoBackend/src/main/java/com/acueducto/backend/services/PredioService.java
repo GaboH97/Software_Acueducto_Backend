@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acueducto.backend.models.dao.IPredioDAO;
-import com.acueducto.backend.models.entity.Lugar;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.PredioID;
 
@@ -29,16 +28,34 @@ public class PredioService implements IPredioService{
 	public void save(Predio predio) {
 		predioDAO.save(predio);
 	}
+	
+	public Predio findPredioByNumeroMatricula(String numeroMatricula) {
+		return predioDAO.findById(numeroMatricula).orElse(null);
+	}
+	@Override
+	@Transactional
+	public void delete(String numeroMatricula) {
+		predioDAO.deleteById(numeroMatricula);
+	}
 
 	@Override
 	public Predio findByPredioID(PredioID predioID) {
-		return predioDAO.findById(predioID).orElse(null);
+		return null;
 	}
 
 	@Override
-	@Transactional
-	public void delete(PredioID predioID) {
-		predioDAO.deleteById(predioID);
+	public void delete(PredioID predioID) {		
 	}
+
+//	@Override
+//	public Predio findByPredioID(PredioID predioID) {
+//		return predioDAO.findById(predioID).orElse(null);
+//	}
+//
+//	@Override
+//	@Transactional
+//	public void delete(PredioID predioID) {
+//		predioDAO.deleteById(predioID);
+//	}
 
 }

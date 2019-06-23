@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "predios")
-@IdClass(PredioID.class)
+//@IdClass(PredioID.class)
 public class Predio implements Serializable {
 
 	/**
@@ -38,7 +38,6 @@ public class Predio implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "lugar_id", referencedColumnName = "id")
 	private Lugar lugar;
 
 	@NotNull
