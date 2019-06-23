@@ -129,4 +129,12 @@ public class Predio implements Serializable {
 	public void setHistorialPredio(List<HistorialPredio> historialPredio) {
 		this.historialPredio = historialPredio;
 	}
+	
+	public void setLugar(Lugar lugar) {
+		this.lugar = lugar;
+	}
+	
+	public Lugar getLugar() {
+		return lugar;
+	}
 }
