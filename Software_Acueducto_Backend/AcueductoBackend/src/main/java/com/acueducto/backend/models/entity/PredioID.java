@@ -12,22 +12,22 @@ public class PredioID implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int lugar;
+	private Integer lugar;
 	
 	private String numeroMatricula;
 	
 	public PredioID() {}
 
-	public PredioID(int lugarId, String numeroMatricula) {
+	public PredioID(Integer lugarId, String numeroMatricula) {
 		this.lugar = lugarId;
 		this.numeroMatricula = numeroMatricula;
 	}
 
-	public int getLugarId() {
+	public Integer getLugarId() {
 		return lugar;
 	}
 
-	public void setLugarId(int lugarId) {
+	public void setLugarId(Integer lugarId) {
 		this.lugar = lugarId;
 	}
 
