@@ -19,7 +19,8 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 /*INSERT LUGARES*/
 
 insert into lugares (nombre, tipo, ubicado_id) values ('Moniquira','M', null)
-
+insert into lugares (nombre, tipo, ubicado_id) values ('Paipa','M', null)
+insert into lugares (nombre, tipo, ubicado_id) values ('Santa Ana','M', null)
 insert into lugares (nombre, tipo, ubicado_id) values ('Pila Grande','V', 1)
 insert into lugares (nombre, tipo, ubicado_id) values ('Potrero Grande','V', 1)
 insert into lugares (nombre, tipo, ubicado_id) values ('La Hoya','V', 1)
@@ -42,22 +43,24 @@ insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado
 /*INSERT PREDIOS*/
 
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('2','hjsdkfhds',1, 1.1,1.2,2)
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('2','hjsdkfhds',1 , 1.1, 1.2, 4)
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('3','hjsdkfhds',1, 1.1,1.2,2)
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('3','hjsdkfhds',1 , 1.1, 1.2, 4)
 
-/*INSERT ASIGNACIONES*/
+/*INSERT ASIGNACIONES
 
-insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
+--insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
 
-insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','700-32-6247',2,'2')
+--insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','700-32-6247',2,'2')
+
 
 
 /*INSERT FACTURAS*/
 
-insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
-insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
-insert into FACTURAS (cedula_suscriptor, periodo_facturado) values ('206-97-0192','2018-09-20')
+insert into FACTURAS (predio_lugar_id, predio_numero_matricula, periodo_facturado) values (4,'2','2018-09-20')
+insert into FACTURAS (predio_lugar_id, predio_numero_matricula, periodo_facturado) values (4,'2','2018-12-20')
+insert into FACTURAS (predio_lugar_id, predio_numero_matricula, periodo_facturado) values (4,'2','2019-02-20')
+
 
 /*INSERT TARIFAS*/
 

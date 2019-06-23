@@ -41,6 +41,6 @@ public class SuscriptorService implements ISuscriptorService{
 
 	@Override
 	public Suscriptor fetchByCedulaWithAsignacionesWithPredios(String cedula) {
-		return suscriptorDAO.fetchByCedulaWithAsinacionesWithPredios(cedula);
+		return suscriptorDAO.findById(cedula).orElse(null);
 	}
 }

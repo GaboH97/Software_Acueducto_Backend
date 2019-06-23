@@ -24,7 +24,6 @@ import com.acueducto.backend.services.ILugarService;
 public class LugaresController {
 
 	@Autowired
-	// @Qualifier("suscriptorDAOJPA")
 	private ILugarService lugarService;
 
 	@GetMapping("/lugares")

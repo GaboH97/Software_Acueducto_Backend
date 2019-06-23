@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.acueducto.backend.models.entity.HistorialPredio;
+import com.acueducto.backend.models.entity.HistorialTarifa;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.PredioID;
 import com.acueducto.backend.services.IPredioService;
 
 @Controller
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class PredioController {
 
 	@Autowired
-	// @Qualifier("suscriptorDAOJPA")
 	private IPredioService predioService;
 
 	@GetMapping("/predios")
@@ -33,19 +36,23 @@ public class PredioController {
 
 	@GetMapping("/predios/{vereda}/{matricula}")
 	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
-		System.out.println("vereda: "+vereda+" mat "+matricula);
+		System.out.println("vereda: " + vereda + " mat " + matricula);
 		PredioID predioID = new PredioID(vereda, matricula);
-		return predioService.fetchByIdWithAsignaciones(predioID);
+		return predioService.findByPredioID(predioID);
 	}
 
 	@DeleteMapping("/predios/{vereda}/{matricula}")
-	public void deleteSuscriptor(@PathVariable int vereda, @PathVariable String matricula) {
+	public @ResponseBody Predio deletePredio(@PathVariable int vereda, @PathVariable String matricula) {
 		PredioID predioID = new PredioID(vereda, matricula);
+		Predio predio = predioService.findByPredioID(predioID);
 		predioService.delete(predioID);
+		return predio;
 	}
 
 	@PostMapping("/predios")
-	public ResponseEntity<Predio> createSuscriptor(@Valid @RequestBody Predio predio) {
+	public ResponseEntity<Predio> createPredio(@Valid @RequestBody Predio predio) {
+		HistorialPredio historialPredio = new HistorialPredio();
+		predio.getHistorialPredio().add(historialPredio);
 		predioService.save(predio);
 		return new ResponseEntity<Predio>(predio, HttpStatus.CREATED);
 	}

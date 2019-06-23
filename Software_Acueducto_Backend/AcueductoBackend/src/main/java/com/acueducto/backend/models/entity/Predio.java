@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -49,14 +50,18 @@ public class Predio implements Serializable {
 	private double latitud;
 
 	private double longitud;
-
-	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Asignacion> asignaciones;
-
-	public Predio() {
-		asignaciones = new ArrayList<>();
-	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
+	private Suscriptor suscriptor;
+	
+	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, orphanRemoval = false)
+	private List<Factura> facturas;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<HistorialPredio> historialPredio;
+	
+	public Predio() {}
 
 	public String getNumeroMatricula() {
 		return numeroMatricula;
@@ -98,12 +103,27 @@ public class Predio implements Serializable {
 		this.longitud = longitud;
 	}
 
-	public List<Asignacion> getAsignaciones() {
-		return asignaciones;
+	public Suscriptor getSuscriptor() {
+		return suscriptor;
 	}
-
-	public void setAsignaciones(List<Asignacion> asignaciones) {
-		this.asignaciones = asignaciones;
+	
+	public void setSuscriptor(Suscriptor suscriptor) {
+		this.suscriptor = suscriptor;
 	}
-
+	
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
+	
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+	
+	public List<HistorialPredio> getHistorialPredio() {
+		return historialPredio;
+	}
+	
+	public void setHistorialPredio(List<HistorialPredio> historialPredio) {
+		this.historialPredio = historialPredio;
+	}
 }

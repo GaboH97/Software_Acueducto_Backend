@@ -21,6 +21,7 @@ public class PredioService implements IPredioService{
 	@Override
 	@Transactional(readOnly=true)
 	public List<Predio> findAll() {
+		
 		return (List<Predio>) predioDAO.findAll();
 	}
 
@@ -39,12 +40,6 @@ public class PredioService implements IPredioService{
 	@Transactional
 	public void delete(PredioID predioID) {
 		predioDAO.deleteById(predioID);
-	}
-
-	@Override
-	public Predio fetchByIdWithAsignaciones(PredioID predioID) {
-		
-		return predioDAO.fetchByIdWithAsignaciones(predioID.getLugarId(),predioID.getNumeroMatricula());
 	}
 
 }

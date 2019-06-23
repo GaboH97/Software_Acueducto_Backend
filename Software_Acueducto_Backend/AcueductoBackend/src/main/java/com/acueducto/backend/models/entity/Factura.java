@@ -61,13 +61,12 @@ public class Factura implements Serializable {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "factura_id")
-	//@JoinTable(inverseJoinColumns=@JoinColumn(name="suscriptor_cedula"))
 	private List<DetalleFactura> detallesFactura;
 	
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cedula_suscriptor")
 	@JsonBackReference
-	private Suscriptor suscriptor;
+	private Predio predio;
 	
 	public Factura() {
 		this.detallesFactura= new ArrayList<DetalleFactura>();
@@ -125,20 +124,20 @@ public class Factura implements Serializable {
 		return detallesFactura;
 	}
 	
-	public Suscriptor getSuscriptor() {
-		return suscriptor;
-	}
-	
 	public void setDetallesFactura(List<DetalleFactura> detallesFactura) {
 		this.detallesFactura = detallesFactura;
 	}
 	
-	public void setSuscriptor(Suscriptor suscriptor) {
-		this.suscriptor = suscriptor;
+	public Predio getPredio() {
+		return predio;
+	}
+	
+	public void setPredio(Predio predio) {
+		this.predio = predio;
 	}
 	
 	/*
-	 * Este campo es calculado y automáticamente se agrega como un campo al momento de consultar
+	 * Este campo es calculado y automáticamente se serializa como un campo al momento de consultar
 	 */
 	public Double getGranTotal() {
 		return detallesFactura.stream().mapToDouble(i -> i.getValor()).sum();

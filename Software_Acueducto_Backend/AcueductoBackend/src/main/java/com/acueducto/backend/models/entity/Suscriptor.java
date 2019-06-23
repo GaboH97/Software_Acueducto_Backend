@@ -69,18 +69,17 @@ public class Suscriptor implements Serializable {
 	private String correoElectronico;
 	
 	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JsonIgnore
-	//@JoinTable(inverseJoinColumns=@JoinColumn(name="suscriptor_cedula"))
-	private List<Asignacion> asignaciones;
-	
-	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JsonIgnore
-	private List<Factura> facturas;
+	@JsonManagedReference
+	private List<Predio> predios;
+//	
+//	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//	@JsonIgnore
+//	private List<Factura> facturas;
 	
 	
 	public Suscriptor() {
-		asignaciones = new ArrayList<Asignacion>();
-		facturas = new ArrayList<Factura>();
+		predios = new ArrayList<Predio>();
+//		facturas = new ArrayList<Factura>();
 	}
 	
 	@PrePersist
@@ -162,12 +161,12 @@ public class Suscriptor implements Serializable {
 		this.correoElectronico = correoElectronico;
 	}
 	
-	public List<Asignacion> getAsignaciones() {
-		return asignaciones;
+	public List<Predio> getPredios() {
+		return predios;
 	}
 	
-	public List<Factura> getFacturas() {
-		return facturas;
-	}
+//	public List<Factura> getFacturas() {
+//		return facturas;
+//	}
 	
 }
