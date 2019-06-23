@@ -48,20 +48,22 @@ public class Predio implements Serializable {
 	private int estrato;
 
 	private double latitud;
-
 	private double longitud;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Suscriptor suscriptor;
-	
+
 	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, orphanRemoval = false)
 	private List<Factura> facturas;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns({ @JoinColumn(name = "predio_lugar_id", referencedColumnName = "lugar_id"),
+			@JoinColumn(name = "predio_numero_matricula", referencedColumnName = "numero_matricula") })
 	private List<HistorialPredio> historialPredio;
-	
-	public Predio() {}
+
+	public Predio() {
+	}
 
 	public String getNumeroMatricula() {
 		return numeroMatricula;
@@ -106,23 +108,23 @@ public class Predio implements Serializable {
 	public Suscriptor getSuscriptor() {
 		return suscriptor;
 	}
-	
+
 	public void setSuscriptor(Suscriptor suscriptor) {
 		this.suscriptor = suscriptor;
 	}
-	
+
 	public List<Factura> getFacturas() {
 		return facturas;
 	}
-	
+
 	public void setFacturas(List<Factura> facturas) {
 		this.facturas = facturas;
 	}
-	
+
 	public List<HistorialPredio> getHistorialPredio() {
 		return historialPredio;
 	}
-	
+
 	public void setHistorialPredio(List<HistorialPredio> historialPredio) {
 		this.historialPredio = historialPredio;
 	}
