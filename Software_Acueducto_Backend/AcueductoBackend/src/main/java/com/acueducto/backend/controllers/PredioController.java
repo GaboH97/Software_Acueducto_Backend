@@ -51,6 +51,7 @@ public class PredioController {
 
 	@PostMapping("/predios")
 	public ResponseEntity<Predio> createPredio(@Valid @RequestBody Predio predio) {
+		
 		HistorialPredio historialPredio = new HistorialPredio();
 		predio.getHistorialPredio().add(historialPredio);
 		predioService.save(predio);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acueducto.backend.models.dao.ILugarDAO;
 import com.acueducto.backend.models.dao.IPredioDAO;
 import com.acueducto.backend.models.entity.Lugar;
 import com.acueducto.backend.models.entity.Predio;

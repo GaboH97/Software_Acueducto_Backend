@@ -52,6 +52,7 @@ public class Predio implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
+	@NotNull
 	private Suscriptor suscriptor;
 
 	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, orphanRemoval = false)

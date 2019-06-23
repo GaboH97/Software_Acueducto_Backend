@@ -43,9 +43,9 @@ insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado
 /*INSERT PREDIOS*/
 
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('2','hjsdkfhds',1 , 1.1, 1.2, 4)
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('2','El rodeo',1 , 1.1, 1.2, 4,'206-97-0192')
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id) values ('3','hjsdkfhds',1 , 1.1, 1.2, 4)
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('3','Uberrimo',1 , 1.1, 1.2, 4, '206-97-0192')
 
 /*INSERT ASIGNACIONES
 
