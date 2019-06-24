@@ -33,6 +33,18 @@ public class PredioController {
 	public @ResponseBody List<Predio> findAll() {
 		return predioService.findAll();
 	}
+	
+	@GetMapping("/predios/{matricula}")
+	public @ResponseBody Predio findById(@PathVariable String matricula) {
+		return predioService.findByNumeroMatricula(matricula);
+	}
+	
+	@GetMapping("/predios/search/{nombre}")
+	public @ResponseBody List<Predio> findByNombre(@PathVariable String nombre) {
+		System.out.println("Aqui");
+		return predioService.findByNombre(nombre);
+	}
+
 
 	@GetMapping("/predios/{vereda}/{matricula}")
 	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
@@ -40,6 +52,8 @@ public class PredioController {
 		PredioID predioID = new PredioID(vereda, matricula);
 		return predioService.findByPredioID(predioID);
 	}
+	
+	
 
 	@DeleteMapping("/predios/{vereda}/{matricula}")
 	public @ResponseBody Predio deletePredio(@PathVariable int vereda, @PathVariable String matricula) {

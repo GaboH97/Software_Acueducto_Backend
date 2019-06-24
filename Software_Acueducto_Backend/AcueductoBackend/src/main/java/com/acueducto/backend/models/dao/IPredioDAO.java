@@ -11,4 +11,6 @@ import com.acueducto.backend.models.entity.PredioID;
 public interface IPredioDAO extends CrudRepository<Predio,String>{
 	
 	
+	public List<Predio> findByNombreIgnoreCaseContaining(String nombre);
+
 }

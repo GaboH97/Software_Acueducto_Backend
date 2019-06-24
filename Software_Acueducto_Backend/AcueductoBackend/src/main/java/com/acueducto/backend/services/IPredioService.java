@@ -17,5 +17,9 @@ public interface IPredioService {
 	public void delete(PredioID predioID);
 
 	void delete(String numeroMatricula);
+
+	public Predio findByNumeroMatricula(String numeroMatricula);
+
+	public List<Predio> findByNombre(String nombre);
 	
 }

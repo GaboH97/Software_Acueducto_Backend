@@ -47,6 +47,8 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 
 insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('3','Uberrimo',1 , 1.1, 1.2, 4, '206-97-0192')
 
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('4','Ubate',1 , 1.1, 1.2, 4, '700-32-6247')
+
 /*INSERT ASIGNACIONES
 
 --insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')

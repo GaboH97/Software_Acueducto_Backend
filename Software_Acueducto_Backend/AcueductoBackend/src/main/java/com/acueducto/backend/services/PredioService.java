@@ -29,9 +29,11 @@ public class PredioService implements IPredioService{
 		predioDAO.save(predio);
 	}
 	
-	public Predio findPredioByNumeroMatricula(String numeroMatricula) {
+	@Override
+	public Predio findByNumeroMatricula(String numeroMatricula) {
 		return predioDAO.findById(numeroMatricula).orElse(null);
 	}
+	
 	@Override
 	@Transactional
 	public void delete(String numeroMatricula) {
@@ -45,6 +47,11 @@ public class PredioService implements IPredioService{
 
 	@Override
 	public void delete(PredioID predioID) {		
+	}
+
+	@Override
+	public List<Predio> findByNombre(String nombre) {
+		return predioDAO.findByNombreIgnoreCaseContaining(nombre);
 	}
 
 //	@Override
