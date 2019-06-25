@@ -36,7 +36,7 @@ public class PredioController {
 	
 	@GetMapping("/predios/{matricula}")
 	public @ResponseBody Predio findById(@PathVariable String matricula) {
-		return predioService.findByNumeroMatricula(matricula);
+		return predioService.findByNumeroMatriculaWithSuscriptor(matricula);
 	}
 	
 	@GetMapping("/predios/search/{nombre}")
@@ -44,14 +44,15 @@ public class PredioController {
 		System.out.println("Aqui");
 		return predioService.findByNombre(nombre);
 	}
+	
 
 
-	@GetMapping("/predios/{vereda}/{matricula}")
-	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
-		System.out.println("vereda: " + vereda + " mat " + matricula);
-		PredioID predioID = new PredioID(vereda, matricula);
-		return predioService.findByPredioID(predioID);
-	}
+//	@GetMapping("/predios/{vereda}/{matricula}")
+//	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
+//		System.out.println("vereda: " + vereda + " mat " + matricula);
+//		PredioID predioID = new PredioID(vereda, matricula);
+//		return predioService.findByPredioID(predioID);
+//	}
 	
 	
 

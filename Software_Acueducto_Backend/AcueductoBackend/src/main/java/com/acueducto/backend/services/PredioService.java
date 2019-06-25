@@ -19,8 +19,7 @@ public class PredioService implements IPredioService{
 	@Override
 	@Transactional(readOnly=true)
 	public List<Predio> findAll() {
-		
-		return (List<Predio>) predioDAO.findAll();
+		return (List<Predio>) predioDAO.buscarConSuscriptor();
 	}
 
 	@Override
@@ -30,8 +29,8 @@ public class PredioService implements IPredioService{
 	}
 	
 	@Override
-	public Predio findByNumeroMatricula(String numeroMatricula) {
-		return predioDAO.findById(numeroMatricula).orElse(null);
+	public Predio findByNumeroMatriculaWithSuscriptor(String numeroMatricula) {
+		return predioDAO.findByNumeroMatriculaWithSuscriptor(numeroMatricula).orElse(null);
 	}
 	
 	@Override

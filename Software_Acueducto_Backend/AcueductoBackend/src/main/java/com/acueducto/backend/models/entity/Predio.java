@@ -50,7 +50,6 @@ public class Predio implements Serializable {
 	private double longitud;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
 	@NotNull
 	private Suscriptor suscriptor;
 

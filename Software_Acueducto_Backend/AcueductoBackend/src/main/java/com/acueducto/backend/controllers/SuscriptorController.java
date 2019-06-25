@@ -43,8 +43,8 @@ public class SuscriptorController {
 	@GetMapping("/suscriptores/{cedula}/detalles")
 	public @ResponseBody Suscriptor fetchByCedulaWithAsignacionesWithPredios(@PathVariable String cedula) {
 		Suscriptor suscriptor =suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
-		System.out.println(suscriptor.getPredios().size());
-		suscriptor.getPredios().forEach(a->System.out.println("coso"));
+		//System.out.println(suscriptor.getPredios().size());
+		//suscriptor.getPredios().forEach(a->System.out.println("coso"));
 		return suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
 	}
 
