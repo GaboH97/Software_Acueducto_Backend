@@ -3,11 +3,14 @@ package com.acueducto.backend.controllers;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,7 @@ import com.acueducto.backend.models.entity.Tarifa;
 import com.acueducto.backend.services.ITarifaService;
 
 @Controller
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class TarifaController {
 
 	@Autowired
@@ -38,63 +41,93 @@ public class TarifaController {
 	}
 
 	@GetMapping("/tarifas/{id}")
-	public ResponseEntity<Tarifa> findById(@PathVariable int id) {
-		Tarifa tarifa = tarifaService.findById(id);
-		
-		if(tarifa!=null) {
-			return ResponseEntity.ok().body(tarifa);
-		}else {
-			return null;
+	public ResponseEntity<?> findById(@PathVariable int id) {
+		Tarifa tarifa = null;
+		try {
+			tarifa = tarifaService.findById(id);
+		} catch (DataAccessException e) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "Error al realizar consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		if (tarifa == null) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "La tarifa con ID".concat(String.valueOf(id).concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Tarifa>(tarifa, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/tarifas/{id}")
-	public @ResponseBody Tarifa deleteTarifa(@PathVariable int id) {
-		Tarifa tarifa = tarifaService.findById(id);
-		if(tarifa!=null) {
+	public ResponseEntity<?> deleteTarifa(@PathVariable int id) {
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		try {
 			tarifaService.delete(id);
-			return tarifa;
-		}else {
-			System.out.println("yaper");
-			return null;
+		} catch (DataAccessException e) {
+			System.out.println("aqui se jodio");
+			response.put("mensaje", "Error al eliminar suscriptor de la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		response.put("mensaje", "Tarifa eliminada con éxito");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/tarifas")
-	public @ResponseBody Tarifa createTarifa(@Valid @RequestBody Tarifa tarifa) {
-		if(tarifaService.findById(tarifa.getId())==null) {
-			HistorialTarifa historialTarifa = new HistorialTarifa();
-			historialTarifa.setValorTarifa(tarifa.getValorTarifa());
-		
-			tarifa.getHistorialTarifa().add(historialTarifa);
+	public ResponseEntity<?> createTarifa(@Valid @RequestBody Tarifa tarifa) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		try {
 			tarifaService.save(tarifa);
-			return tarifa;
-		}else {
-			return null;
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		response.put("mensaje", "Tarifa creada con éxito");
+		response.put("tarifa", tarifa);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/tarifas/{id}")
-	public @ResponseBody Tarifa updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id){
-		if(tarifaService.findById(id)!=null) {
-		
-			//Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo registro
-			HistorialTarifa anteriorHistorialTarifa = tarifa.getHistorialTarifa().isEmpty()?new HistorialTarifa():tarifa.getHistorialTarifa().get(tarifa.getHistorialTarifa().size()-1);
-			
-			anteriorHistorialTarifa.setFechaFinal(Date.from(LocalDate.now().atStartOfDay()
-				      .atZone(ZoneId.systemDefault())
-				      .toInstant()));
-			
+	public ResponseEntity<?> updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		Tarifa tarifaAux = tarifaService.findById(id);
+
+		if (tarifaAux == null) {
+			response.put("mensaje", "El cliente con cédula ".concat(String.valueOf(id).concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
+		try {
+			HistorialTarifa anteriorHistorialTarifa = tarifa.getHistorialTarifa().isEmpty() ? new HistorialTarifa()
+					: tarifa.getHistorialTarifa().get(tarifa.getHistorialTarifa().size() - 1);
+
+			anteriorHistorialTarifa.setFechaFinal(
+					Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
 			HistorialTarifa nuevaHistorialTarifa = new HistorialTarifa();
 			nuevaHistorialTarifa.setValorTarifa(tarifa.getValorTarifa());
-		
+
 			tarifa.getHistorialTarifa().add(nuevaHistorialTarifa);
 			
+			// Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo
+			// registro
 			tarifaService.save(tarifa);
-			return tarifa;
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		System.out.println("yaper");
-		return null;
+
+		response.put("mensaje", "Suscriptor actualizado con éxito");
+		response.put("suscriptor", tarifa);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-			
 }

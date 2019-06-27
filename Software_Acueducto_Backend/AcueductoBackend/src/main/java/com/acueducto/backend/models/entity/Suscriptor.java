@@ -39,7 +39,7 @@ public class Suscriptor implements Serializable {
 	@Id
 	private String cedula;
 		
-	
+	@Column(nullable = false)
 	private String nombre;
 	
 	
@@ -84,8 +84,8 @@ public class Suscriptor implements Serializable {
 	
 	@PrePersist
 	public void prePersist() {
-		this.estado="Activo";
-		this.estadoCuenta="Al día";
+		this.estado = "A";
+		this.estadoCuenta= "D";
 	}
 	
 

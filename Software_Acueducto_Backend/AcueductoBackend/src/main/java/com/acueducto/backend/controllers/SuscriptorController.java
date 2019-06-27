@@ -1,10 +1,13 @@
 package com.acueducto.backend.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,7 @@ import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
 
 @Controller
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class SuscriptorController {
 
 	@Autowired
@@ -36,81 +39,95 @@ public class SuscriptorController {
 	}
 
 	@GetMapping("/suscriptores/{cedula}")
-	public @ResponseBody Suscriptor findByCedula(@PathVariable String cedula) {
-		return suscriptorService.findByCedula(cedula);
-	}
-	
-	@GetMapping("/suscriptores/{cedula}/detalles")
-	public @ResponseBody Suscriptor fetchByCedulaWithAsignacionesWithPredios(@PathVariable String cedula) {
-		Suscriptor suscriptor =suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
-		//System.out.println(suscriptor.getPredios().size());
-		//suscriptor.getPredios().forEach(a->System.out.println("coso"));
-		return suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
-	}
-
-	@DeleteMapping("/suscriptores/{cedula}")
-	public @ResponseBody Suscriptor deleteSuscriptor(@PathVariable String cedula) {
-		Suscriptor suscriptor = suscriptorService.findByCedula(cedula);
-		if(suscriptor!=null) {
-			suscriptorService.delete(cedula);
-			return suscriptor;
-		}else {
-			System.out.println("yaper");
-			return null;
+	public ResponseEntity<?> findByCedula(@PathVariable String cedula) {
+		Suscriptor suscriptor = null;
+		try {
+			suscriptor = suscriptorService.findByCedula(cedula);
+		} catch (DataAccessException e) {
+			System.out.println("aqui enton");
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "Error al realizar consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
+		if (suscriptor == null) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "El cliente con cédula ".concat(cedula.concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		System.out.println("aqui si");
+		return new ResponseEntity<Suscriptor>(suscriptor, HttpStatus.OK);
 	}
 
-//	@PostMapping("/suscriptores")
-//	@ResponseBody
-//	public Suscriptor createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
-//		
-//		if(result.hasErrors()) {
-//			StringBuilder builder = new StringBuilder();
-//			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-//			return suscriptor;
-//		}else { 
-//			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
-//				suscriptorService.save(suscriptor);
-//				return suscriptor;
-//			}
-//		}
-//		return suscriptor;
+//	@GetMapping("/suscriptores/{cedula}/detalles")
+//	public @ResponseBody Suscriptor fetchByCedulaWithAsignacionesWithPredios(@PathVariable String cedula) {
+//		Suscriptor suscriptor =suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
+//		//System.out.println(suscriptor.getPredios().size());
+//		//suscriptor.getPredios().forEach(a->System.out.println("coso"));
+//		return suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
 //	}
-	
+
+
+
 	@PostMapping("/suscriptores")
-	public ResponseEntity<Suscriptor> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
-		
-		if(result.hasErrors()) {
-			StringBuilder builder = new StringBuilder();
-			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body(builder.toString());
-		}else { 
-			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
-				suscriptorService.save(suscriptor);
-				return ResponseEntity.ok(suscriptor);
-			}
+	public ResponseEntity<?> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
+
+		Map<String, Object> response = new HashMap<String, Object>();
+		try {
+			suscriptorService.save(suscriptor);
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return ResponseEntity.ok(suscriptor);
+		response.put("mensaje", "Cliente creado con éxito");
+		response.put("suscriptor", suscriptor);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+
+	@PutMapping("/suscriptores/{cedula}")
+	public ResponseEntity<?> updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, @PathVariable String cedula,
+			BindingResult result) {
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		Suscriptor suscriptoraux = suscriptorService.findByCedula(cedula);
+		
+		if (suscriptoraux == null) {
+			response.put("mensaje", "El cliente con cédula ".concat(cedula.concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		try {
+			suscriptorService.save(suscriptor);
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje", "Suscriptor actualizado con éxito");
+		response.put("suscriptor", suscriptor);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/suscriptores/{cedula}")
-	@ResponseBody
-	public Suscriptor updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, @PathVariable String cedula, BindingResult result) {
+	@DeleteMapping("/suscriptores/{cedula}")
+	public ResponseEntity<?> deleteSuscriptor(@PathVariable String cedula) {
 		
-		if(result.hasErrors()) {
-			StringBuilder builder = new StringBuilder();
-			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-			builder.toString();
-			return suscriptor;
-		}else { 
-			if (suscriptorService.findByCedula(cedula) != null) {
-				suscriptorService.save(suscriptor);
-				return suscriptor;
-			} else {
-				return null;
-			}
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		try {
+			suscriptorService.deleteByCedula(cedula);
+		}catch(DataAccessException e) {
+			response.put("mensaje", "Error al eliminar suscriptor de la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
 		
+		response.put("mensaje", "Suscriptor eliminado con éxito");
+		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+	}
 }

@@ -35,12 +35,8 @@ public class SuscriptorService implements ISuscriptorService{
 
 	@Override
 	@Transactional
-	public void delete(String cedula) {
+	public void deleteByCedula(String cedula) {
 		suscriptorDAO.deleteById(cedula);
 	}
-
-	@Override
-	public Suscriptor fetchByCedulaWithAsignacionesWithPredios(String cedula) {
-		return suscriptorDAO.findById(cedula).orElse(null);
-	}
+	
 }
