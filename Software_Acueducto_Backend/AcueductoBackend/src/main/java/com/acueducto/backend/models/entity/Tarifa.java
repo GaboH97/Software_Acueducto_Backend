@@ -46,6 +46,7 @@ public class Tarifa implements Serializable{
 	private double valorTarifa;
 	
 	@NotNull
+	@Column(unique = true)
 	private String descripcion;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

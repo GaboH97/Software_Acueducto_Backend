@@ -68,7 +68,7 @@ public class TarifaController {
 			tarifaService.delete(id);
 		} catch (DataAccessException e) {
 			System.out.println("aqui se jodio");
-			response.put("mensaje", "Error al eliminar suscriptor de la base de datos");
+			response.put("mensaje", "Error al eliminar tarifa de la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -99,7 +99,7 @@ public class TarifaController {
 		Tarifa tarifaAux = tarifaService.findById(id);
 
 		if (tarifaAux == null) {
-			response.put("mensaje", "El cliente con cédula ".concat(String.valueOf(id).concat(" no se encontró")));
+			response.put("mensaje", "La tarifa con ID ".concat(String.valueOf(id).concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
@@ -125,8 +125,8 @@ public class TarifaController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "Suscriptor actualizado con éxito");
-		response.put("suscriptor", tarifa);
+		response.put("mensaje", "Tarifa actualizado con éxito");
+		response.put("tarifa", tarifa);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
