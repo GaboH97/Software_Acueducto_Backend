@@ -58,9 +58,7 @@ public class Suscriptor implements Serializable {
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
-	
 	private String genero;
-	
 	
 	@Column(name="numero_telefono")
 	private String numeroTelefono;

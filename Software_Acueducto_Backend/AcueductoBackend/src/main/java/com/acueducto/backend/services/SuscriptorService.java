@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acueducto.backend.models.dao.ISuscriptorDAO;
+import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 
 @Service
@@ -37,6 +38,11 @@ public class SuscriptorService implements ISuscriptorService{
 	@Transactional
 	public void deleteByCedula(String cedula) {
 		suscriptorDAO.deleteById(cedula);
+	}
+	
+	@Override
+	public List<Predio> getPrediosBySuscriptor(String cedula) {
+		return suscriptorDAO.getPrediosBySuscriptor(cedula);
 	}
 	
 }

@@ -38,7 +38,7 @@ public class Predio implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="lugar_id")
-	private Lugar lugar;
+	private Lugar vereda;
 
 	@NotNull
 	private String nombre;
@@ -129,11 +129,11 @@ public class Predio implements Serializable {
 		this.historialPredio = historialPredio;
 	}
 	
-	public void setLugar(Lugar lugar) {
-		this.lugar = lugar;
+	public void setVereda(Lugar vereda) {
+		this.vereda = vereda;
 	}
 	
-	public Lugar getLugar() {
-		return lugar;
+	public Lugar getVereda() {
+		return vereda;
 	}
 }

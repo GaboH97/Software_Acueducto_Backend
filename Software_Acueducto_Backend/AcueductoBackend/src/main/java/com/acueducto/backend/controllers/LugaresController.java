@@ -99,6 +99,7 @@ public class LugaresController {
 
 	@GetMapping("/lugares/tipo/{tipo}")
 	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo) {
+		System.out.println("AAAAA");
 		return lugarService.findByTipo(tipo);
 	}
 }

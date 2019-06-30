@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
 
@@ -129,5 +130,10 @@ public class SuscriptorController {
 		
 		response.put("mensaje", "Suscriptor eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("/suscriptores/{cedula}/predios")
+	public @ResponseBody List<Predio> getPrediosBySuscriptor(@PathVariable String cedula){
+		return suscriptorService.getPrediosBySuscriptor(cedula);
 	}
 }
