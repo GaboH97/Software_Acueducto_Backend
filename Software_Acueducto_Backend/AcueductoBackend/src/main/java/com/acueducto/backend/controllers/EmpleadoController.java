@@ -53,30 +53,16 @@ public class EmpleadoController {
 		
 	}
 
-//	@PostMapping("/suscriptores")
-//	@ResponseBody
-//	public Suscriptor createSuscriptor(@Valid @RequestBody Suscriptor suscriptor, BindingResult result) {
-//		
-//		if(result.hasErrors()) {
-//			StringBuilder builder = new StringBuilder();
-//			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
-//			return suscriptor;
-//		}else { 
-//			if (suscriptorService.findByCedula(suscriptor.getCedula()) == null) {
-//				suscriptorService.save(suscriptor);
-//				return suscriptor;
-//			}
-//		}
-//		return suscriptor;
-//	}
 	
 	@PostMapping("/empleados")
-	public ResponseEntity<Empleado> createSuscriptor(@Valid @RequestBody Empleado empleado, BindingResult result) {
-		
+	public ResponseEntity<Empleado> createEmpleado(@Valid @RequestBody Empleado empleado, BindingResult result) {
+		System.out.println("aqui");
 		if(result.hasErrors()) {
 			StringBuilder builder = new StringBuilder();
 			result.getAllErrors().forEach(e-> builder.append(e.getDefaultMessage().concat(System.getProperty("line.separator"))));
 			ResponseEntity.status(HttpStatus.BAD_REQUEST).body(builder.toString());
+			System.out.println("alla");
+
 		}else { 
 			if (empleadoService.findByCedula(empleado.getCedula()) == null) {
 				empleadoService.save(empleado);

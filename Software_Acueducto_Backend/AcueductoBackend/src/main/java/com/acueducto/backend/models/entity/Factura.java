@@ -50,22 +50,22 @@ public class Factura implements Serializable {
 	private Integer id;
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_emision")
 	private Date fechaEmision;
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "periodo_facturado")
 	private Date periodofacturado;
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_maximo_pago")
 	private Date fechaMaximoPago;
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_pago")
 	private Date fechaPago;
 	

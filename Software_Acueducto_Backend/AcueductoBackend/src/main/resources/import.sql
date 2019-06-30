@@ -60,7 +60,7 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 
 /*INSERT FACTURAS*/
 
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('2','2018-09-20');
+insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('2', NOW());
 insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2018-12-20');
 insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2019-02-20');
 
@@ -78,3 +78,4 @@ insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión',
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,1,1,500);
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,2,1,27.604);
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (2,1,1,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (3,1,2,500);

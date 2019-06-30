@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "empleados")
@@ -60,8 +62,9 @@ public class Empleado implements Serializable {
 	private String direccionResidencia;
 		
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="lugar_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Lugar lugarResidencia;
 
 	public String getCedula() {
@@ -134,6 +137,14 @@ public class Empleado implements Serializable {
 
 	public void setDireccionResidencia(String direccionResidencia) {
 		this.direccionResidencia = direccionResidencia;
+	}
+	
+	public Lugar getLugarResidencia() {
+		return lugarResidencia;
+	}
+	
+	public void setLugarResidencia(Lugar lugarResidencia) {
+		this.lugarResidencia = lugarResidencia;
 	}
 
 }
