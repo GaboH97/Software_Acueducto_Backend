@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.acueducto.backend.models.dao.ITarifaDAO;
 import com.acueducto.backend.models.entity.HistorialTarifa;
+import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Tarifa;
 
 @Service
@@ -37,6 +38,11 @@ public class TarifaService implements ITarifaService {
 	@Transactional
 	public void delete(int id) {
 		tarifaDAO.deleteById(id);
+	}
+	
+	@Override
+	public List<Tarifa> findByDescripcion(String descripcion) {
+		return tarifaDAO.findByDescripcionIgnoreCaseContaining(descripcion);
 	}
 
 }

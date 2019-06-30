@@ -125,9 +125,16 @@ public class TarifaController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "Tarifa actualizado con éxito");
+		response.put("mensaje", "Tarifa actualizada con éxito");
 		response.put("tarifa", tarifa);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/tarifas/search/{descripcion}")
+	public @ResponseBody List<Tarifa> obtenerTarifasPorDescripcion(@PathVariable String descripcion){
+		return tarifaService.findByDescripcion(descripcion);
+	}
+	
+	
 }

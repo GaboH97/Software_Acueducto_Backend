@@ -13,5 +13,7 @@ public interface ITarifaService {
 	public Tarifa findById(int id);
 	
 	public void delete(int id);
+
+	public List<Tarifa> findByDescripcion(String descripcion);
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.acueducto.backend.models.dao.IPredioDAO;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.PredioID;
+import com.acueducto.backend.models.entity.Tarifa;
 
 @Service
 public class PredioService implements IPredioService{
@@ -52,6 +53,7 @@ public class PredioService implements IPredioService{
 	public List<Predio> findByNombre(String nombre) {
 		return predioDAO.findByNombreIgnoreCaseContaining(nombre);
 	}
+
 
 //	@Override
 //	public Predio findByPredioID(PredioID predioID) {
