@@ -37,7 +37,7 @@ public class DetalleFactura implements Serializable{
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Tarifa tarifa;
 	
-	private Integer  cantidad;
+	private Integer cantidad;
 	
 	@NotNull
 	private Double valor;

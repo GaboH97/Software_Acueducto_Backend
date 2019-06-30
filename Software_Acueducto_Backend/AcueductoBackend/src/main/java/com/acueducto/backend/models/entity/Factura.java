@@ -27,6 +27,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * 
+ * DOMINIO DE VALORES PARA ESTADO DE FACTURA
+ * 		
+ * 		PP => Por Pagar
+ * 		VE => Vencida
+ * 		PA => Pagada
+ *
+ */
 @Entity
 @Table(name = "facturas")
 public class Factura implements Serializable {
@@ -60,6 +69,9 @@ public class Factura implements Serializable {
 	@Column(name = "fecha_pago")
 	private Date fechaPago;
 	
+	@Column(name="estado_factura")
+	private String estadoFactura;
+	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "factura_id")
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -79,6 +91,7 @@ public class Factura implements Serializable {
 		//Ejecuta este método justo antes de persistir el objeto
 		this.fechaEmision = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		this.fechaMaximoPago = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plusDays(15).toInstant());
+		this.estadoFactura = "PP";
 	}
 	
 

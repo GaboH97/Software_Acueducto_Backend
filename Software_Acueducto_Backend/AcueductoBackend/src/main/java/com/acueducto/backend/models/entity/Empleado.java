@@ -46,6 +46,7 @@ public class Empleado implements Serializable {
 	private String tipoEmpleado;
 	
 	@NotNull
+	@Column(unique = true)
 	private String usuario;
 	
 	@NotNull
