@@ -51,9 +51,10 @@ public class Predio implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Suscriptor suscriptor;
 
-	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, orphanRemoval = false)
+	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Factura> facturas;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

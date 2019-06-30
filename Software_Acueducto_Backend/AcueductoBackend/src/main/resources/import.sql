@@ -44,11 +44,11 @@ insert into empleados (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado
 /*INSERT PREDIOS*/
 
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('2','El rodeo',1 , 1.1, 1.2, 4,'206-97-0192')
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('2','El rodeo',1 , 1.1, 1.2, 4,'206-97-0192');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('3','Uberrimo',1 , 1.1, 1.2, 4, '206-97-0192')
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('3','Uberrimo',1 , 1.1, 1.2, 4, '206-97-0192');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('4','Ubate',1 , 1.1, 1.2, 4, '700-32-6247')
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('4','Ubate',1 , 1.1, 1.2, 4, '700-32-6247');
 
 /*INSERT ASIGNACIONES
 
@@ -60,9 +60,9 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 
 /*INSERT FACTURAS*/
 
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('2','2018-09-20')
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2018-12-20')
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2019-02-20')
+insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('2','2018-09-20');
+insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2018-12-20');
+insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2019-02-20');
 
 
 /*INSERT TARIFAS*/
@@ -75,6 +75,6 @@ insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión',
 
 /*INSERT DETALLES_FACTURA*/
 
-insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (1,1,25.4,500);
-insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (1,2,null,27.604);
-insert into DETALLES_FACTURA (factura_id, tarifa_id, consumo_actual, valor) values (2,1,25.4,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,1,1,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,2,1,27.604);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (2,1,1,500);

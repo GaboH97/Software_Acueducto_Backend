@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tarifas")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Tarifa implements Serializable{
 	
 	/**
@@ -34,7 +33,7 @@ public class Tarifa implements Serializable{
 	
 	@NotNull
 	@Column(name ="valor_tarifa")
-	private double valorTarifa;
+	private Double valorTarifa;
 	
 	@NotNull
 	@Column(unique = true)
@@ -57,11 +56,11 @@ public class Tarifa implements Serializable{
 		this.id = id;
 	}
 
-	public double getValorTarifa() {
+	public Double getValorTarifa() {
 		return valorTarifa;
 	}
 
-	public void setValorTarifa(double valorTarifa) {
+	public void setValorTarifa(Double valorTarifa) {
 		this.valorTarifa = valorTarifa;
 	}
 

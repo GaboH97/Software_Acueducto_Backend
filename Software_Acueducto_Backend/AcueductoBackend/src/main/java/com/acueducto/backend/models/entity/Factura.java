@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "facturas")
@@ -61,6 +62,7 @@ public class Factura implements Serializable {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "factura_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private List<DetalleFactura> detallesFactura;
 	
 	@NotNull
@@ -140,7 +142,7 @@ public class Factura implements Serializable {
 	 * Este campo es calculado y automáticamente se serializa como un campo al momento de consultar
 	 */
 	public Double getGranTotal() {
-		return detallesFactura.stream().mapToDouble(i -> i.getValor()).sum();
+		return detallesFactura.stream().mapToDouble(i -> i.getImporte()).sum();
 	}
 
 }

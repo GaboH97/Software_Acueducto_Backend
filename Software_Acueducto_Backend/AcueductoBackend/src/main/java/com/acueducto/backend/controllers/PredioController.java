@@ -47,7 +47,6 @@ public class PredioController {
 	}
 	
 
-
 //	@GetMapping("/predios/{vereda}/{matricula}")
 //	public @ResponseBody Predio findById(@PathVariable int vereda, @PathVariable String matricula) {
 //		System.out.println("vereda: " + vereda + " mat " + matricula);

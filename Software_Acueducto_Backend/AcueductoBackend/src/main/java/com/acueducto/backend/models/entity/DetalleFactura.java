@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "detalles_factura")
 public class DetalleFactura implements Serializable{
@@ -31,11 +33,11 @@ public class DetalleFactura implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE) // BORRAR DESPUÉS, SOLO PARA PRUEBAS
-	@JoinColumn(name="tarifa_id", referencedColumnName = "id")
+	@JoinColumn(name="tarifa_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Tarifa tarifa;
 	
-	@Column(name = "consumo_actual")
-	private Double consumoActual;
+	private Integer  cantidad;
 	
 	@NotNull
 	private Double valor;
@@ -48,12 +50,12 @@ public class DetalleFactura implements Serializable{
 		this.tarifa = tarifa;
 	}
 
-	public Double getConsumoActual() {
-		return consumoActual;
+	public Integer getCantidad() {
+		return cantidad;
 	}
 
-	public void setConsumoActual(Double consumoActual) {
-		this.consumoActual = consumoActual;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	public Double getValor() {
@@ -62,6 +64,10 @@ public class DetalleFactura implements Serializable{
 
 	public void setValor(Double valor) {
 		this.valor = valor;
-	}	
+	}
+	
+	public Double getImporte() {
+		return cantidad.doubleValue()*tarifa.getValorTarifa();
+	}
 
 }
