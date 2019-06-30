@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,6 +30,7 @@ public class Empleado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Size(min = 10, max = 10)
 	private String cedula;
 	
 	@NotNull
@@ -39,7 +41,7 @@ public class Empleado implements Serializable {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
 	

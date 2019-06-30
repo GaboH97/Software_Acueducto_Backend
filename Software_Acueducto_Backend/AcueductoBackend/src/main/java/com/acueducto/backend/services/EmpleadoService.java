@@ -34,7 +34,7 @@ public class EmpleadoService implements IEmpleadoService {
 
 	@Override
 	@Transactional
-	public void delete(String cedula) {
+	public void deleteByCedula(String cedula) {
 		empleadoDAO.deleteById(cedula);
 	}
 

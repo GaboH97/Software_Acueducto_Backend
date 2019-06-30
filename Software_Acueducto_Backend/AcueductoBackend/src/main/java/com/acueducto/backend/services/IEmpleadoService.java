@@ -13,6 +13,6 @@ public interface IEmpleadoService {
 
 	public Empleado findByCedula(String cedula);
 
-	public void delete(String cedula);
+	public void deleteByCedula(String cedula);
 	
 }
