@@ -57,7 +57,7 @@ public class Factura implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "periodo_facturado")
-	private Date periodofacturado;
+	private Date periodoFacturado;
 	
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -89,12 +89,13 @@ public class Factura implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		//Ejecuta este método justo antes de persistir el objeto
-		this.fechaEmision = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		this.fechaEmision = new Date();
 		this.fechaMaximoPago = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plusDays(15).toInstant());
 		this.estadoFactura = "PP";
 	}
 	
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -111,12 +112,12 @@ public class Factura implements Serializable {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public Date getPeriodofacturado() {
-		return periodofacturado;
+	public Date getPeriodoFacturado() {
+		return periodoFacturado;
 	}
 
-	public void setPeriodofacturado(Date periodofacturado) {
-		this.periodofacturado = periodofacturado;
+	public void setPeriodoFacturado(Date periodoFacturado) {
+		this.periodoFacturado = periodoFacturado;
 	}
 
 	public Date getFechaMaximoPago() {
@@ -151,6 +152,14 @@ public class Factura implements Serializable {
 		this.predio = predio;
 	}
 	
+	public String getEstadoFactura() {
+		return estadoFactura;
+	}
+
+	public void setEstadoFactura(String estadoFactura) {
+		this.estadoFactura = estadoFactura;
+	}
+
 	/*
 	 * Este campo es calculado y automáticamente se serializa como un campo al momento de consultar
 	 */

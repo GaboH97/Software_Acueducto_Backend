@@ -60,9 +60,9 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 
 /*INSERT FACTURAS*/
 
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('2', NOW());
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2018-12-20');
-insert into FACTURAS (predio_numero_matricula, periodo_facturado) values ('3','2019-02-20');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','2', '2018-12-01');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','3', '2018-12-01');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','3', '2018-12-01');
 
 
 /*INSERT TARIFAS*/
