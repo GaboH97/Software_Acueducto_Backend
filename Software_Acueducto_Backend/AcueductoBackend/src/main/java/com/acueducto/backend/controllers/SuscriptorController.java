@@ -61,16 +61,6 @@ public class SuscriptorController {
 		return new ResponseEntity<Suscriptor>(suscriptor, HttpStatus.OK);
 	}
 
-//	@GetMapping("/suscriptores/{cedula}/detalles")
-//	public @ResponseBody Suscriptor fetchByCedulaWithAsignacionesWithPredios(@PathVariable String cedula) {
-//		Suscriptor suscriptor =suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
-//		//System.out.println(suscriptor.getPredios().size());
-//		//suscriptor.getPredios().forEach(a->System.out.println("coso"));
-//		return suscriptorService.fetchByCedulaWithAsignacionesWithPredios(cedula);
-//	}
-
-
-
 	@PostMapping("/suscriptores")
 	public ResponseEntity<?> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
 
