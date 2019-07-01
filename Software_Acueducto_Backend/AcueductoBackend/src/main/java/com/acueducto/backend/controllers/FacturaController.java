@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acueducto.backend.models.entity.Factura;
-import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.IFacturaService;
 
 @Controller
@@ -67,7 +66,7 @@ public class FacturaController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "Factura eliminado con éxito");
+		response.put("mensaje", "Factura eliminada con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
