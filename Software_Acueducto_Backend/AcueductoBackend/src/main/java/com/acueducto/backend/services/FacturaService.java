@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.acueducto.backend.models.dao.IFacturaDAO;
 import com.acueducto.backend.models.entity.Factura;
+import com.acueducto.backend.models.entity.Predio;
 
 @Service
 public class FacturaService implements IFacturaService {
@@ -41,5 +42,10 @@ public class FacturaService implements IFacturaService {
 	@Override
 	public Factura fetchByIdWithDetalleFacturaWithTarifa(Integer id) {
 		return facturaDAO.fetchByIdWithClientWithInvoiceItemWithProduct(id);
+	}
+	
+	@Override
+	public Predio findPredioByFacturaId(Integer id) {
+		return facturaDAO.findPredioByFacturaId(id);
 	}
 }

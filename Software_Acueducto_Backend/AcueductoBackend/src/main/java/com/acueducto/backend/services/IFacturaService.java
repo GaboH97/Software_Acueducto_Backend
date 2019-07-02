@@ -3,6 +3,7 @@ package com.acueducto.backend.services;
 import java.util.List;
 
 import com.acueducto.backend.models.entity.Factura;
+import com.acueducto.backend.models.entity.Predio;
 
 public interface IFacturaService {
 	
@@ -15,5 +16,7 @@ public interface IFacturaService {
 	public void delete(Integer id);
 	
 	public Factura fetchByIdWithDetalleFacturaWithTarifa(Integer id);
+
+	public Predio findPredioByFacturaId(Integer id);
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acueducto.backend.models.entity.Factura;
+import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.services.IFacturaService;
 
 @Controller
@@ -90,5 +91,27 @@ public class FacturaController {
 	public @ResponseBody Factura fetchFacturaByIdWithDetallesFacturaWithTarifas(@PathVariable Integer id) {
 		Factura factura = facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
 		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
+	}
+	
+	@GetMapping("/facturas/{id}/info")
+	public ResponseEntity<?> getPredioByFacturaId(@PathVariable Integer id){
+		Factura factura = null;
+		try {
+			factura = facturaService.findById(id);
+		} catch (DataAccessException e) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "Error al realizar consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		if (factura == null) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("mensaje", "La factura con ID".concat(String.valueOf(id).concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		Predio predio = facturaService.findPredioByFacturaId(id);
+		return new ResponseEntity<Predio>(predio, HttpStatus.OK);
 	}
 }
