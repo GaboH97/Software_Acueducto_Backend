@@ -30,7 +30,7 @@ public class PredioService implements IPredioService{
 	}
 	
 	@Override
-	public Predio findByNumeroMatriculaWithSuscriptor(String numeroMatricula) {
+	public Predio findByNumeroMatricula(String numeroMatricula) {
 		return predioDAO.findByNumeroMatriculaWithSuscriptor(numeroMatricula).orElse(null);
 	}
 	

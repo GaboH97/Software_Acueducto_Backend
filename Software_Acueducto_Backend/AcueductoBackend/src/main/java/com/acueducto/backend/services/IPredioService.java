@@ -2,7 +2,6 @@ package com.acueducto.backend.services;
 
 import java.util.List;
 
-import com.acueducto.backend.models.entity.Lugar;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.PredioID;
 
@@ -18,7 +17,7 @@ public interface IPredioService {
 
 	void delete(String numeroMatricula);
 
-	public Predio findByNumeroMatriculaWithSuscriptor(String numeroMatricula);
+	public Predio findByNumeroMatricula(String numeroMatricula);
 
 	public List<Predio> findByNombre(String nombre);
 	

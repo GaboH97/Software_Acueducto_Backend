@@ -49,7 +49,7 @@ public class LugaresController {
 
 		if (lugar == null) {
 			Map<String, Object> response = new HashMap<String, Object>();
-			response.put("mensaje", "El cliente con cédula ".concat(String.valueOf(id).concat(" no se encontró")));
+			response.put("mensaje", "El Lugar con ID ".concat(String.valueOf(id).concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		System.out.println("aqui si");
@@ -83,23 +83,35 @@ public class LugaresController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "Cliente creado con éxito");
+		response.put("mensaje", "Municipio creado con éxito");
 		response.put("lugar", lugar);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/lugares/{idMunicipio}")
-	public ResponseEntity<Lugar> createLugarVereda(@Valid @RequestBody Lugar lugar, @PathVariable int idMunicipio) {
+	public ResponseEntity<?> createLugarVereda(@Valid @RequestBody Lugar lugar, @PathVariable int idMunicipio) {
+		Map<String, Object> response = new HashMap<String, Object>();
+
 		Lugar municipio = lugarService.findById(idMunicipio);
 		lugar.setUbicado(municipio);
-		System.out.println("Municipio es " + municipio.getNombre());
-		lugarService.save(lugar);
-		return new ResponseEntity<Lugar>(lugar, HttpStatus.CREATED);
+		
+		try {
+			lugarService.save(lugar);
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje", "Vereda creada con éxito");
+		response.put("lugar", lugar);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		
 	}
 
 	@GetMapping("/lugares/tipo/{tipo}")
 	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo) {
-		System.out.println("AAAAA");
 		return lugarService.findByTipo(tipo);
 	}
 }

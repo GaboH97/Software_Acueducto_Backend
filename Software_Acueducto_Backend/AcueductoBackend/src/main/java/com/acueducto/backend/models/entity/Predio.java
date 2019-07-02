@@ -51,7 +51,7 @@ public class Predio implements Serializable {
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Suscriptor suscriptor;
 
-	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY)
 	private List<Factura> facturas;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -74,6 +74,10 @@ public class Predio implements Serializable {
 	public String getNombre() {
 		return nombre;
 	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public void setDireccion(String nombre) {
 		this.nombre = nombre;
@@ -82,8 +86,9 @@ public class Predio implements Serializable {
 	public Integer getEstrato() {
 		return estrato;
 	}
+	
 
-	public void setEstrato(Integer integer) {
+	public void setEstrato(Integer estrato) {
 		this.estrato = estrato;
 	}
 
@@ -134,4 +139,6 @@ public class Predio implements Serializable {
 	public Lugar getVereda() {
 		return vereda;
 	}
+	
+	
 }
