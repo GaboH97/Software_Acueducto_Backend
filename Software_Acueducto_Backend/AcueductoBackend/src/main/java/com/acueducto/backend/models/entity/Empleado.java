@@ -62,6 +62,9 @@ public class Empleado implements Serializable {
 	@NotNull
 	@Column(name = "direccion_residencia")
 	private String direccionResidencia;
+	
+	
+	private String foto;
 		
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -147,6 +150,14 @@ public class Empleado implements Serializable {
 	
 	public void setLugarResidencia(Lugar lugarResidencia) {
 		this.lugarResidencia = lugarResidencia;
+	}
+	
+	public String getFoto() {
+		return foto;
+	}
+	
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 }

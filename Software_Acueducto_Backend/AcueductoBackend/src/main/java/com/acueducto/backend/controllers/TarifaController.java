@@ -67,7 +67,6 @@ public class TarifaController {
 		try {
 			tarifaService.delete(id);
 		} catch (DataAccessException e) {
-			System.out.println("aqui se jodio");
 			response.put("mensaje", "Error al eliminar tarifa de la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -117,6 +116,7 @@ public class TarifaController {
 			
 			// Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo
 			// registro
+			
 			tarifaService.save(tarifa);
 		} catch (DataAccessException e) {
 

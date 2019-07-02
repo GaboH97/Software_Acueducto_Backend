@@ -1,13 +1,24 @@
 package com.acueducto.backend.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.hibernate.result.NoMoreReturnsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +30,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.acueducto.backend.models.entity.Empleado;
 import com.acueducto.backend.models.entity.Suscriptor;
@@ -48,6 +61,15 @@ public class EmpleadoController {
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		try {
+			Empleado empleado = empleadoService.findByCedula(cedula);
+			String nombreFotoAnterior = empleado.getFoto();
+			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+					archivoFotoAnterior.delete();
+				}
+			}
 			empleadoService.deleteByCedula(cedula);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar empleado de la base de datos");
@@ -91,6 +113,7 @@ public class EmpleadoController {
 		}
 
 		try {
+
 			empleadoService.save(empleado);
 		} catch (DataAccessException e) {
 
@@ -103,5 +126,63 @@ public class EmpleadoController {
 		response.put("empleado", empleado);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+
+	@PostMapping("empleados/cargarFoto")
+	public ResponseEntity<?> uploadPhoto(@RequestParam("foto") MultipartFile foto,
+			@RequestParam("cedula") String cedula) {
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		Empleado empleado = empleadoService.findByCedula(cedula);
+
+		if (!foto.isEmpty()) {
+			String nombreArchivo = UUID.randomUUID().toString().concat("_")
+					.concat(foto.getOriginalFilename().replaceAll(" ", "_"));
+			Path path = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+			try {
+				Files.copy(foto.getInputStream(), path);
+			} catch (IOException e) {
+				response.put("mensaje", "Error al subir la imagen del empleado");
+				response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
+
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			String nombreFotoAnterior = empleado.getFoto();
+			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+					archivoFotoAnterior.delete();
+				}
+			}
+			empleado.setFoto(nombreArchivo);
+			empleadoService.save(empleado);
+			response.put("empleado", empleado);
+			response.put("mensaje", "Se ha subido correctamente la foto");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
+
+		Path path = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+		Resource resource = null;
+
+		try {
+			resource = new UrlResource(path.toUri());
+		} catch (MalformedURLException e) {
+
+		}
+
+		if (!resource.exists() && resource.isReadable()) {
+			throw new RuntimeException("Error, no se pudo cargar la imagen".concat(nombreFoto));
+		}
+
+		HttpHeaders header = new HttpHeaders();
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
 }

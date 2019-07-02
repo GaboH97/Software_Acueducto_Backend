@@ -2,7 +2,6 @@ package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,9 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,12 +28,11 @@ public class DetalleFactura implements Serializable{
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE) // BORRAR DESPUÉS, SOLO PARA PRUEBAS
 	@JoinColumn(name="tarifa_id")
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Tarifa tarifa;
 	
-	private Integer cantidad;
+	private Double cantidad;
 	
 	@NotNull
 	private Double valor;
@@ -50,11 +45,11 @@ public class DetalleFactura implements Serializable{
 		this.tarifa = tarifa;
 	}
 
-	public Integer getCantidad() {
+	public Double getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 

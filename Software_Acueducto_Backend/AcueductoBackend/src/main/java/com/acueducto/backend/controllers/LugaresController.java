@@ -107,7 +107,6 @@ public class LugaresController {
 		response.put("mensaje", "Vereda creada con éxito");
 		response.put("lugar", lugar);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-		
 	}
 
 	@GetMapping("/lugares/tipo/{tipo}")
