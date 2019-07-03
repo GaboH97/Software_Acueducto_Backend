@@ -16,7 +16,7 @@ public interface IFacturaDAO extends CrudRepository<Factura, Integer>{
 	@Query("select p from Predio p join p.facturas f where f.id=?1")
 	public Predio findPredioByFacturaId(int id);
 
-	@Query("select f from Factura f join f.predio p where p.numeroMatricula=?1")
+	@Query("select f from Factura f where f.predio.numeroMatricula=?1")
 	public List<Factura> fetchFacturasByNumeroMatriculaPredio(String numeroMatricula);
 	
 }

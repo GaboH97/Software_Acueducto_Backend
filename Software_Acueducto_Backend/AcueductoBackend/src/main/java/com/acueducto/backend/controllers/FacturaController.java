@@ -117,7 +117,7 @@ public class FacturaController {
 	
 	
 	@GetMapping("facturas/predios/{numeroMatricula}")
-	public @ResponseBody List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula){
+	public @ResponseBody List<Factura> getFacturasByNumeroMatriculaPredio(@PathVariable String numeroMatricula){
 		return facturaService.getFacturasByNumeroMatriculaPredio(numeroMatricula);
 	}
 }
