@@ -165,7 +165,7 @@ public class EmpleadoController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	@GetMapping("/empleados/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
 
 		Path path = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
@@ -176,7 +176,6 @@ public class EmpleadoController {
 		} catch (MalformedURLException e) {
 
 		}
-
 		if (!resource.exists() && resource.isReadable()) {
 			throw new RuntimeException("Error, no se pudo cargar la imagen".concat(nombreFoto));
 		}
@@ -185,4 +184,8 @@ public class EmpleadoController {
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
+	
+	
+	
+	
 }

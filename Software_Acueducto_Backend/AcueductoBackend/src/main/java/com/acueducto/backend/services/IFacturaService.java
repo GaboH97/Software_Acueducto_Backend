@@ -19,4 +19,6 @@ public interface IFacturaService {
 
 	public Predio findPredioByFacturaId(Integer id);
 
+	public List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula);
+
 }

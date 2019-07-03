@@ -79,7 +79,7 @@ public class Factura implements Serializable {
 	
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonIgnoreProperties({"facturas","hibernateLazyInitializer","handler"})
 	private Predio predio;
 	
 	public Factura() {

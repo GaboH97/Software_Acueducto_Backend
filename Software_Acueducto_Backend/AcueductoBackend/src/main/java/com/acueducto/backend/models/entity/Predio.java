@@ -52,6 +52,7 @@ public class Predio implements Serializable {
 	private Suscriptor suscriptor;
 
 	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("predio")
 	private List<Factura> facturas;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

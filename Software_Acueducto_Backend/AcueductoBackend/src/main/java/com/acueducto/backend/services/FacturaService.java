@@ -48,4 +48,9 @@ public class FacturaService implements IFacturaService {
 	public Predio findPredioByFacturaId(Integer id) {
 		return facturaDAO.findPredioByFacturaId(id);
 	}
+
+	@Override
+	public List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula) {
+		return facturaDAO.fetchFacturasByNumeroMatriculaPredio(numeroMatricula);
+	}
 }

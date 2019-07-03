@@ -8,7 +8,7 @@ DROP EVENT actualizar_facturas_ev;
 
 CREATE EVENT IF NOT EXISTS actualizar_facturas_ev
 ON SCHEDULE EVERY 1 DAY 
-STARTS current_date()
+STARTS current_timestamp() + INTERVAL 50 SECOND
 COMMENT 'Actualizar estado de facturas'
 DO
 CALL actualizar_facturas_proc()

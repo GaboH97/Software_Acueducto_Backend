@@ -114,4 +114,10 @@ public class FacturaController {
 		Predio predio = facturaService.findPredioByFacturaId(id);
 		return new ResponseEntity<Predio>(predio, HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("facturas/predios/{numeroMatricula}")
+	public @ResponseBody List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula){
+		return facturaService.getFacturasByNumeroMatriculaPredio(numeroMatricula);
+	}
 }
