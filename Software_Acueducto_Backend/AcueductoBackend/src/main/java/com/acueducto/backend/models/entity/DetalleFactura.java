@@ -36,6 +36,15 @@ public class DetalleFactura implements Serializable{
 	
 	@NotNull
 	private Double valor;
+	
+	public DetalleFactura() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public DetalleFactura(Tarifa tarifa) {
+		this.tarifa = tarifa;
+		this.valor = tarifa.getValorTarifa();
+	}
 
 	public Tarifa getTarifa() {
 		return tarifa;

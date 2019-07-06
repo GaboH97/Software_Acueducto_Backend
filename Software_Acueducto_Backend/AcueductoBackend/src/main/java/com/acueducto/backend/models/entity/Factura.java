@@ -86,6 +86,7 @@ public class Factura implements Serializable {
 		this.detallesFactura= new ArrayList<DetalleFactura>();
 	}
 	
+	
 	@PrePersist
 	public void prePersist() {
 		//Ejecuta este método justo antes de persistir el objeto

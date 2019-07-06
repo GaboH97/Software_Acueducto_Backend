@@ -11,6 +11,8 @@ import com.acueducto.backend.models.entity.Predio;
 public interface IPredioDAO extends CrudRepository<Predio,String>{
 	
 	
+	public Predio findByNumeroMatricula(String numeroMatricula);
+	
 	public List<Predio> findByNombreIgnoreCaseContaining(String nombre);
 	
 	@Query("select p from Predio p join fetch p.suscriptor s")

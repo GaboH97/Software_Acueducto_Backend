@@ -8,4 +8,6 @@ import com.acueducto.backend.models.entity.Tarifa;
 public interface ITarifaDAO extends CrudRepository<Tarifa, Integer>{
 
 	public List<Tarifa> findByDescripcionIgnoreCaseContaining(String descripcion);
+	
+	public Tarifa findByDescripcion(String descripción);
 }

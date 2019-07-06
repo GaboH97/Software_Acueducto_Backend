@@ -1,5 +1,6 @@
 package com.acueducto.backend.services;
 
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface IFacturaService {
 	public List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula);
 
 	public List<Factura> getFacturasByPeriodoFacturado(Date periodoFacturado);
+
+	public void generarFacturas(Path path);
 
 }
