@@ -39,34 +39,30 @@ public class Suscriptor implements Serializable {
 	@Id
 	@Size(min = 10, max = 10)
 	private String cedula;
-		
+
 	@Column(nullable = false)
 	private String nombre;
-	
-	
+
 	private String apellido;
-	
-	
+
 	private String estado;
 
-	
 	@Column(name = "estado_cuenta")
 	private String estadoCuenta;
 
-	
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Column(name="fecha_nacimiento")
+	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
-	
+
 	private String genero;
-	
-	@Column(name="numero_telefono")
+
+	@Column(name = "numero_telefono")
 	private String numeroTelefono;
-	
-	@Column(name="correo_electronico")
+
+	@Column(name = "correo_electronico")
 	private String correoElectronico;
-	
+
 //	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 //	@JsonManagedReference
 //	private List<Predio> predios;
@@ -74,19 +70,17 @@ public class Suscriptor implements Serializable {
 //	@OneToMany(mappedBy="suscriptor",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 //	@JsonIgnore
 //	private List<Factura> facturas;
-	
-	
+
 	public Suscriptor() {
 //		predios = new ArrayList<Predio>();
 //		facturas = new ArrayList<Factura>();
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.estado = "A";
-		this.estadoCuenta= "D";
+		this.estadoCuenta = "D";
 	}
-	
 
 	public String getCedula() {
 		return cedula;
@@ -159,7 +153,35 @@ public class Suscriptor implements Serializable {
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
-	
+
+	public String formatEstado() {
+
+		String formattedEstado = "";
+		switch (this.estado) {
+		case "A":
+			formattedEstado = "Activo";
+			break;
+		case "I":
+			formattedEstado = "Inactivo";
+			break;
+		}
+		return formattedEstado;
+	}
+
+	public String formatEstadoCuenta() {
+
+		String formattedEstadoCuenta = "";
+		switch (this.estadoCuenta) {
+		case "D":
+			formattedEstadoCuenta = "Al Día";
+			break;
+		case "M":
+			formattedEstadoCuenta = "En Mora";
+			break;
+		}
+		return formattedEstadoCuenta;
+	}
+
 //	public List<Predio> getPredios() {
 //		return predios;
 //	}
@@ -167,5 +189,5 @@ public class Suscriptor implements Serializable {
 //	public List<Factura> getFacturas() {
 //		return facturas;
 //	}
-	
+
 }

@@ -1,5 +1,7 @@
 package com.acueducto.backend.controllers;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +9,12 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,6 +32,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
+
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 @Controller
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -70,7 +84,7 @@ public class SuscriptorController {
 		if (suscriptorAux != null) {
 			response.put("mensaje", "Ya existe un suscritor con dicha cédula");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}else {
+		} else {
 			try {
 				suscriptorService.save(suscriptor);
 			} catch (DataAccessException e) {
@@ -83,7 +97,7 @@ public class SuscriptorController {
 			response.put("suscriptor", suscriptor);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
-		
+
 	}
 
 	@PutMapping("/suscriptores/{cedula}")
@@ -132,7 +146,31 @@ public class SuscriptorController {
 
 	@GetMapping("/suscriptores/{cedula}/predios")
 	public @ResponseBody List<Predio> getPrediosBySuscriptor(@PathVariable String cedula) {
-		System.out.println("ESTA ES LA CÉDULA "+cedula);
+		System.out.println("ESTA ES LA CÉDULA " + cedula);
 		return suscriptorService.getPrediosBySuscriptor(cedula);
 	}
+
+	@GetMapping(value = "/suscriptores/reporte", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<ByteArrayResource> generarReporte() {
+		Path path = Paths.get("Blank_A4.jrxml").toAbsolutePath();
+		try {
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(suscriptorService.report());
+			;
+			JasperReport report = JasperCompileManager.compileReport(path.toString());
+			JasperPrint print = JasperFillManager.fillReport(report, null, dataSource);
+
+			byte[] pdfAsByteArray = JasperExportManager.exportReportToPdf(print);
+
+			ByteArrayResource bar = new ByteArrayResource(pdfAsByteArray);
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte.pdf")
+					.contentType(MediaType.APPLICATION_PDF) //
+					.body(bar);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

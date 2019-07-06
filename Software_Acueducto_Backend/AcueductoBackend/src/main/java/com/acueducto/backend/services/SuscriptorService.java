@@ -1,7 +1,9 @@
 package com.acueducto.backend.services;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,22 @@ public class SuscriptorService implements ISuscriptorService{
 	@Override
 	public List<Predio> getPrediosBySuscriptor(String cedula) {
 		return suscriptorDAO.getPrediosBySuscriptor(cedula);
+	}
+	
+	@Override
+	public List<Map<String, Object>> report() {
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+		for (Suscriptor suscriptor : findAll()) {
+			Map<String, Object> item = new HashMap<String, Object>();
+			item.put("cedula", suscriptor.getCedula());
+			item.put("nombre", suscriptor.getNombre());
+			item.put("apellido", suscriptor.getApellido());
+			item.put("estado", suscriptor.formatEstado());
+			System.out.println(suscriptor.formatEstadoCuenta());
+			item.put("estadoCuenta", suscriptor.formatEstadoCuenta());
+			result.add(item);
+		}
+		return result;
 	}
 	
 }
