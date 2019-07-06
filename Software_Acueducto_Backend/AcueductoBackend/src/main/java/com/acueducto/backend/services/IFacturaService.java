@@ -1,5 +1,6 @@
 package com.acueducto.backend.services;
 
+import java.util.Date;
 import java.util.List;
 
 import com.acueducto.backend.models.entity.Factura;
@@ -20,5 +21,7 @@ public interface IFacturaService {
 	public Predio findPredioByFacturaId(Integer id);
 
 	public List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula);
+
+	public List<Factura> getFacturasByPeriodoFacturado(Date periodoFacturado);
 
 }

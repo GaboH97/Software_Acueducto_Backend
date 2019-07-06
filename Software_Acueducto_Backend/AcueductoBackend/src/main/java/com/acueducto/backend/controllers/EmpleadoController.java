@@ -85,12 +85,11 @@ public class EmpleadoController {
 	@PostMapping("/empleados")
 	public ResponseEntity<?> createEmpleado(@Valid @RequestBody Empleado empleado, BindingResult result) {
 		Map<String, Object> response = new HashMap<String, Object>();
+		
 		try {
-			System.out.println("perra");
 			empleadoService.save(empleado);
 		} catch (DataAccessException e) {
-
-			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("mensaje", "Ya existe un usuario con el nombre '"+empleado.getUsuario()+"'");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -184,8 +183,5 @@ public class EmpleadoController {
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
-	
-	
-	
-	
+
 }

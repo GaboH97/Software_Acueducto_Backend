@@ -1,5 +1,6 @@
 package com.acueducto.backend.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class FacturaService implements IFacturaService {
 	@Override
 	public List<Factura> getFacturasByNumeroMatriculaPredio(String numeroMatricula) {
 		return facturaDAO.fetchFacturasByNumeroMatriculaPredio(numeroMatricula);
+	}
+
+	@Override
+	public List<Factura> getFacturasByPeriodoFacturado(Date periodoFacturado) {
+		return facturaDAO.fetchByPeriodoFacturado(periodoFacturado);
 	}
 }

@@ -1,5 +1,6 @@
 package com.acueducto.backend.models.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,8 @@ public interface IFacturaDAO extends CrudRepository<Factura, Integer>{
 
 	@Query("select f from Factura f where f.predio.numeroMatricula=?1")
 	public List<Factura> fetchFacturasByNumeroMatriculaPredio(String numeroMatricula);
+
+	@Query("select f from Factura f where f.periodoFacturado=?1")
+	public List<Factura> fetchByPeriodoFacturado(Date periodoFacturado);
 	
 }

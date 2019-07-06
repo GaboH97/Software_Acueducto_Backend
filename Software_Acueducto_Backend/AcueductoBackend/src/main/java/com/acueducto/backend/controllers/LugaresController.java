@@ -52,7 +52,6 @@ public class LugaresController {
 			response.put("mensaje", "El Lugar con ID ".concat(String.valueOf(id).concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		System.out.println("aqui si");
 		return new ResponseEntity<Lugar>(lugar, HttpStatus.OK);
 	}
 

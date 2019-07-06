@@ -45,7 +45,6 @@ public class SuscriptorController {
 		try {
 			suscriptor = suscriptorService.findByCedula(cedula);
 		} catch (DataAccessException e) {
-			System.out.println("aqui enton");
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("mensaje", "Error al realizar consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -65,31 +64,40 @@ public class SuscriptorController {
 	public ResponseEntity<?> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
 
 		Map<String, Object> response = new HashMap<String, Object>();
-		try {
-			suscriptorService.save(suscriptor);
-		} catch (DataAccessException e) {
 
-			response.put("mensaje", "Error al hacer registro en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		Suscriptor suscriptorAux = suscriptorService.findByCedula(suscriptor.getCedula());
+
+		if (suscriptorAux != null) {
+			response.put("mensaje", "Ya existe un suscritor con dicha cédula");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}else {
+			try {
+				suscriptorService.save(suscriptor);
+			} catch (DataAccessException e) {
+
+				response.put("mensaje", "Error al hacer registro en la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			response.put("mensaje", "Cliente creado con éxito");
+			response.put("suscriptor", suscriptor);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
-		response.put("mensaje", "Cliente creado con éxito");
-		response.put("suscriptor", suscriptor);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		
 	}
 
 	@PutMapping("/suscriptores/{cedula}")
 	public ResponseEntity<?> updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, @PathVariable String cedula,
 			BindingResult result) {
-		
+
 		Map<String, Object> response = new HashMap<String, Object>();
 		Suscriptor suscriptoraux = suscriptorService.findByCedula(cedula);
-		
+
 		if (suscriptoraux == null) {
 			response.put("mensaje", "El cliente con cédula ".concat(cedula.concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		
+
 		try {
 			suscriptorService.save(suscriptor);
 		} catch (DataAccessException e) {
@@ -98,32 +106,33 @@ public class SuscriptorController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		response.put("mensaje", "Suscriptor actualizado con éxito");
 		response.put("suscriptor", suscriptor);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+
 	@DeleteMapping("/suscriptores/{cedula}")
 	public ResponseEntity<?> deleteSuscriptor(@PathVariable String cedula) {
-		
+
 		Map<String, Object> response = new HashMap<String, Object>();
-		
+
 		try {
 			suscriptorService.deleteByCedula(cedula);
-		}catch(DataAccessException e) {
+		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar suscriptor de la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		response.put("mensaje", "Suscriptor eliminado con éxito");
-		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/suscriptores/{cedula}/predios")
-	public @ResponseBody List<Predio> getPrediosBySuscriptor(@PathVariable String cedula){
+	public @ResponseBody List<Predio> getPrediosBySuscriptor(@PathVariable String cedula) {
+		System.out.println("ESTA ES LA CÉDULA "+cedula);
 		return suscriptorService.getPrediosBySuscriptor(cedula);
 	}
 }
