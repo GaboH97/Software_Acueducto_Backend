@@ -93,6 +93,7 @@ public class Factura implements Serializable {
 		this.fechaEmision = new Date();
 		this.periodoFacturado = new Date();
 		this.fechaMaximoPago = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plusDays(15).toInstant());
+		//Deja el estado de la factura "Por pagar"
 		this.estadoFactura = "PP";
 	}
 	
