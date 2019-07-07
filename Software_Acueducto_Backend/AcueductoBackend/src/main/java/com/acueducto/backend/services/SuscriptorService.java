@@ -56,7 +56,6 @@ public class SuscriptorService implements ISuscriptorService{
 			item.put("nombre", suscriptor.getNombre());
 			item.put("apellido", suscriptor.getApellido());
 			item.put("estado", suscriptor.formatEstado());
-			System.out.println(suscriptor.formatEstadoCuenta());
 			item.put("estadoCuenta", suscriptor.formatEstadoCuenta());
 			result.add(item);
 		}
