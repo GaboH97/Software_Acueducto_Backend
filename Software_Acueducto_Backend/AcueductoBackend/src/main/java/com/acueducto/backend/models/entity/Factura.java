@@ -91,6 +91,7 @@ public class Factura implements Serializable {
 	public void prePersist() {
 		//Ejecuta este método justo antes de persistir el objeto
 		this.fechaEmision = new Date();
+		this.periodoFacturado = new Date();
 		this.fechaMaximoPago = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).plusDays(15).toInstant());
 		this.estadoFactura = "PP";
 	}
