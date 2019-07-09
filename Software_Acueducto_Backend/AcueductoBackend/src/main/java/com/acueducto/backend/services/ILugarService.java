@@ -11,6 +11,8 @@ public interface ILugarService {
 	public void save(Lugar lugar);
 
 	public Lugar findById(int id);
+	
+	public Lugar findByNombre(String nombre);
 
 	public void delete(int id);
 	

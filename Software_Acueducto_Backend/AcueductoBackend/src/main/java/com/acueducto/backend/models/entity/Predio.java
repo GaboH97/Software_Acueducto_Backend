@@ -33,7 +33,7 @@ public class Predio implements Serializable {
 	private String numeroMatricula;
 
 	@ManyToOne
-	@JoinColumn(name="lugar_id")
+	@JoinColumn(name = "lugar_id")
 	private Lugar vereda;
 
 	@NotNull
@@ -48,7 +48,7 @@ public class Predio implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
-	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Suscriptor suscriptor;
 
 	@OneToMany(mappedBy = "predio", fetch = FetchType.LAZY)
@@ -75,7 +75,7 @@ public class Predio implements Serializable {
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -87,7 +87,6 @@ public class Predio implements Serializable {
 	public Integer getEstrato() {
 		return estrato;
 	}
-	
 
 	public void setEstrato(Integer estrato) {
 		this.estrato = estrato;
@@ -132,14 +131,17 @@ public class Predio implements Serializable {
 	public void setHistorialPredio(List<HistorialPredio> historialPredio) {
 		this.historialPredio = historialPredio;
 	}
-	
+
 	public void setVereda(Lugar vereda) {
 		this.vereda = vereda;
 	}
-	
+
 	public Lugar getVereda() {
 		return vereda;
 	}
-	
-	
+
+	public String getEstadoPredio() {
+		return facturas.stream().allMatch(f -> !f.getEstadoFactura().equals("VE")) ? "D" : "M";
+	}
+
 }

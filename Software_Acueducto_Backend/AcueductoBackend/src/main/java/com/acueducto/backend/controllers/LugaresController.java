@@ -74,17 +74,25 @@ public class LugaresController {
 	@PostMapping("/lugares")
 	public ResponseEntity<?> createLugarMunicipio(@Valid @RequestBody Lugar lugar) {
 		Map<String, Object> response = new HashMap<String, Object>();
-		try {
-			lugarService.save(lugar);
-		} catch (DataAccessException e) {
+		Lugar lugaraux = lugarService.findByNombre(lugar.getNombre());
 
-			response.put("mensaje", "Error al hacer registro en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		if (lugaraux != null) {
+			response.put("mensaje", "Ya existe el lugar '" + lugar.getNombre() + "'");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+
+			try {
+				lugarService.save(lugar);
+			} catch (DataAccessException e) {
+
+				response.put("mensaje", "Error al hacer registro en la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			response.put("mensaje", "Municipio creado con éxito");
+			response.put("lugar", lugar);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
-		response.put("mensaje", "Municipio creado con éxito");
-		response.put("lugar", lugar);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/lugares/{idMunicipio}")
@@ -93,7 +101,7 @@ public class LugaresController {
 
 		Lugar municipio = lugarService.findById(idMunicipio);
 		lugar.setUbicado(municipio);
-		
+
 		try {
 			lugarService.save(lugar);
 		} catch (DataAccessException e) {
@@ -102,7 +110,7 @@ public class LugaresController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		response.put("mensaje", "Vereda creada con éxito");
 		response.put("lugar", lugar);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);

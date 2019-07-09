@@ -79,17 +79,26 @@ public class TarifaController {
 	@PostMapping("/tarifas")
 	public ResponseEntity<?> createTarifa(@Valid @RequestBody Tarifa tarifa) {
 		Map<String, Object> response = new HashMap<String, Object>();
-		try {
-			tarifaService.save(tarifa);
-		} catch (DataAccessException e) {
 
-			response.put("mensaje", "Error al hacer registro en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		Tarifa tarifaux = tarifaService.findByDescripcionIgnoreCase(tarifa.getDescripcion());
+
+		if (tarifaux != null) {
+			response.put("mensaje", "Ya existe la tarifa '" + tarifa.getDescripcion() + "'");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+
+			try {
+				tarifaService.save(tarifa);
+			} catch (DataAccessException e) {
+
+				response.put("mensaje", "Error al hacer registro en la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			response.put("mensaje", "Tarifa creada con éxito");
+			response.put("tarifa", tarifa);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
-		response.put("mensaje", "Tarifa creada con éxito");
-		response.put("tarifa", tarifa);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/tarifas/{id}")
@@ -113,10 +122,10 @@ public class TarifaController {
 			nuevaHistorialTarifa.setValorTarifa(tarifa.getValorTarifa());
 
 			tarifa.getHistorialTarifa().add(nuevaHistorialTarifa);
-			
+
 			// Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo
 			// registro
-			
+
 			tarifaService.save(tarifa);
 		} catch (DataAccessException e) {
 
@@ -130,11 +139,10 @@ public class TarifaController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/tarifas/search/{descripcion}")
-	public @ResponseBody List<Tarifa> obtenerTarifasPorDescripcion(@PathVariable String descripcion){
+	public @ResponseBody List<Tarifa> obtenerTarifasPorDescripcion(@PathVariable String descripcion) {
 		return tarifaService.findByDescripcion(descripcion);
 	}
-	
-	
+
 }

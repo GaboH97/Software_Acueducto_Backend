@@ -16,4 +16,6 @@ public interface ITarifaService {
 
 	public List<Tarifa> findByDescripcion(String descripcion);
 	
+	public Tarifa findByDescripcionIgnoreCase (String descripcion);
+	
 }

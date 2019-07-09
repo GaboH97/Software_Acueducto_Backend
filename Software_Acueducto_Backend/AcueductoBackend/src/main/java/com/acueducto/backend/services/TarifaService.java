@@ -45,4 +45,9 @@ public class TarifaService implements ITarifaService {
 		return tarifaDAO.findByDescripcionIgnoreCaseContaining(descripcion);
 	}
 
+	@Override
+	public Tarifa findByDescripcionIgnoreCase(String descripcion) {
+		return tarifaDAO.findByDescripcionIgnoreCase(descripcion);
+	}
+
 }

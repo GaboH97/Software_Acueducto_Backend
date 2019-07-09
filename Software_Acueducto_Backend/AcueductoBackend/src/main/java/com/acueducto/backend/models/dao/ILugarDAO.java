@@ -9,4 +9,6 @@ import com.acueducto.backend.models.entity.Lugar;
 public interface ILugarDAO extends CrudRepository<Lugar, Integer>{
 
 	public List<Lugar> findByTipo(String tipo);
+	
+	public Lugar findByNombreIgnoreCase(String nombre);
 }

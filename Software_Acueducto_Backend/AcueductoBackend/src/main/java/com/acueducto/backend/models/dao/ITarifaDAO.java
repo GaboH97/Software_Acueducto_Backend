@@ -9,5 +9,7 @@ public interface ITarifaDAO extends CrudRepository<Tarifa, Integer>{
 
 	public List<Tarifa> findByDescripcionIgnoreCaseContaining(String descripcion);
 	
-	public Tarifa findByDescripcion(String descripción);
+	public Tarifa findByDescripcion(String descripcion);
+
+	public Tarifa findByDescripcionIgnoreCase(String descripcion);
 }

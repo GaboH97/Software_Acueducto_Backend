@@ -43,4 +43,9 @@ public class LugarService implements ILugarService {
 		return lugarDAO.findByTipo(tipo);
 	}
 
+	@Override
+	public Lugar findByNombre(String nombre) {
+		return lugarDAO.findByNombreIgnoreCase(nombre);
+	}
+
 }
