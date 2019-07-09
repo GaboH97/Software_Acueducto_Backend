@@ -1,5 +1,8 @@
 package com.acueducto.backend.controllers;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acueducto.backend.models.entity.HistorialPredio;
+import com.acueducto.backend.models.entity.HistorialTarifa;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.IPredioService;
@@ -120,6 +124,24 @@ public class PredioController {
 		}
 
 		try {
+
+			HistorialPredio anteriorHistorialTarifa = predio.getHistorialPredio().isEmpty() ? new HistorialPredio()
+					: predio.getHistorialPredio().get(predio.getHistorialPredio().size() - 1);
+
+			anteriorHistorialTarifa.setFechaFinal(
+					Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+			HistorialPredio nuevaHistorialPredio = new HistorialPredio();
+
+			Suscriptor suscriptor = predio.getSuscriptor();
+
+			nuevaHistorialPredio.setSuscriptor(suscriptor);
+
+			predio.getHistorialPredio().add(nuevaHistorialPredio);
+
+			// Si hay historiales de tarifa, obtiene el último, si no, crea un nuevo
+			// registro
+
 			predioService.save(predio);
 		} catch (DataAccessException e) {
 

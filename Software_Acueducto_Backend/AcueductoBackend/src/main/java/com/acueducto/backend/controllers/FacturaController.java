@@ -18,6 +18,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -36,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.acueducto.backend.exceptions.PredioNotFoundException;
 import com.acueducto.backend.models.entity.Empleado;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
@@ -144,7 +147,7 @@ public class FacturaController {
 		return facturaService.getFacturasByPeriodoFacturado(periodoFacturado);
 	}
 
-	@PostMapping("facturas/cargarArchivo")
+	@PostMapping("facturas/generarFacturas")
 	public ResponseEntity<?> uploadArchivo(@RequestParam("archivo") MultipartFile archivoExcel) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
@@ -162,13 +165,22 @@ public class FacturaController {
 			} else if (originalFileName.endsWith(".xls")) {
 				path = Paths.get("uploads").resolve(fileName.concat(".xlsx")).toAbsolutePath();
 			}
-
+			
+			int numeroFacturas = 0;
 			try {
+				
 				Files.copy(archivoExcel.getInputStream(), path);
-				facturaService.generarFacturas(path);
-			} catch (IOException e) {
+				numeroFacturas = facturaService.generarFacturas(path, numeroFacturas);
+				response.put("mensaje", numeroFacturas+" facturas creadas");
+				
+			}catch (EncryptedDocumentException | InvalidFormatException | IOException e ) {
+
 				response.put("mensaje", "Error al subir el archivo para facturación");
 				response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (PredioNotFoundException e) {
+				response.put("mensaje", e.getMessage());
+				response.put("numeroFacturas", numeroFacturas +" facturas creadas creadas");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
@@ -177,37 +189,7 @@ public class FacturaController {
 		} else {
 			response.put("error", "El archivo está vacío");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-
 		}
-
-//		if (!foto.isEmpty()) {
-//			String nombreArchivo = UUID.randomUUID().toString().concat("_")
-//					.concat(foto.getOriginalFilename().replaceAll(" ", "_"));
-//			Path path = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-//			try {
-//				Files.copy(foto.getInputStream(), path);
-//			} catch (IOException e) {
-//				response.put("mensaje", "Error al subir la imagen del empleado");
-//				response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
-//
-//				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//
-//			String nombreFotoAnterior = empleado.getFoto();
-//			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-//				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-//				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-//				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-//					archivoFotoAnterior.delete();
-//				}
-//			}
-//			empleado.setFoto(nombreArchivo);
-//			empleadoService.save(empleado);
-//			response.put("empleado", empleado);
-//			response.put("mensaje", "Se ha subido correctamente la foto");
-//		}
-//
-//		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/facturas/uploads/{nombreArchivo:.+}")

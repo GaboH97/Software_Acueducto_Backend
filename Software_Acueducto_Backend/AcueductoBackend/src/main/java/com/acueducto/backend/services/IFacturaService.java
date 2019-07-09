@@ -1,9 +1,14 @@
 package com.acueducto.backend.services;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
+import com.acueducto.backend.exceptions.PredioNotFoundException;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
 
@@ -25,6 +30,6 @@ public interface IFacturaService {
 
 	public List<Factura> getFacturasByPeriodoFacturado(Date periodoFacturado);
 
-	public void generarFacturas(Path path);
+	public int generarFacturas(Path path, int numeroFacturasCreadas) throws EncryptedDocumentException, InvalidFormatException, IOException, PredioNotFoundException;
 
 }

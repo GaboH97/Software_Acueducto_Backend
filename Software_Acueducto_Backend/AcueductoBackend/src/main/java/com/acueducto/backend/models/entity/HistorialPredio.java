@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -43,6 +44,9 @@ public class HistorialPredio implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_final")
 	private Date fechaFinal;
+	
+	@OneToOne
+	private Suscriptor suscriptor;
 	
 	public HistorialPredio() {}
 	
@@ -85,5 +89,13 @@ public class HistorialPredio implements Serializable {
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
 	}
-
+	
+	public Suscriptor getSuscriptor() {
+		return suscriptor;
+	}
+	
+	public void setSuscriptor(Suscriptor suscriptor) {
+		this.suscriptor = suscriptor;
+	}
+	
 }
