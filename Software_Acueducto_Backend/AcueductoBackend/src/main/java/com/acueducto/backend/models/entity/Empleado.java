@@ -2,7 +2,9 @@ package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,11 +21,18 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "empleados")
+
+
 public class Empleado implements Serializable {
 
 	/**
@@ -32,45 +43,54 @@ public class Empleado implements Serializable {
 	@Id
 	@Size(min = 10, max = 10)
 	private String cedula;
-	
+
 	@NotNull
 	private String nombre;
-	
+
 	@NotNull
 	private String apellido;
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
-	
-	@NotNull
-	@Column(name = "tipo_empleado")
-	private String tipoEmpleado;
-	
-	@NotNull
-	@Column(unique = true)
-	private String usuario;
-	
-	@NotNull
-	private String contrasena;
-	
+
 	@NotNull
 	private String genero;
-	
+
 	@NotNull
 	@Column(name = "direccion_residencia")
 	private String direccionResidencia;
-	
-	
+
 	private String foto;
-		
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="lugar_id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-    private Lugar lugarResidencia;
+	@JoinColumn(name = "lugar_id")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private Lugar lugarResidencia;
+
+	@NotNull
+	@Column(name = "tipo_empleado")
+	private String tipoEmpleado;
+
+	// ------------------ INFORMACIÓN DE AUTENTICACIÓN------------------------
+
+	@NotNull
+	@Column(unique = true, length = 20)
+	private String usuario;
+
+	@NotNull
+	@Column(length = 60)
+	private String contrasena;
+
+	private boolean activo;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Rol> roles;
+
+	// -----------------------------------------------------------------------
 
 	public String getCedula() {
 		return cedula;
@@ -112,6 +132,40 @@ public class Empleado implements Serializable {
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getDireccionResidencia() {
+		return direccionResidencia;
+	}
+
+	public void setDireccionResidencia(String direccionResidencia) {
+		this.direccionResidencia = direccionResidencia;
+	}
+
+	public Lugar getLugarResidencia() {
+		return lugarResidencia;
+	}
+
+	public void setLugarResidencia(Lugar lugarResidencia) {
+		this.lugarResidencia = lugarResidencia;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	// ------------------ INFORMACIÓN DE AUTENTICACIÓN------------------------
+
 	public String getUsuario() {
 		return usuario;
 	}
@@ -128,36 +182,23 @@ public class Empleado implements Serializable {
 		this.contrasena = contrasena;
 	}
 
-	public String getGenero() {
-		return genero;
+	public boolean getActivo() {
+		return activo;
+	}
+	
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+	
+	public List<Rol> getRoles() {
+		return roles;
+	}
+	
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-
-	public String getDireccionResidencia() {
-		return direccionResidencia;
-	}
-
-	public void setDireccionResidencia(String direccionResidencia) {
-		this.direccionResidencia = direccionResidencia;
-	}
 	
-	public Lugar getLugarResidencia() {
-		return lugarResidencia;
-	}
-	
-	public void setLugarResidencia(Lugar lugarResidencia) {
-		this.lugarResidencia = lugarResidencia;
-	}
-	
-	public String getFoto() {
-		return foto;
-	}
-	
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+	// ------------------------------------------------------------------------
 
 }

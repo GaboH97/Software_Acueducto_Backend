@@ -6,4 +6,5 @@ import com.acueducto.backend.models.entity.Empleado;
 
 public interface IEmpleadoDAO extends CrudRepository<Empleado, String> {
 
+	public Empleado findByUsuario(String usuario);
 }

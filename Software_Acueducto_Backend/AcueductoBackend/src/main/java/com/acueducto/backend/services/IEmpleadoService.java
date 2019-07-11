@@ -15,4 +15,6 @@ public interface IEmpleadoService {
 
 	public void deleteByCedula(String cedula);
 	
+	
+	
 }

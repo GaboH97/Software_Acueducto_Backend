@@ -152,7 +152,7 @@ public class SuscriptorController {
 		Path path = Paths.get("Blank_A4.jrxml").toAbsolutePath();
 		try {
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(suscriptorService.report());
-			;
+			
 			JasperReport report = JasperCompileManager.compileReport(path.toString());
 			JasperPrint print = JasperFillManager.fillReport(report, null, dataSource);
 
