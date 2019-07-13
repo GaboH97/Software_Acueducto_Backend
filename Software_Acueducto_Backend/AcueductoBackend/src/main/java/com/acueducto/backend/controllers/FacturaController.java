@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.acueducto.backend.exceptions.PredioNotFoundException;
-import com.acueducto.backend.models.entity.Empleado;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.services.IFacturaService;

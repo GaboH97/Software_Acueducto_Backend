@@ -1,13 +1,11 @@
 package com.acueducto.backend.auth;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -25,8 +23,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	public void configure(HttpSecurity http) throws Exception {
 		
 		//Define como publico el nombre, para el resto de rutas debe estar autenticado
-		http.authorizeRequests().antMatchers("/suscriptores/").permitAll()
-		.antMatchers("/predios/**").hasRole("ADMIN")
+		http.authorizeRequests().antMatchers("/images/**").permitAll()
+		.antMatchers("/suscriptores/").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	

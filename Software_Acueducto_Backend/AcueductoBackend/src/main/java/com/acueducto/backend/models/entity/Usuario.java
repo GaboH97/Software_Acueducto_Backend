@@ -30,10 +30,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "empleados")
+@Table(name = "usuarios")
 
 
-public class Empleado implements Serializable {
+public class Usuario implements Serializable {
 
 	/**
 	 * 
