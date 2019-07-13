@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,19 +36,20 @@ public class PredioController {
 
 	@Autowired
 	private IPredioService predioService;
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/predios")
 	public @ResponseBody List<Predio> findAll() {
 		return predioService.findAll();
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/predios/{matricula}")
 	public ResponseEntity<?> findById(@PathVariable String matricula) {
 		Predio predio = null;
 		try {
 			predio = predioService.findByNumeroMatricula(matricula);
 		} catch (DataAccessException e) {
-			System.out.println("aqui enton");
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("mensaje", "Error al realizar consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -59,15 +61,16 @@ public class PredioController {
 			response.put("mensaje", "El Predio con número de matrícula ".concat(matricula.concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		System.out.println("aqui si");
 		return new ResponseEntity<Predio>(predio, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/predios/search/{nombre}")
 	public @ResponseBody List<Predio> findByNombre(@PathVariable String nombre) {
 		return predioService.findByNombre(nombre);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/predios/{matricula}")
 	public ResponseEntity<?> deletePredio(@PathVariable String matricula) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -83,7 +86,8 @@ public class PredioController {
 		response.put("mensaje", "Predio eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/predios")
 	public ResponseEntity<?> createPredio(@Valid @RequestBody Predio predio) {
 
@@ -112,7 +116,8 @@ public class PredioController {
 		}
 
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/predios/{matricula}")
 	public ResponseEntity<?> updatePredio(@Valid @RequestBody Predio predio, @PathVariable String matricula) {
 		Map<String, Object> response = new HashMap<String, Object>();

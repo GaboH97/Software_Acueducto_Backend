@@ -1,20 +1,16 @@
 package com.acueducto.backend.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -27,12 +23,15 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.acueducto.backend.exceptions.PredioNotFoundException;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
+import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.IFacturaService;
 
 @Controller
@@ -49,7 +49,8 @@ public class FacturaController {
 
 	@Autowired
 	private IFacturaService facturaService;
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/facturas")
 	public @ResponseBody List<Factura> findAll() {
 		return facturaService.findAll();
@@ -74,7 +75,8 @@ public class FacturaController {
 		}
 		return new ResponseEntity<Factura>(factura, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/facturas/{id}")
 	public ResponseEntity<?> deleteFactura(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -90,7 +92,8 @@ public class FacturaController {
 		response.put("mensaje", "Factura eliminada con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@PostMapping("/facturas")
 	public ResponseEntity<?> createFactura(@Valid @RequestBody Factura factura) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -107,12 +110,43 @@ public class FacturaController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/facturas/{id}/detalles")
-	public @ResponseBody Factura fetchFacturaByIdWithDetallesFacturaWithTarifas(@PathVariable Integer id) {
-		Factura factura = facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
-		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
-	}
+//	@GetMapping("/facturas/{id}/detalles")
+//	public @ResponseBody Factura fetchFacturaByIdWithDetallesFacturaWithTarifas(@PathVariable Integer id) {
+//		Factura factura = facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
+//		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
+//	}
 
+	
+	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
+	@PutMapping("/factura/{id}")
+	public ResponseEntity<?> updateFactura(@Valid @RequestBody Factura factura, @PathVariable Integer id,
+			BindingResult result) {
+
+		Map<String, Object> response = new HashMap<String, Object>();
+		Factura facturaAux = facturaService.findById(id);
+
+		if (facturaAux == null) {
+			response.put("mensaje", "La Factura con ID ".concat(String.valueOf(id).concat(" no se encontró")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
+		try {
+			facturaService.save(factura);
+		} catch (DataAccessException e) {
+
+			response.put("mensaje", "Error al hacer registro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "Factura actualizado con éxito");
+		response.put("factura", factura);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	
+	
 	@GetMapping("/facturas/{id}/info")
 	public ResponseEntity<?> getPredioByFacturaId(@PathVariable Integer id) {
 		Factura factura = null;
@@ -145,7 +179,8 @@ public class FacturaController {
 			@RequestParam("periodoFacturado") Date periodoFacturado) {
 		return facturaService.getFacturasByPeriodoFacturado(periodoFacturado);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
 	@PostMapping("facturas/generarFacturas")
 	public ResponseEntity<?> uploadArchivo(@RequestParam("archivo") MultipartFile archivoExcel) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -166,6 +201,7 @@ public class FacturaController {
 			}
 			
 			int numeroFacturas = 0;
+			
 			try {
 				
 				Files.copy(archivoExcel.getInputStream(), path);
@@ -178,6 +214,7 @@ public class FacturaController {
 				response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			} catch (PredioNotFoundException e) {
+				
 				response.put("mensaje", e.getMessage());
 				response.put("numeroFacturas", numeroFacturas +" facturas creadas creadas");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);

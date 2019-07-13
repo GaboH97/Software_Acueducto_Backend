@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,12 +30,14 @@ public class LugaresController {
 
 	@Autowired
 	private ILugarService lugarService;
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/lugares")
 	public @ResponseBody List<Lugar> findAll() {
 		return lugarService.findAll();
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/lugares/{id}")
 	public ResponseEntity<?> findById(@PathVariable int id) {
 		Lugar lugar = null;
@@ -54,7 +57,8 @@ public class LugaresController {
 		}
 		return new ResponseEntity<Lugar>(lugar, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/lugares/{id}")
 	public ResponseEntity<?> deleteLugar(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -70,7 +74,8 @@ public class LugaresController {
 		response.put("mensaje", "Lugar eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/lugares")
 	public ResponseEntity<?> createLugarMunicipio(@Valid @RequestBody Lugar lugar) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -94,7 +99,8 @@ public class LugaresController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/lugares/{idMunicipio}")
 	public ResponseEntity<?> createLugarVereda(@Valid @RequestBody Lugar lugar, @PathVariable int idMunicipio) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -115,7 +121,8 @@ public class LugaresController {
 		response.put("lugar", lugar);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/lugares/tipo/{tipo}")
 	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo) {
 		return lugarService.findByTipo(tipo);

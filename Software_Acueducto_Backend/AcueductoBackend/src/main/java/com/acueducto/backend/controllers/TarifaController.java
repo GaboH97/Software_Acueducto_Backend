@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acueducto.backend.models.entity.HistorialTarifa;
-import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Tarifa;
 import com.acueducto.backend.services.ITarifaService;
 
@@ -34,12 +34,14 @@ public class TarifaController {
 
 	@Autowired
 	private ITarifaService tarifaService;
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/tarifas")
 	public @ResponseBody List<Tarifa> findAll() {
 		return tarifaService.findAll();
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/tarifas/{id}")
 	public ResponseEntity<?> findById(@PathVariable int id) {
 		Tarifa tarifa = null;
@@ -59,7 +61,8 @@ public class TarifaController {
 		}
 		return new ResponseEntity<Tarifa>(tarifa, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/tarifas/{id}")
 	public ResponseEntity<?> deleteTarifa(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -75,7 +78,8 @@ public class TarifaController {
 		response.put("mensaje", "Tarifa eliminada con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/tarifas")
 	public ResponseEntity<?> createTarifa(@Valid @RequestBody Tarifa tarifa) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -100,7 +104,8 @@ public class TarifaController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/tarifas/{id}")
 	public ResponseEntity<?> updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -139,7 +144,8 @@ public class TarifaController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/tarifas/search/{descripcion}")
 	public @ResponseBody List<Tarifa> obtenerTarifasPorDescripcion(@PathVariable String descripcion) {
 		return tarifaService.findByDescripcion(descripcion);

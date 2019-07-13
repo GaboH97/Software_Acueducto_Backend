@@ -45,12 +45,14 @@ public class SuscriptorController {
 
 	@Autowired
 	private ISuscriptorService suscriptorService;
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/suscriptores")
 	public @ResponseBody List<Suscriptor> findAll() {
 		return suscriptorService.findAll();
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/suscriptores/{cedula}")
 	public ResponseEntity<?> findByCedula(@PathVariable String cedula) {
 		Suscriptor suscriptor = null;
@@ -68,10 +70,10 @@ public class SuscriptorController {
 			response.put("mensaje", "El cliente con cédula ".concat(cedula.concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		System.out.println("aqui si");
 		return new ResponseEntity<Suscriptor>(suscriptor, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/suscriptores")
 	public ResponseEntity<?> createSuscriptor(@Valid @RequestBody Suscriptor suscriptor) {
 
@@ -97,7 +99,8 @@ public class SuscriptorController {
 		}
 
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/suscriptores/{cedula}")
 	public ResponseEntity<?> updateSuscriptor(@Valid @RequestBody Suscriptor suscriptor, @PathVariable String cedula,
 			BindingResult result) {
@@ -124,7 +127,8 @@ public class SuscriptorController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/suscriptores/{cedula}")
 	public ResponseEntity<?> deleteSuscriptor(@PathVariable String cedula) {
 
@@ -141,13 +145,14 @@ public class SuscriptorController {
 		response.put("mensaje", "Suscriptor eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/suscriptores/{cedula}/predios")
 	public @ResponseBody List<Predio> getPrediosBySuscriptor(@PathVariable String cedula) {
-		System.out.println("ESTA ES LA CÉDULA " + cedula);
 		return suscriptorService.getPrediosBySuscriptor(cedula);
 	}
-
+	
+	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
 	@GetMapping(value = "/suscriptores/reporte", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<ByteArrayResource> generarReporte() {
 		Path path = Paths.get("Blank_A4.jrxml").toAbsolutePath();
@@ -165,7 +170,6 @@ public class SuscriptorController {
 					.contentType(MediaType.APPLICATION_PDF) //
 					.body(bar);
 		} catch (JRException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

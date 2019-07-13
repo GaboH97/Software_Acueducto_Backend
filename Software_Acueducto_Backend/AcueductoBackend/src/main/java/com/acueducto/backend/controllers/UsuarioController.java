@@ -20,6 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,17 +45,20 @@ public class UsuarioController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios")
 	public @ResponseBody List<Usuario> findAll() {
 		return usuarioService.findAll();
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios/{cedula}")
 	public @ResponseBody Usuario findByCedula(@PathVariable String cedula) {
 		return usuarioService.findByCedula(cedula);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/usuarios/{cedula}")
 	public ResponseEntity<?> deleteEmpleado(@PathVariable String cedula) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -80,7 +84,8 @@ public class UsuarioController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/usuarios")
 	public ResponseEntity<?> createEmpleado(@Valid @RequestBody Usuario usuario, BindingResult result) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -96,7 +101,8 @@ public class UsuarioController {
 		response.put("empleado", usuario);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/usuarios/{cedula}")
 	@ResponseBody
 	public ResponseEntity<?> updateSuscriptor(@Valid @RequestBody Usuario usuario, @PathVariable String cedula,
@@ -125,7 +131,8 @@ public class UsuarioController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("usuarios/cargarFoto")
 	public ResponseEntity<?> uploadPhoto(@RequestParam("foto") MultipartFile foto,
 			@RequestParam("cedula") String cedula) {
@@ -162,7 +169,8 @@ public class UsuarioController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
 
