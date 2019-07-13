@@ -24,7 +24,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		
 		//Define como publico el nombre, para el resto de rutas debe estar autenticado
 		http.authorizeRequests().antMatchers("/images/**").permitAll()
-		.antMatchers("/suscriptores/").hasRole("ADMIN")
+		.antMatchers("/suscriptores/**").hasRole("ADMIN")
+		.antMatchers("/tarifas/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	
