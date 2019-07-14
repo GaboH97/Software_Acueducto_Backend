@@ -14,6 +14,8 @@ public interface IUsuarioService {
 
 	public void deleteByCedula(String cedula);
 	
+	public Usuario findByUsuario(String usuario);
+	
 	
 	
 }

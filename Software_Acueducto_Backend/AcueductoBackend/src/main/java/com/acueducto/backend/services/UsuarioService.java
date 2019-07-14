@@ -59,7 +59,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
 
-		Usuario user = usuarioDAO.findByUsuario(usuario);
+		Usuario user = findByUsuario(usuario);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("El usuario " + usuario + " no existe en el sistema");
@@ -77,6 +77,11 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
 		return new User(user.getUsuario(), user.getContrasena(), user.getActivo(), true, true, true,
 				authorities);
+	}
+	
+	@Transactional(readOnly = true)
+	public Usuario findByUsuario(String usuario) {
+		return usuarioDAO.findByUsuario(usuario);
 	}
 
 }
