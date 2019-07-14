@@ -140,8 +140,8 @@ public class Predio implements Serializable {
 		return vereda;
 	}
 
-	public String getEstadoPredio() {
-		return facturas.stream().allMatch(f -> !f.getEstadoFactura().equals("VE")) ? "D" : "M";
-	}
+//	public String getEstadoPredio() {
+//		return facturas.stream().allMatch(f -> !f.getEstadoFactura().equals("VE")) ? "D" : "M";
+//	}
 
 }
