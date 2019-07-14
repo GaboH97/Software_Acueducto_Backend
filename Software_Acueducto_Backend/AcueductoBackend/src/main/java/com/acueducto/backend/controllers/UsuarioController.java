@@ -91,6 +91,8 @@ public class UsuarioController {
 		Map<String, Object> response = new HashMap<String, Object>();
 		
 		try {
+			
+			
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Ya existe un usuario con el nombre '"+usuario.getUsuario()+"'");

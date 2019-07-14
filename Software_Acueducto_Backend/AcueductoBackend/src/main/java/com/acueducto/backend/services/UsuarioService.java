@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,10 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
+	
+	@Autowired
+	@Lazy
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public List<Usuario> findAll() {
@@ -32,6 +38,8 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
+		//Encripta la contraseña antes de guardar el usuario
+		usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 		usuarioDAO.save(usuario);
 	}
 
