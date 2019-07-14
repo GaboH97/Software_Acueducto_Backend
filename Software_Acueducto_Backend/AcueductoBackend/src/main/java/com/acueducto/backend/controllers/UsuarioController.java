@@ -92,7 +92,6 @@ public class UsuarioController {
 		
 		try {
 			
-			
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Ya existe un usuario con el nombre '"+usuario.getUsuario()+"'");
@@ -119,7 +118,7 @@ public class UsuarioController {
 		}
 
 		try {
-
+			
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 
@@ -138,6 +137,7 @@ public class UsuarioController {
 	@PostMapping("usuarios/cargarFoto")
 	public ResponseEntity<?> uploadPhoto(@RequestParam("foto") MultipartFile foto,
 			@RequestParam("cedula") String cedula) {
+		
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		Usuario usuario = usuarioService.findByCedula(cedula);
@@ -172,10 +172,10 @@ public class UsuarioController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-
+		
+		System.out.println("Obteniendo foto");
 		Path path = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
 		Resource resource = null;
 
@@ -185,6 +185,7 @@ public class UsuarioController {
 
 		}
 		if (!resource.exists() && resource.isReadable()) {
+			System.out.println("aaayy");
 			throw new RuntimeException("Error, no se pudo cargar la imagen".concat(nombreFoto));
 		}
 

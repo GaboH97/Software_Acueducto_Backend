@@ -34,7 +34,7 @@ insert into lugares (nombre, tipo, ubicado_id) values ('La Hoya','V', 1)
 
 /*INSERT EMPLEADOS*/
 
-insert into usuarios (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id, activo) values ('2069701934', 'Gabriel', 'Huertas','2019-03-02', 'A', 'admin','$2a$10$olDqLNiWWyq/f9RlMu.71.5MptG5h9TKnMTsCUKMrChPTUFRHFOYu','F','Calle falsa 123',2, 1);
+insert into usuarios (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id, activo) values ('2069701934', 'Gabriel', 'Huertas','2019-03-02', 'A', 'admin','$2a$10$L.4tNBVQa/nABm.F6ZTNLewLB9IblG8oumBTRPXVraPR6KFV8Hiwi','F','Calle falsa 123',2, 1);
 insert into usuarios (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id, activo) values ('2069701935', 'Pedro', 'Aguirre','2019-03-02', 'T', 'fontanero','$2a$10$YFdPmP7PyoM8Naxs0NPClupAG4rhspHbRo6y.E6OnqkNyQgpvNGtm','F','Calle falsa 123',2, 1);
 insert into usuarios (cedula, nombre, apellido, fecha_nacimiento, tipo_empleado, usuario, contrasena, genero, direccion_residencia, lugar_id, activo) values ('2069701936', 'Ángel', 'Gutierrez','2019-03-02', 'F', 'tesorero','$2a$10$YFdPmP7PyoM8Naxs0NPClupAG4rhspHbRo6y.E6OnqkNyQgpvNGtm','F','Calle falsa 123',2, 1);
 

@@ -26,10 +26,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
 	
-	@Autowired
-	@Lazy
-	private BCryptPasswordEncoder passwordEncoder;
-
 	@Override
 	public List<Usuario> findAll() {
 		return (List<Usuario>) usuarioDAO.findAll();
@@ -38,8 +34,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
-		//Encripta la contraseña antes de guardar el usuario
-		usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 		usuarioDAO.save(usuario);
 	}
 
