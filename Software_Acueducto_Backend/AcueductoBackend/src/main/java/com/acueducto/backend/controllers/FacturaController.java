@@ -118,7 +118,7 @@ public class FacturaController {
 
 	
 	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
-	@PutMapping("/factura/{id}")
+	@PutMapping("/facturas/{id}")
 	public ResponseEntity<?> updateFactura(@Valid @RequestBody Factura factura, @PathVariable Integer id,
 			BindingResult result) {
 
