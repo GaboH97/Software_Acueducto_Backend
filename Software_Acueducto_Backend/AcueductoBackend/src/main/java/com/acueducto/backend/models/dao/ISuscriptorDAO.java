@@ -14,4 +14,6 @@ public interface ISuscriptorDAO extends CrudRepository<Suscriptor, String>{
 	public List<Predio> getPrediosBySuscriptor(String cedula);
 	
 	public List<Suscriptor> findByEstadoCuenta(String estadoCuenta);
+
+	public Long countByEstado(String string);
 }

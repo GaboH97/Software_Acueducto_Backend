@@ -161,4 +161,16 @@ public class FacturaService implements IFacturaService {
 		return result;
 	}
 
+	@Override
+	public Double obtenerValorCarteraPendiente() {
+		return findAll().stream().filter(f -> !f.getEstadoFactura().equals("PA"))
+				.mapToDouble(f -> f.getGranTotal()).sum();
+	}
+
+	@Override
+	public Double obtenerTotalRecaudado() {
+		return findAll().stream().filter(f -> f.getEstadoFactura().equals("PA"))
+				.mapToDouble(f -> f.getGranTotal()).sum();
+	}
+
 }

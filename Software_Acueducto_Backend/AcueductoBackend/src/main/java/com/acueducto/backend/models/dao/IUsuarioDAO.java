@@ -7,4 +7,6 @@ import com.acueducto.backend.models.entity.Usuario;
 public interface IUsuarioDAO extends CrudRepository<Usuario, String> {
 
 	public Usuario findByUsuario(String usuario);
+
+	public Long countByActivo(boolean activo);
 }

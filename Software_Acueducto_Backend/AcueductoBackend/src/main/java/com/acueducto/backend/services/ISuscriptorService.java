@@ -18,10 +18,12 @@ public interface ISuscriptorService {
 
 	public List<Predio> getPrediosBySuscriptor(String cedula);
 
-	List<Map<String, Object>> obtenerTodosSuscriptores();
+	public List<Map<String, Object>> obtenerTodosSuscriptores();
 
-	List<Map<String, Object>> obtenerSuscriptoresEnMora();
+	public List<Map<String, Object>> obtenerSuscriptoresEnMora();
 
-	double obtenerGranTotalDeuda();
+	public double obtenerGranTotalDeuda();
+
+	public Long obtenerNumeroSuscriptoresActivos();
 
 }

@@ -18,6 +18,9 @@ public interface IUsuarioService {
 	public Usuario findByUsuario(String usuario);
 
 	public List<Rol> findAllRoles();
+
+	public int obtenerNumeroUsuariosActivos();
+	
 	
 	
 	

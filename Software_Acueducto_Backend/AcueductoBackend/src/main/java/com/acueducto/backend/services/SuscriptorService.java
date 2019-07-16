@@ -111,5 +111,10 @@ public class SuscriptorService implements ISuscriptorService {
 		}
 		return total;
 	}
+	
+	@Override
+	public Long obtenerNumeroSuscriptoresActivos() {
+		return suscriptorDAO.countByEstado("A");
+	}
 
 }

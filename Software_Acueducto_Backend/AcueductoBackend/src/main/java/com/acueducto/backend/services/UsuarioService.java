@@ -90,5 +90,10 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	public List<Rol> findAllRoles() {
 		return (List<Rol>) rolDAO.findAll();
 	}
+	
+	@Override
+	public int obtenerNumeroUsuariosActivos() {
+		return ((List<Usuario>)usuarioDAO.findAll()).size();
+	}
 
 }

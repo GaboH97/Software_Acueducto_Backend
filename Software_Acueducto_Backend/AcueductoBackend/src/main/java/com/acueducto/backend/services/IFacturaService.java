@@ -37,4 +37,8 @@ public interface IFacturaService {
 
 	List<Factura> findByPeriodoFacturado(Date periodoFacturado);
 
+	public Double obtenerValorCarteraPendiente();
+
+	public Double obtenerTotalRecaudado();
+
 }
