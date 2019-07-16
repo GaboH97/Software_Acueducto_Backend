@@ -72,9 +72,6 @@ public class Usuario implements Serializable {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Lugar lugarResidencia;
 
-	@NotNull
-	@Column(name = "tipo_empleado")
-	private String tipoEmpleado;
 
 	// ------------------ INFORMACIÓN DE AUTENTICACIÓN------------------------
 
@@ -123,14 +120,6 @@ public class Usuario implements Serializable {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public String getTipoEmpleado() {
-		return tipoEmpleado;
-	}
-
-	public void setTipoEmpleado(String tipoEmpleado) {
-		this.tipoEmpleado = tipoEmpleado;
 	}
 
 	public String getGenero() {
