@@ -35,6 +35,7 @@ public class ExtraTokenInfo implements TokenEnhancer {
 		
 		extraInfo.put("usuario", usuario.getUsuario());
 		extraInfo.put("foto", usuario.getFoto());
+		extraInfo.put("rol", usuario.getRol());
 		
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(extraInfo);
 		return accessToken;

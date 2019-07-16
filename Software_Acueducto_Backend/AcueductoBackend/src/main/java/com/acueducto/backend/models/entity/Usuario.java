@@ -88,7 +88,7 @@ public class Usuario implements Serializable {
 
 	private boolean activo;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.DETACH)
 	private Rol rol;
 
 	// -----------------------------------------------------------------------
