@@ -263,7 +263,8 @@ public class FacturaController {
 	@GetMapping("/facturas/prueba")
 	@ResponseBody
 	public List<Factura> obtener(
-			@RequestParam("periodoFacturado") @DateTimeFormat(pattern = "MMddyyyy") Date periodoFacturado) {
+			@RequestParam("periodoFacturado") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
+		System.err.println(periodoFacturado);
 		return facturaService.findByPeriodoFacturado(periodoFacturado);
 	}
 
