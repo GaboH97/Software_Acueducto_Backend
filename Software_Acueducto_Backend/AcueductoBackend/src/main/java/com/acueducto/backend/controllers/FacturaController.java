@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -258,19 +259,22 @@ public class FacturaController {
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/facturas/prueba")
 	@ResponseBody
 	public List<Factura> obtener(
 			@RequestParam("periodoFacturado") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
-		System.err.println(periodoFacturado);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		// get current date time with Date()
+
+		System.out.println(dateFormat.format(periodoFacturado));
 		return facturaService.findByPeriodoFacturado(periodoFacturado);
 	}
 
 	@GetMapping(value = "/facturas/reportes", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(
-			@RequestParam("periodoFacturado") Date periodoFacturado) {
+			@RequestParam("periodoFacturado") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
 		Path path = Paths.get(Utils.INVOICES_PER_BILLED_PERIOD_REPORT_TEMPLATE).toAbsolutePath();
 		try {
 
@@ -282,6 +286,8 @@ public class FacturaController {
 			Map<String, Object> parameters = new HashMap<>();
 
 			// parameters.put("deudaTotal", facturaService.obtenerGranTotalDeuda());
+			
+			parameters.put("periodoFacturadoP", periodoFacturado);
 
 			JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
 

@@ -2,6 +2,8 @@ package com.acueducto.backend.services;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Tarifa;
+import com.acueducto.backend.utils.Utils;
 
 @Service
 public class FacturaService implements IFacturaService {
@@ -88,7 +91,6 @@ public class FacturaService implements IFacturaService {
 	public int generarFacturas(Path path, int numeroFacturasCreadas)
 			throws EncryptedDocumentException, InvalidFormatException, IOException, PredioNotFoundException {
 
-
 		Workbook workbook;
 
 		workbook = WorkbookFactory.create(path.toFile());
@@ -99,8 +101,8 @@ public class FacturaService implements IFacturaService {
 		Tarifa tarifaValorM3 = tarifaDAO.findByDescripcion("Valor metro cúbico");
 
 		for (int i = 0; i < sheet.getLastRowNum(); i++) {
-			
-			System.out.println("nUMERO "+sheet.getLastRowNum());
+
+			System.out.println("nUMERO " + sheet.getLastRowNum());
 			Row row = sheet.getRow(i);
 
 			if (row == null || row.getCell(0) == null) {
@@ -114,7 +116,7 @@ public class FacturaService implements IFacturaService {
 				DetalleFactura detalleFacturaValorM3 = new DetalleFactura(tarifaValorM3);
 
 				String numeroMatricula = row.getCell(0).getStringCellValue();
-				System.out.println(numeroMatricula+" NUMERO MATRICULA");
+				System.out.println(numeroMatricula + " NUMERO MATRICULA");
 				Predio predio = predioDAO.findByNumeroMatricula(numeroMatricula);
 
 				if (predio != null) {
@@ -134,23 +136,29 @@ public class FacturaService implements IFacturaService {
 				}
 			}
 		}
-		
+
 		return numeroFacturasCreadas;
 	}
+
 	@Override
-	public List<Factura> findByPeriodoFacturado(Date periodoFacturado){
-		return facturaDAO.findByPeriodoFacturado(periodoFacturado);
+	public List<Factura> findByPeriodoFacturado(Date periodoFacturado) {
+		LocalDate date = Utils.toLocalDate(periodoFacturado);
+
+		return facturaDAO.findByPeriodoFacturado(date.getYear(), date.getMonthValue());
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> obtenerDatosFacturasPorPeriodoFacturado(Date periodoFacturado) {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		for (Factura factura : findByPeriodoFacturado(periodoFacturado)) {
-			Map<String, Object> item  = new HashMap<String, Object>();
+			Map<String, Object> item = new HashMap<String, Object>();
 			Predio predio = factura.getPredio();
+			item.put("numeroFactura", String.valueOf(factura.getId()));
+			item.put("predio", predio.getNombre());
+			item.put("total", factura.getGranTotal());
 			result.add(item);
 		}
 		return result;
 	}
-	
+
 }

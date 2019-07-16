@@ -1,5 +1,9 @@
 package com.acueducto.backend.utils;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 
@@ -37,5 +41,12 @@ public class Utils {
 	    }
 
 	    System.out.print("\t");
+	}
+	
+	
+	public static final LocalDate toLocalDate(Date date) {
+		return date.toInstant()
+	      .atZone(ZoneId.systemDefault())
+	      .toLocalDate();
 	}
 }
