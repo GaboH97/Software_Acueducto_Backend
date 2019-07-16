@@ -1,4 +1,4 @@
-
+ex
 /*INSERT SUSCRIPTORES*/
 
 insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha_nacimiento, genero, numero_telefono, correo_electronico) values ('2069701923', 'Maryl', 'Hischke', 'A', 'D', '2019-03-02', 'F', '523-796-5041', 'mhischke0@opera.com');

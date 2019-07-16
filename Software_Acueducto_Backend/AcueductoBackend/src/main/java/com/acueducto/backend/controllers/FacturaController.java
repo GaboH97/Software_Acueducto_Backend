@@ -241,9 +241,8 @@ public class FacturaController {
 	}
 
 
-	@GetMapping(value = "/facturas/reportes", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<ByteArrayResource> generarReporteFacturasPorPeriodoFacturado(
-			@RequestParam("periodoFacturado") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
+	@GetMapping(value = "/facturas/reportes/{periodoFacturado}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
 		Path path = Paths.get(Utils.INVOICES_PER_BILLED_PERIOD_REPORT_TEMPLATE).toAbsolutePath();
 		try {
 
