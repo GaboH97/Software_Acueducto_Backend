@@ -192,7 +192,7 @@ public class FacturaController {
 		return facturaService.getFacturasByPeriodoFacturado(periodoFacturado);
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO" })
+	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO","ROLE_FONTANERO"})
 	@PostMapping("facturas/generarFacturas")
 	public ResponseEntity<?> uploadArchivo(@RequestParam("archivo") MultipartFile archivoExcel) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -240,37 +240,6 @@ public class FacturaController {
 		}
 	}
 
-	@GetMapping("/facturas/uploads/{nombreArchivo:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-
-		Path path = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
-		Resource resource = null;
-
-		try {
-			resource = new UrlResource(path.toUri());
-		} catch (MalformedURLException e) {
-
-		}
-		if (!resource.exists() && resource.isReadable()) {
-			throw new RuntimeException("Error, no se pudo cargar la imagen".concat(nombreFoto));
-		}
-
-		HttpHeaders header = new HttpHeaders();
-		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
-		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
-	}
-
-	@Secured({ "ROLE_ADMIN" })
-	@GetMapping("/facturas/prueba")
-	@ResponseBody
-	public List<Factura> obtener(
-			@RequestParam("periodoFacturado") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		// get current date time with Date()
-
-		System.out.println(dateFormat.format(periodoFacturado));
-		return facturaService.findByPeriodoFacturado(periodoFacturado);
-	}
 
 	@GetMapping(value = "/facturas/reportes", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(

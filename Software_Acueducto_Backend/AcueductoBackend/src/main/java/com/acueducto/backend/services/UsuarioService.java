@@ -1,5 +1,6 @@
 package com.acueducto.backend.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.acueducto.backend.models.dao.IRolDAO;
 import com.acueducto.backend.models.dao.IUsuarioDAO;
+import com.acueducto.backend.models.entity.Rol;
 import com.acueducto.backend.models.entity.Usuario;
 
 @Service
@@ -25,6 +28,9 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private IRolDAO rolDAO;
 	
 	@Override
 	public List<Usuario> findAll() {
@@ -63,7 +69,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 		 * Obtiene los roles del usuario y los convierte a una lista de GrantedAuthority
 		 * a través de su implementación SimpleGrantedAuthority
 		 */
-		List<GrantedAuthority> authorities = user.getRoles()
+		List<GrantedAuthority> authorities = Arrays.asList(user.getRol())
 				.stream()
 				.map(r -> new SimpleGrantedAuthority(r.getNombre()))
 				.peek(auth -> System.out.println("Rol "+auth.getAuthority()))
@@ -77,5 +83,12 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	public Usuario findByUsuario(String usuario) {
 		return usuarioDAO.findByUsuario(usuario);
 	}
+	
+	@Override
+	public List<Rol> findAllRoles() {
+		return (List<Rol>) rolDAO.findAll();
+	}
+	
+	
 
 }

@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -87,8 +88,8 @@ public class Usuario implements Serializable {
 
 	private boolean activo;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Rol> roles;
+	@OneToOne(fetch = FetchType.LAZY)
+	private Rol rol;
 
 	// -----------------------------------------------------------------------
 
@@ -190,12 +191,12 @@ public class Usuario implements Serializable {
 		this.activo = activo;
 	}
 	
-	public List<Rol> getRoles() {
-		return roles;
+	public Rol getRol() {
+		return rol;
 	}
 	
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 
 	

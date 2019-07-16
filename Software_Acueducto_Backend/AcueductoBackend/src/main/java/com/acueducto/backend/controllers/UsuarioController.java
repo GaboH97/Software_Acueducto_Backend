@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.acueducto.backend.models.entity.Rol;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Usuario;
 import com.acueducto.backend.services.IUsuarioService;
@@ -192,6 +193,13 @@ public class UsuarioController {
 		HttpHeaders header = new HttpHeaders();
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+	
+	
+	@Secured({"ROLE_ADMIN"})
+	@GetMapping("/usuarios/roles")
+	public @ResponseBody List<Rol> findAllRoles() {
+		return usuarioService.findAllRoles();
 	}
 	
 }

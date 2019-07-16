@@ -2,6 +2,7 @@ package com.acueducto.backend.services;
 
 import java.util.List;
 
+import com.acueducto.backend.models.entity.Rol;
 import com.acueducto.backend.models.entity.Usuario;
 
 public interface IUsuarioService {
@@ -15,6 +16,8 @@ public interface IUsuarioService {
 	public void deleteByCedula(String cedula);
 	
 	public Usuario findByUsuario(String usuario);
+
+	public List<Rol> findAllRoles();
 	
 	
 	
