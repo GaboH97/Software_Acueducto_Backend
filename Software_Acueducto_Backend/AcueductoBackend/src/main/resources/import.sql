@@ -42,6 +42,12 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 
 insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7355','Ubate',1 , 1.1, 1.2, 4, '7003262474');
 
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7356','La colorada',2 , 1.1, 1.2, 5, '7003262474');
+
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7357','El placer',2 , 1.1, 1.2, 6, '5292677642');
+
+
+
 /*INSERT ASIGNACIONES
 
 --insert into asignaciones (fecha_inicial, fecha_final, cedula_suscriptor, lugar_id, predio_matricula) values ('2018-09-29', '2018-09-29','206-97-0192',2,'2')
@@ -53,11 +59,11 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 /*INSERT FACTURAS*/
 
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-01-20','2018-01-04','2018-01-03','PA','080-7353', '2019-01-01');
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7354', '2018-12-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-1','2018-07-01',NULL,'PP','080-7355', '2019-07-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-1','2018-07-01',NULL,'PP','080-7355', '2019-07-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04',NULL,'PP','080-7354', '2018-12-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-01-20','2018-02-04',NULL,'PP','080-7354', '2018-01-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'PP','080-7355', '2019-06-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-07-20','2018-08-05',NULL,'PP','080-7355', '2019-06-02');
 
 
 /*INSERT TARIFAS*/
