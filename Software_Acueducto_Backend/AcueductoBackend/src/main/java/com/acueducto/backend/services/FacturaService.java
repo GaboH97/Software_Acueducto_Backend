@@ -2,8 +2,11 @@ package com.acueducto.backend.services;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,6 +25,7 @@ import com.acueducto.backend.models.dao.ITarifaDAO;
 import com.acueducto.backend.models.entity.DetalleFactura;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
+import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Tarifa;
 
 @Service
@@ -133,4 +137,20 @@ public class FacturaService implements IFacturaService {
 		
 		return numeroFacturasCreadas;
 	}
+	@Override
+	public List<Factura> findByPeriodoFacturado(Date periodoFacturado){
+		return facturaDAO.findByPeriodoFacturado(periodoFacturado);
+	}
+	
+	@Override
+	public List<Map<String, Object>> obtenerDatosFacturasPorPeriodoFacturado(Date periodoFacturado) {
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+		for (Factura factura : findByPeriodoFacturado(periodoFacturado)) {
+			Map<String, Object> item  = new HashMap<String, Object>();
+			Predio predio = factura.getPredio();
+			result.add(item);
+		}
+		return result;
+	}
+	
 }

@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -17,11 +19,14 @@ import javax.validation.Valid;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -42,6 +47,15 @@ import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.IFacturaService;
+import com.acueducto.backend.utils.Utils;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:4200")
@@ -49,8 +63,8 @@ public class FacturaController {
 
 	@Autowired
 	private IFacturaService facturaService;
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/facturas")
 	public @ResponseBody List<Factura> findAll() {
 		return facturaService.findAll();
@@ -75,8 +89,8 @@ public class FacturaController {
 		}
 		return new ResponseEntity<Factura>(factura, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/facturas/{id}")
 	public ResponseEntity<?> deleteFactura(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -92,8 +106,8 @@ public class FacturaController {
 		response.put("mensaje", "Factura eliminada con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@PostMapping("/facturas")
 	public ResponseEntity<?> createFactura(@Valid @RequestBody Factura factura) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -116,8 +130,7 @@ public class FacturaController {
 //		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
 //	}
 
-	
-	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
+	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO" })
 	@PutMapping("/facturas/{id}")
 	public ResponseEntity<?> updateFactura(@Valid @RequestBody Factura factura, @PathVariable Integer id,
 			BindingResult result) {
@@ -144,9 +157,7 @@ public class FacturaController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
-	
-	
+
 	@GetMapping("/facturas/{id}/info")
 	public ResponseEntity<?> getPredioByFacturaId(@PathVariable Integer id) {
 		Factura factura = null;
@@ -179,8 +190,8 @@ public class FacturaController {
 			@RequestParam("periodoFacturado") Date periodoFacturado) {
 		return facturaService.getFacturasByPeriodoFacturado(periodoFacturado);
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO" })
 	@PostMapping("facturas/generarFacturas")
 	public ResponseEntity<?> uploadArchivo(@RequestParam("archivo") MultipartFile archivoExcel) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -199,24 +210,24 @@ public class FacturaController {
 			} else if (originalFileName.endsWith(".xls")) {
 				path = Paths.get("uploads").resolve(fileName.concat(".xlsx")).toAbsolutePath();
 			}
-			
+
 			int numeroFacturas = 0;
-			
+
 			try {
-				
+
 				Files.copy(archivoExcel.getInputStream(), path);
 				numeroFacturas = facturaService.generarFacturas(path, numeroFacturas);
-				response.put("mensaje", numeroFacturas+" facturas creadas");
-				
-			}catch (EncryptedDocumentException | InvalidFormatException | IOException e ) {
+				response.put("mensaje", numeroFacturas + " facturas creadas");
+
+			} catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
 
 				response.put("mensaje", "Error al subir el archivo para facturación");
 				response.put("error", e.getMessage().concat(" : ").concat(e.getCause().getMessage()));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			} catch (PredioNotFoundException e) {
-				
+
 				response.put("mensaje", e.getMessage());
-				response.put("numeroFacturas", numeroFacturas +" facturas creadas creadas");
+				response.put("numeroFacturas", numeroFacturas + " facturas creadas creadas");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
@@ -246,6 +257,45 @@ public class FacturaController {
 		HttpHeaders header = new HttpHeaders();
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"");
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@GetMapping("/facturas/prueba")
+	@ResponseBody
+	public List<Factura> obtener(
+			@RequestParam("periodoFacturado") @DateTimeFormat(pattern = "MMddyyyy") Date periodoFacturado) {
+		return facturaService.findByPeriodoFacturado(periodoFacturado);
+	}
+
+	@GetMapping(value = "/facturas/reportes", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(
+			@RequestParam("periodoFacturado") Date periodoFacturado) {
+		Path path = Paths.get(Utils.INVOICES_PER_BILLED_PERIOD_REPORT_TEMPLATE).toAbsolutePath();
+		try {
+
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(
+					facturaService.obtenerDatosFacturasPorPeriodoFacturado(periodoFacturado));
+
+			JasperReport report = JasperCompileManager.compileReport(path.toString());
+
+			Map<String, Object> parameters = new HashMap<>();
+
+			// parameters.put("deudaTotal", facturaService.obtenerGranTotalDeuda());
+
+			JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
+
+			byte[] pdfAsByteArray = JasperExportManager.exportReportToPdf(print);
+
+			ByteArrayResource bar = new ByteArrayResource(pdfAsByteArray);
+
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte_suscritores_en_mora.pdf")
+					.contentType(MediaType.APPLICATION_PDF) //
+					.body(bar);
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

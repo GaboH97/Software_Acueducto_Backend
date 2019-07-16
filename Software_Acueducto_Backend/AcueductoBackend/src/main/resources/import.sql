@@ -61,8 +61,9 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-01');
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-01');
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7354', '2018-12-01');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-1','2018-07-01','PP','080-7355', '2019-07-01');
-
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-1','2018-07-01',NULL,'PP','080-7355', '2019-07-01');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-1','2018-07-01',NULL,'PP','080-7355', '2019-07-01');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04',NULL,'PP','080-7354', '2018-12-01');
 
 
 /*INSERT TARIFAS*/
@@ -76,10 +77,14 @@ insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión',
 /*INSERT DETALLES_FACTURA*/
 
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,1,1,500);
-insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,2,1,27.604);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (1,2,1,27604);
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (2,1,1,500);
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (3,1,2,500);
 insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (4,1,2,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (5,1,2,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (6,1,5.9,500);
+insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor) values (6,2,1,27604);
+
 
 insert into ROLES (nombre) values ('ROLE_ADMIN');
 insert into ROLES (nombre) values ('ROLE_FONTANERO');

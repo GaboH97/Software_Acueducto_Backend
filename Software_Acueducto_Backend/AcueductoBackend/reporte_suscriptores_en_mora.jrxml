@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_suscriptores_en_mora" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c3ae4763-743e-42b3-8848-a444d1e8459f">
+	<parameter name="deudaTotal" class="java.lang.Double" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="predio" class="java.lang.String"/>
+	<field name="saldoPendiente" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="129">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="149" backcolor="#006699" uuid="f876ddbd-6986-4f59-b7bf-517e7656d209"/>
+				<staticText>
+					<reportElement x="20" y="20" width="310" height="110" forecolor="#FFFFFF" uuid="2330dd40-d1c3-4eca-ac42-dc828d274797"/>
+					<textElement>
+						<font size="28" isBold="true"/>
+					</textElement>
+					<text><![CDATA[REPORTE DE SUSCRIPTORES EN MORA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="30" width="180" height="90" forecolor="#FFFFFF" uuid="9d40e9f4-fb96-4a35-a01f-30e8a67d55d3"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ASOCIACIÓN DE SUSCRIPTORES DEL ACUEDUCTO
+MULTIVEREDAL MONSALVE, PILA GRANDE Y POTRERO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="44">
+			<line>
+				<reportElement x="-10" y="43" width="595" height="1" forecolor="#666666" uuid="2505d123-5e3b-4e59-bf8d-d62259a97f07"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="7" width="90" height="30" uuid="68f8a15d-4384-4355-9eb6-a2b0be192543"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="8" width="119" height="30" uuid="cf772576-6aa7-41e8-835f-024ce071e8ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="7" width="100" height="30" uuid="2f7eac94-ebff-449e-9c00-98a1ec398462"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Predio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="7" width="125" height="30" uuid="9760f43e-d436-459e-8d84-570c90304df8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Pendiente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="38">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="30" width="555" height="1" uuid="90b5f48d-1d33-46b3-a260-41deaa488f02"/>
+			</line>
+			<textField>
+				<reportElement x="20" y="10" width="90" height="20" uuid="bd750247-1a1c-4001-b2f8-b7ed4553ca12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="10" width="119" height="20" uuid="9d2548be-b0d5-47f8-8fca-1fe9f62b15ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}.concat(' '+ $F{apellido} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="10" width="100" height="19" uuid="ee44bd76-3a62-43f9-9677-0c4d0cc6a76e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{predio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##">
+				<reportElement x="390" y="10" width="100" height="20" uuid="9403baeb-bd88-4542-8ac3-9a84da0726fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldoPendiente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="b5cbf3f0-26a5-4160-9bff-a92c16ef8415"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="67840732-a000-4ddb-be3b-881fdfba0f28"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="3153f070-8c0a-41c1-8fec-1ba710ff14ae"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="42">
+			<staticText>
+				<reportElement x="290" y="10" width="100" height="23" uuid="f4b2bff7-080e-4e8e-b41f-a62a40ebbf23"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Gran Total]]></text>
+			</staticText>
+			<textField pattern="¤#,##0.##">
+				<reportElement x="410" y="6" width="120" height="30" uuid="29fda7fd-e8b3-426f-85eb-629be232698e"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{deudaTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

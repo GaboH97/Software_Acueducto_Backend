@@ -181,13 +181,4 @@ public class Suscriptor implements Serializable {
 		}
 		return formattedEstadoCuenta;
 	}
-
-//	public List<Predio> getPredios() {
-//		return predios;
-//	}
-//	
-//	public List<Factura> getFacturas() {
-//		return facturas;
-//	}
-
 }

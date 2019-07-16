@@ -12,6 +12,6 @@ public interface ISuscriptorDAO extends CrudRepository<Suscriptor, String>{
 	
 	@Query("select p from Predio p join fetch p.suscriptor s where s.cedula=?1")
 	public List<Predio> getPrediosBySuscriptor(String cedula);
-
 	
+	public List<Suscriptor> findByEstadoCuenta(String estadoCuenta);
 }

@@ -24,7 +24,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	public void configure(HttpSecurity http) throws Exception {
 		
 		//Define como publico el nombre, para el resto de rutas debe estar autenticado
-		http.authorizeRequests().antMatchers("/images/**","/usuarios/uploads/img/**").permitAll()
+		http.authorizeRequests().antMatchers("/images/**","/usuarios/uploads/img/**","/suscriptores/reportes/**").permitAll()
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	

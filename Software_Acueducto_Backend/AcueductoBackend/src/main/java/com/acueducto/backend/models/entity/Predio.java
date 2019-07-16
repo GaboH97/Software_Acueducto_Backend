@@ -139,6 +139,15 @@ public class Predio implements Serializable {
 	public Lugar getVereda() {
 		return vereda;
 	}
+	
+	public boolean estaAlDia() {
+		return this.facturas.stream().allMatch(f-> f.getEstadoFactura().equals("PA"));
+	}
+	
+	public Double obtenerDeudaTotal() {
+		return this.facturas.stream().filter(f-> !f.getEstadoFactura().equals("PA"))
+				.mapToDouble(i-> i.getGranTotal()).sum();
+	}
 
 //	public String getEstadoPredio() {
 //		return facturas.stream().allMatch(f -> !f.getEstadoFactura().equals("VE")) ? "D" : "M";

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -31,5 +32,9 @@ public interface IFacturaService {
 	public List<Factura> getFacturasByPeriodoFacturado(Date periodoFacturado);
 
 	public int generarFacturas(Path path, int numeroFacturasCreadas) throws EncryptedDocumentException, InvalidFormatException, IOException, PredioNotFoundException;
+
+	List<Map<String, Object>> obtenerDatosFacturasPorPeriodoFacturado(Date periodoFacturado);
+
+	List<Factura> findByPeriodoFacturado(Date periodoFacturado);
 
 }

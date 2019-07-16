@@ -24,5 +24,7 @@ public interface IFacturaDAO extends CrudRepository<Factura, Integer>{
 	public List<Factura> fetchByPeriodoFacturado(Date periodoFacturado);
 	
 	public List<Factura> findByOrderByPeriodoFacturadoDesc();
+
+	public List<Factura> findByPeriodoFacturado(Date periodoFacturado);
 	
 }

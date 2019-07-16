@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.acueducto.backend.models.entity.Predio;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.*;
+import com.acueducto.backend.utils.Utils;
 
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -152,12 +153,12 @@ public class SuscriptorController {
 		return suscriptorService.getPrediosBySuscriptor(cedula);
 	}
 	
-	@Secured({"ROLE_ADMIN","ROLE_TESORERO"})
-	@GetMapping(value = "/suscriptores/reporte", produces = MediaType.APPLICATION_PDF_VALUE)
+	@GetMapping(value = "/suscriptores/reportes/todos", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<ByteArrayResource> generarReporte() {
-		Path path = Paths.get("Blank_A4.jrxml").toAbsolutePath();
+		Path path = Paths.get(Utils.ALL_SUBSCRIBERS_REPORT_TEMPLATE).toAbsolutePath();
 		try {
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(suscriptorService.report());
+			
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(suscriptorService.obtenerTodosSuscriptores());
 			
 			JasperReport report = JasperCompileManager.compileReport(path.toString());
 			JasperPrint print = JasperFillManager.fillReport(report, null, dataSource);
@@ -166,7 +167,36 @@ public class SuscriptorController {
 
 			ByteArrayResource bar = new ByteArrayResource(pdfAsByteArray);
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte.pdf")
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte_suscritores.pdf")
+					.contentType(MediaType.APPLICATION_PDF) //
+					.body(bar);
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@GetMapping(value = "/suscriptores/reportes/enMora", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores() {
+		Path path = Paths.get(Utils.SUBSCRIBERS_WITH_DEBT_ARREARS_REPORT_TEMPLATE).toAbsolutePath();
+		try {
+			
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(suscriptorService.obtenerSuscriptoresEnMora());
+			
+			JasperReport report = JasperCompileManager.compileReport(path.toString());
+			
+			Map<String,Object> parameters = new HashMap<>();
+			
+			parameters.put("deudaTotal", suscriptorService.obtenerGranTotalDeuda());
+			
+			
+			JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
+
+			byte[] pdfAsByteArray = JasperExportManager.exportReportToPdf(print);
+
+			ByteArrayResource bar = new ByteArrayResource(pdfAsByteArray);
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte_suscritores_en_mora.pdf")
 					.contentType(MediaType.APPLICATION_PDF) //
 					.body(bar);
 		} catch (JRException e) {

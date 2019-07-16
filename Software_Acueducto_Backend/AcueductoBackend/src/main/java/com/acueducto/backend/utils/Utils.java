@@ -5,6 +5,12 @@ import org.apache.poi.ss.usermodel.DateUtil;
 
 public class Utils {
 	
+	
+	public static final String ALL_SUBSCRIBERS_REPORT_TEMPLATE = "reporte_todos_suscriptores.jrxml";
+	public static final String SUBSCRIBERS_WITH_DEBT_ARREARS_REPORT_TEMPLATE = "reporte_suscriptores_en_mora.jrxml";
+	public static final String INVOICES_PER_BILLED_PERIOD_REPORT_TEMPLATE= "reporte_recaudo_periodo_facturado.jrxml";
+
+	
 	public static void printCellValue(Cell cell) {
 	    switch (cell.getCellTypeEnum()) {
 	        case BOOLEAN:

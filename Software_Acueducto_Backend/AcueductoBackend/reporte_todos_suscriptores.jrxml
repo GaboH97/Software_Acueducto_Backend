@@ -31,14 +31,16 @@
 	<title>
 		<band height="86" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="10" width="550" height="70" uuid="1c485f4d-a57d-4283-8e90-8142013db382"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="0" y="10" width="550" height="70" backcolor="#7CB2D6" uuid="1c485f4d-a57d-4283-8e90-8142013db382"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19"/>
+				</textElement>
 				<text><![CDATA[ASOCIACIÓN DE SUSCRIPTORES DEL ACUEDUCTO MULTIVEREDAL MONSALVE, PILA GRANDE Y POTRERO GRANDE DEL MUNICIPIO DE MONIQUIRÁ]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="42" splitType="Stretch">
+		<band height="87" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="570" height="33" uuid="2553b998-b494-42d8-9e3d-5ba614bef103"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -46,40 +48,47 @@
 				</textElement>
 				<text><![CDATA[Reporte de Suscriptores]]></text>
 			</staticText>
+			<textField pattern="MMMMM d, yyyy h:mm:ss a">
+				<reportElement x="400" y="53" width="120" height="20" uuid="f280fdc2-deb2-46f4-9322-a5f46b759845"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="33" width="130" height="20" uuid="05151b74-46a8-4ecc-ac93-25eb67df1b4a"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Generación]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="57" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="9" width="90" height="30" uuid="0450ef1e-661d-42ed-89f9-548a0bc4d345"/>
+				<reportElement x="40" y="10" width="90" height="30" uuid="0450ef1e-661d-42ed-89f9-548a0bc4d345"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="10" width="100" height="30" uuid="ea8c0216-e8cb-496a-b2a5-3db24c812c84"/>
+				<reportElement x="150" y="11" width="119" height="30" uuid="ea8c0216-e8cb-496a-b2a5-3db24c812c84"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="227" y="10" width="100" height="30" uuid="1c724630-41b0-4ecb-ab24-68b87a80ca6d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Apellido]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="350" y="9" width="100" height="30" uuid="c8682ff5-39b3-4283-a496-4e55637bbaaf"/>
+				<reportElement x="290" y="10" width="100" height="30" uuid="c8682ff5-39b3-4283-a496-4e55637bbaaf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="9" width="100" height="30" uuid="0e8643e7-7636-428b-9f7c-e8b2cf82f13b"/>
+				<reportElement x="410" y="10" width="100" height="30" uuid="0e8643e7-7636-428b-9f7c-e8b2cf82f13b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -90,27 +99,22 @@
 	<detail>
 		<band height="35" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="10" width="90" height="20" uuid="b5c52867-0d5a-40bc-93ac-a15f630a61bb"/>
+				<reportElement x="40" y="11" width="90" height="20" uuid="b5c52867-0d5a-40bc-93ac-a15f630a61bb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="10" width="100" height="20" uuid="795d8259-a948-45fe-b1c6-e56c0c77e918"/>
+				<reportElement x="150" y="11" width="119" height="20" uuid="795d8259-a948-45fe-b1c6-e56c0c77e918"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre}.concat(' '+ $F{apellido} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="227" y="10" width="100" height="20" uuid="343fbd39-367c-41cb-ae82-58804404f696"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="350" y="11" width="100" height="19" uuid="49212ed0-13e9-447a-be68-bf55202bacbb"/>
+				<reportElement x="290" y="12" width="100" height="19" uuid="49212ed0-13e9-447a-be68-bf55202bacbb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="10" width="90" height="20" uuid="ac0fd691-b53f-41ee-aa8a-aba9cf98ff7c"/>
+				<reportElement x="410" y="11" width="90" height="20" uuid="ac0fd691-b53f-41ee-aa8a-aba9cf98ff7c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{estadoCuenta}]]></textFieldExpression>
 			</textField>
