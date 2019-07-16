@@ -88,7 +88,7 @@ public class UsuarioController {
 	
 	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/usuarios")
-	public ResponseEntity<?> createEmpleado(@Valid @RequestBody Usuario usuario, BindingResult result) {
+	public ResponseEntity<?> createUsuario(@Valid @RequestBody Usuario usuario, BindingResult result) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		
 		try {

@@ -29,9 +29,13 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
 	
+	@Lazy
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@Autowired
 	private IRolDAO rolDAO;
-	
+
 	@Override
 	public List<Usuario> findAll() {
 		return (List<Usuario>) usuarioDAO.findAll();
@@ -40,6 +44,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
+		usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 		usuarioDAO.save(usuario);
 	}
 
@@ -69,26 +74,21 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 		 * Obtiene los roles del usuario y los convierte a una lista de GrantedAuthority
 		 * a través de su implementación SimpleGrantedAuthority
 		 */
-		List<GrantedAuthority> authorities = Arrays.asList(user.getRol())
-				.stream()
+		List<GrantedAuthority> authorities = Arrays.asList(user.getRol()).stream()
 				.map(r -> new SimpleGrantedAuthority(r.getNombre()))
-				.peek(auth -> System.out.println("Rol "+auth.getAuthority()))
-				.collect(Collectors.toList());
+				.peek(auth -> System.out.println("Rol " + auth.getAuthority())).collect(Collectors.toList());
 
-		return new User(user.getUsuario(), user.getContrasena(), user.getActivo(), true, true, true,
-				authorities);
+		return new User(user.getUsuario(), user.getContrasena(), user.getActivo(), true, true, true, authorities);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Usuario findByUsuario(String usuario) {
 		return usuarioDAO.findByUsuario(usuario);
 	}
-	
+
 	@Override
 	public List<Rol> findAllRoles() {
 		return (List<Rol>) rolDAO.findAll();
 	}
-	
-	
 
 }

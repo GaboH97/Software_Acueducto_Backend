@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -87,6 +88,11 @@ public class Usuario implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.DETACH)
 	private Rol rol;
+	
+	@PrePersist
+	private void prePersist() {
+		this.activo=true;
+	}
 
 	// -----------------------------------------------------------------------
 
