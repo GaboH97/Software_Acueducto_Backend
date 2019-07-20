@@ -2,6 +2,7 @@ package com.acueducto.backend.models.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,9 @@ public class DetalleFactura implements Serializable{
 	private Tarifa tarifa;
 	
 	private Double cantidad;
+	
+	@Column(name="valor_unitario")
+	private Double valorUnitario;
 	
 	@NotNull
 	private Double valor;
@@ -70,8 +74,16 @@ public class DetalleFactura implements Serializable{
 		this.valor = valor;
 	}
 	
+	public Double getValorUnitario() {
+		return valorUnitario;
+	}
+	
+	public void setValorUnitario(Double valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+	
 	public Double getImporte() {
-		return cantidad.doubleValue()*tarifa.getValorTarifa();
+		return cantidad.doubleValue()*valorUnitario.doubleValue();
 	}
 
 }

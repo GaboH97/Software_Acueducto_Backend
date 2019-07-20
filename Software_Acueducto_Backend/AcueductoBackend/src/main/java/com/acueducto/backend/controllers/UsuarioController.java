@@ -14,6 +14,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,6 +48,10 @@ public class UsuarioController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Lazy
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios")
@@ -92,7 +98,7 @@ public class UsuarioController {
 		Map<String, Object> response = new HashMap<String, Object>();
 		
 		try {
-			
+			usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Ya existe un usuario con el nombre '"+usuario.getUsuario()+"'");

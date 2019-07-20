@@ -29,9 +29,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
 	
-	@Lazy
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	private IRolDAO rolDAO;
@@ -44,7 +41,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Override
 	@Transactional
 	public void save(Usuario usuario) {
-		usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 		usuarioDAO.save(usuario);
 	}
 
