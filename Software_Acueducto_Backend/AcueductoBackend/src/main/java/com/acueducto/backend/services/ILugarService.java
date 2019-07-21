@@ -17,4 +17,6 @@ public interface ILugarService {
 	public void delete(int id);
 	
 	public List<Lugar> findByTipo(String tipo);
+
+	int numeroPrediosAsociados(int id);
 }

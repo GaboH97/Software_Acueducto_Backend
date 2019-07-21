@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,12 +138,11 @@ public class SuscriptorController {
 
 		try {
 			suscriptorService.deleteByCedula(cedula);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar suscriptor de la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		} catch (DataAccessException e ) {
+			response.put("mensaje", "Este suscriptor tiene predios asociados");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
+		
 		response.put("mensaje", "Suscriptor eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}

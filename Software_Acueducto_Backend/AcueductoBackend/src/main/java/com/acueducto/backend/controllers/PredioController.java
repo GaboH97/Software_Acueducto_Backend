@@ -36,14 +36,14 @@ public class PredioController {
 
 	@Autowired
 	private IPredioService predioService;
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/predios")
 	public @ResponseBody List<Predio> findAll() {
 		return predioService.findAll();
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/predios/{matricula}")
 	public ResponseEntity<?> findById(@PathVariable String matricula) {
 		Predio predio = null;
@@ -63,31 +63,39 @@ public class PredioController {
 		}
 		return new ResponseEntity<Predio>(predio, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/predios/search/{nombre}")
 	public @ResponseBody List<Predio> findByNombre(@PathVariable String nombre) {
 		return predioService.findByNombre(nombre);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/predios/{matricula}")
 	public ResponseEntity<?> deletePredio(@PathVariable String matricula) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
-		try {
-			predioService.delete(matricula);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar predio de la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		Predio predio = predioService.findByNumeroMatricula(matricula);
+
+		if (predio.hasFacturas()) {
+			response.put("mensaje", "El predio ha generado facturas");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			try {
+				predioService.delete(matricula);
+
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al eliminar predio de la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 
 		response.put("mensaje", "Predio eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/predios")
 	public ResponseEntity<?> createPredio(@Valid @RequestBody Predio predio) {
 
@@ -116,8 +124,8 @@ public class PredioController {
 		}
 
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PutMapping("/predios/{matricula}")
 	public ResponseEntity<?> updatePredio(@Valid @RequestBody Predio predio, @PathVariable String matricula) {
 		Map<String, Object> response = new HashMap<String, Object>();

@@ -54,16 +54,4 @@ public class PredioService implements IPredioService{
 		return predioDAO.findByNombreIgnoreCaseContaining(nombre);
 	}
 
-
-//	@Override
-//	public Predio findByPredioID(PredioID predioID) {
-//		return predioDAO.findById(predioID).orElse(null);
-//	}
-//
-//	@Override
-//	@Transactional
-//	public void delete(PredioID predioID) {
-//		predioDAO.deleteById(predioID);
-//	}
-
 }

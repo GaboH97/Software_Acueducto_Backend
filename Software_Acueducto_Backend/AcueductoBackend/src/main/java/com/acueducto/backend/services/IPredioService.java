@@ -20,5 +20,4 @@ public interface IPredioService {
 	public Predio findByNumeroMatricula(String numeroMatricula);
 
 	public List<Predio> findByNombre(String nombre);
-	
 }

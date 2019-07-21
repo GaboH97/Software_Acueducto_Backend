@@ -21,4 +21,6 @@ public interface IPredioDAO extends CrudRepository<Predio,String>{
 	@Query("select p from Predio p join fetch p.suscriptor s where p.numeroMatricula = ?1 ")
 	public Optional<Predio> findByNumeroMatriculaWithSuscriptor(String numeroMatricula);
 
+	
+
 }

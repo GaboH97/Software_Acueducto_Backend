@@ -125,12 +125,6 @@ public class FacturaController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-//	@GetMapping("/facturas/{id}/detalles")
-//	public @ResponseBody Factura fetchFacturaByIdWithDetallesFacturaWithTarifas(@PathVariable Integer id) {
-//		Factura factura = facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
-//		return facturaService.fetchByIdWithDetalleFacturaWithTarifa(id);
-//	}
-
 	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO" })
 	@PutMapping("/facturas/{id}")
 	public ResponseEntity<?> updateFactura(@Valid @RequestBody Factura factura, @PathVariable Integer id,

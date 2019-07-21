@@ -37,10 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.acueducto.backend.models.entity.Rol;
-import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.models.entity.Usuario;
 import com.acueducto.backend.services.IUsuarioService;
-import com.acueducto.backend.services.ISuscriptorService;
 
 @Controller
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -67,7 +65,7 @@ public class UsuarioController {
 	
 	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/usuarios/{cedula}")
-	public ResponseEntity<?> deleteEmpleado(@PathVariable String cedula) {
+	public ResponseEntity<?> deleteUsuario(@PathVariable String cedula) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		try {
@@ -99,13 +97,14 @@ public class UsuarioController {
 		
 		try {
 			usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+			
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Ya existe un usuario con el nombre '"+usuario.getUsuario()+"'");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "Empleado creado con éxito");
+		response.put("mensaje", "Usuario creado con éxito");
 		response.put("empleado", usuario);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
@@ -113,19 +112,23 @@ public class UsuarioController {
 	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/usuarios/{cedula}")
 	@ResponseBody
-	public ResponseEntity<?> updateSuscriptor(@Valid @RequestBody Usuario usuario, @PathVariable String cedula,
-			BindingResult result) {
+	public ResponseEntity<?> updateUsuario(@Valid @RequestBody Usuario usuario, @PathVariable String cedula) {
 
 		Map<String, Object> response = new HashMap<String, Object>();
 		Usuario usuarioAux = usuarioService.findByCedula(cedula);
 
 		if (usuarioAux == null) {
-			response.put("mensaje", "El empleado con cédula ".concat(cedula.concat(" no se encontró")));
+			response.put("mensaje", "El usuario con cédula ".concat(cedula.concat(" no se encontró")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		if(usuarioService.findByUsuario(usuario.getUsuario())!=null) {
+			response.put("mensaje", "El usuario con nombre '"+usuario.getUsuario()+"' ya existe");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		try {
-			
+			usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 			usuarioService.save(usuario);
 		} catch (DataAccessException e) {
 

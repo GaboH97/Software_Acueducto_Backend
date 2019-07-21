@@ -140,6 +140,10 @@ public class Predio implements Serializable {
 		return vereda;
 	}
 	
+	public boolean hasFacturas() {
+		return !this.facturas.isEmpty();
+	}
+	
 	public boolean estaAlDia() {
 		return this.facturas.stream().allMatch(f-> f.getEstadoFactura().equals("PA"));
 	}

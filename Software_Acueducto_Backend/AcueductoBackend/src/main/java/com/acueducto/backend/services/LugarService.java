@@ -47,5 +47,10 @@ public class LugarService implements ILugarService {
 	public Lugar findByNombre(String nombre) {
 		return lugarDAO.findByNombreIgnoreCase(nombre);
 	}
+	
+	@Override
+	public int numeroPrediosAsociados(int id) {
+		return lugarDAO.numeroPrediosAsociados(id);
+	}
 
 }

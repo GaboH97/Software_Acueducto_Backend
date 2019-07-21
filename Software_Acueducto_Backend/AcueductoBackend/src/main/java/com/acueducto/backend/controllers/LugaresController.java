@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.acueducto.backend.models.entity.Lugar;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.ILugarService;
+import com.acueducto.backend.services.IPredioService;
 
 @Controller
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -31,13 +32,15 @@ public class LugaresController {
 	@Autowired
 	private ILugarService lugarService;
 	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+	private IPredioService predioService;
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/lugares")
 	public @ResponseBody List<Lugar> findAll() {
 		return lugarService.findAll();
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/lugares/{id}")
 	public ResponseEntity<?> findById(@PathVariable int id) {
 		Lugar lugar = null;
@@ -57,25 +60,34 @@ public class LugaresController {
 		}
 		return new ResponseEntity<Lugar>(lugar, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/lugares/{id}")
 	public ResponseEntity<?> deleteLugar(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
-		try {
-			lugarService.delete(id);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar lugar de la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		Lugar lugar = lugarService.findById(id);
+		
+		
+		if (lugarService.numeroPrediosAsociados(id)!=0) {
+
+			try {
+				lugarService.delete(id);
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al eliminar lugar de la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}else {
+			response.put("mensaje", "Este lugar tiene predios asociados");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		response.put("mensaje", "Lugar eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/lugares")
 	public ResponseEntity<?> createLugarMunicipio(@Valid @RequestBody Lugar lugar) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -99,8 +111,8 @@ public class LugaresController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/lugares/{idMunicipio}")
 	public ResponseEntity<?> createLugarVereda(@Valid @RequestBody Lugar lugar, @PathVariable int idMunicipio) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -121,10 +133,11 @@ public class LugaresController {
 		response.put("lugar", lugar);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/lugares/tipo/{tipo}")
 	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo) {
 		return lugarService.findByTipo(tipo);
 	}
+	
 }

@@ -34,14 +34,14 @@ public class TarifaController {
 
 	@Autowired
 	private ITarifaService tarifaService;
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/tarifas")
 	public @ResponseBody List<Tarifa> findAll() {
 		return tarifaService.findAll();
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/tarifas/{id}")
 	public ResponseEntity<?> findById(@PathVariable int id) {
 		Tarifa tarifa = null;
@@ -61,25 +61,34 @@ public class TarifaController {
 		}
 		return new ResponseEntity<Tarifa>(tarifa, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/tarifas/{id}")
 	public ResponseEntity<?> deleteTarifa(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
-		try {
-			tarifaService.delete(id);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar tarifa de la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		Tarifa tarifa = tarifaService.findById(id);
+
+
+		if (tarifaService.numeroFacturasPresente(id) != 0) {
+			response.put("mensaje", "Esta tarifa está asociada a una o más facturas");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			try {
+				tarifaService.delete(id);
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al eliminar tarifa de la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
 		}
 
 		response.put("mensaje", "Tarifa eliminada con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/tarifas")
 	public ResponseEntity<?> createTarifa(@Valid @RequestBody Tarifa tarifa) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -104,8 +113,8 @@ public class TarifaController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
 	}
-	
-	@Secured({"ROLE_ADMIN"})
+
+	@Secured({ "ROLE_ADMIN" })
 	@PutMapping("/tarifas/{id}")
 	public ResponseEntity<?> updateTarifa(@Valid @RequestBody Tarifa tarifa, @PathVariable int id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -144,8 +153,8 @@ public class TarifaController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
+
+	@Secured({ "ROLE_ADMIN", "ROLE_FONTANERO", "ROLE_TESORERO" })
 	@GetMapping("/tarifas/search/{descripcion}")
 	public @ResponseBody List<Tarifa> obtenerTarifasPorDescripcion(@PathVariable String descripcion) {
 		return tarifaService.findByDescripcion(descripcion);

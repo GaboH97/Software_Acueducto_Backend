@@ -93,9 +93,7 @@ public class SuscriptorService implements ISuscriptorService {
 				
 				result.add(item);
 			}
-
 		}
-		
 
 		return result;
 	}
