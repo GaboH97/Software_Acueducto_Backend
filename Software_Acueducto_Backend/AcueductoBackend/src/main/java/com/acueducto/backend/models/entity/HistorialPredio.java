@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "historial_predio")
@@ -46,6 +47,7 @@ public class HistorialPredio implements Serializable {
 	private Date fechaFinal;
 	
 	@OneToOne
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	private Suscriptor suscriptor;
 	
 	public HistorialPredio() {}

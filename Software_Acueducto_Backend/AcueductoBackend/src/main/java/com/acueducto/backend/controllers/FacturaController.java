@@ -112,7 +112,10 @@ public class FacturaController {
 	@PostMapping("/facturas")
 	public ResponseEntity<?> createFactura(@Valid @RequestBody Factura factura) {
 		Map<String, Object> response = new HashMap<String, Object>();
-
+		
+		Predio predio = factura.getPredio();
+		System.out.println("Lo carga");
+		
 		Factura ultFac = facturaService
 				.findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(factura.getPredio().getNumeroMatricula());
 
