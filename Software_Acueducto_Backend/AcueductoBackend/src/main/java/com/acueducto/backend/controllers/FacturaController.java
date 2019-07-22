@@ -1,14 +1,13 @@
 package com.acueducto.backend.controllers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,8 +20,6 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -46,7 +43,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.acueducto.backend.exceptions.PredioNotFoundException;
 import com.acueducto.backend.models.entity.Factura;
 import com.acueducto.backend.models.entity.Predio;
-import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.IFacturaService;
 import com.acueducto.backend.utils.Utils;
 
@@ -160,6 +156,7 @@ public class FacturaController {
 		}
 
 		try {
+			factura.setFechaPago(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			facturaService.save(factura);
 		} catch (DataAccessException e) {
 
@@ -279,7 +276,7 @@ public class FacturaController {
 			ByteArrayResource bar = new ByteArrayResource(pdfAsByteArray);
 
 			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte_suscritores_en_mora.pdf")
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=reporte_facturas.pdf")
 					.contentType(MediaType.APPLICATION_PDF) //
 					.body(bar);
 		} catch (JRException e) {

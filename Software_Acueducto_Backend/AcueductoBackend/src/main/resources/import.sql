@@ -36,15 +36,15 @@ insert into lugares (nombre, tipo, ubicado_id) values ('La Hoya','V', 1)
 /*INSERT PREDIOS*/
 
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7353','El rodeo',1 , 1.1, 1.2, 4,'2069701923');
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7353','El rodeo',1 , 5.845627782261896, -73.58027710913451, 4,'2069701923');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7354','Uberrimo',1 , 1.1, 1.2, 4, '2069701923');
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7354','Uberrimo',1 , 5.846627782261896, -73.59027710913451, 4, '2069701923');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7355','Ubate',1 , 1.1, 1.2, 4, '7003262474');
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7355','Ubate',1 ,5.847627782261896, -73.60027710913451, 4, '7003262474');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7356','La colorada',2 , 1.1, 1.2, 5, '7003262474');
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7356','La colorada',2 , 5.848627782261896, -73.65027710913451, 5, '7003262474');
 
-insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7357','El placer',2 , 1.1, 1.2, 6, '5292677642');
+insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7357','El placer',2 , 5.849627782261896, -73.56027710913451, 6, '5292677642');
 
 
 
@@ -61,9 +61,9 @@ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-02');
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-01-20','2018-01-04','2018-01-03','PA','080-7353', '2019-01-01');
 insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7354', '2018-12-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-01-20','2018-02-04',NULL,'PP','080-7354', '2018-01-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'PP','080-7355', '2019-06-02');
-insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-07-20','2018-08-05',NULL,'PP','080-7355', '2019-06-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-01-20','2018-02-04',NULL,'VE','080-7354', '2018-01-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'VE','080-7355', '2019-06-02');
+insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-07-20','2018-08-05',NULL,'VE','080-7355', '2019-06-02');
 
 
 /*INSERT TARIFAS*/
