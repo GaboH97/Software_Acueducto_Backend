@@ -108,6 +108,7 @@ public class PredioController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
 			HistorialPredio historialPredio = new HistorialPredio();
+			historialPredio.setSuscriptor(predio.getSuscriptor());
 			predio.getHistorialPredio().add(historialPredio);
 
 			try {

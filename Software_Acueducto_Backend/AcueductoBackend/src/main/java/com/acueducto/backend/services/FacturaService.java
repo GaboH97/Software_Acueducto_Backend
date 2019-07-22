@@ -98,7 +98,7 @@ public class FacturaService implements IFacturaService {
 		// Getting the Sheet at index zero
 		Sheet sheet = workbook.getSheetAt(0);
 
-		Tarifa tarifaValorM3 = tarifaDAO.findByDescripcion("Valor metro cúbico");
+		Tarifa tarifaValorM3 = tarifaDAO.findById(1).orElse(null);
 
 		for (int i = 0; i < sheet.getLastRowNum(); i++) {
 
@@ -172,5 +172,11 @@ public class FacturaService implements IFacturaService {
 		return findAll().stream().filter(f -> f.getEstadoFactura().equals("PA"))
 				.mapToDouble(f -> f.getGranTotal()).sum();
 	}
+	
+	@Override
+	public Factura findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(String numeroMatricula) {
+		return facturaDAO.findFirstByPredioNumeroMatriculaOrderByPeriodoFacturadoDesc(numeroMatricula);
+	}
+
 
 }

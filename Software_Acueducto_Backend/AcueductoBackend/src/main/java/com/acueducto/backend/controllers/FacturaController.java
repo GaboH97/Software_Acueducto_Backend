@@ -112,6 +112,24 @@ public class FacturaController {
 	@PostMapping("/facturas")
 	public ResponseEntity<?> createFactura(@Valid @RequestBody Factura factura) {
 		Map<String, Object> response = new HashMap<String, Object>();
+
+		Factura ultFac = facturaService
+				.findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(factura.getPredio().getNumeroMatricula());
+
+		if (ultFac != null) {
+			Date now = new Date();
+			Date ultFactPeriodoFacturado = ultFac.getPeriodoFacturado();
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM");
+
+			String nowFormatted = format.format(now);
+			String ultFacPFFormatted = format.format(ultFactPeriodoFacturado);
+			if (nowFormatted.equals(ultFacPFFormatted)) {
+				response.put("mensaje", "Ya se ha facturado este predio para el periodo " + nowFormatted);
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
 		try {
 			facturaService.save(factura);
 		} catch (DataAccessException e) {
@@ -186,7 +204,7 @@ public class FacturaController {
 		return facturaService.getFacturasByPeriodoFacturado(periodoFacturado);
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO","ROLE_FONTANERO"})
+	@Secured({ "ROLE_ADMIN", "ROLE_TESORERO", "ROLE_FONTANERO" })
 	@PostMapping("facturas/generarFacturas")
 	public ResponseEntity<?> uploadArchivo(@RequestParam("archivo") MultipartFile archivoExcel) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -234,9 +252,9 @@ public class FacturaController {
 		}
 	}
 
-
 	@GetMapping(value = "/facturas/reportes/{periodoFacturado}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
+	public ResponseEntity<ByteArrayResource> generarReporteSuscriptores(
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date periodoFacturado) {
 		Path path = Paths.get(Utils.INVOICES_PER_BILLED_PERIOD_REPORT_TEMPLATE).toAbsolutePath();
 		try {
 
@@ -248,7 +266,7 @@ public class FacturaController {
 			Map<String, Object> parameters = new HashMap<>();
 
 			// parameters.put("deudaTotal", facturaService.obtenerGranTotalDeuda());
-			
+
 			parameters.put("periodoFacturadoP", periodoFacturado);
 
 			JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);

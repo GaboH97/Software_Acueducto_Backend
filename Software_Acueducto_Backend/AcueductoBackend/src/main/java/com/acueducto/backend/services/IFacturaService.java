@@ -33,6 +33,8 @@ public interface IFacturaService {
 
 	public int generarFacturas(Path path, int numeroFacturasCreadas) throws EncryptedDocumentException, InvalidFormatException, IOException, PredioNotFoundException;
 
+	public Factura findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(String numeroMatricula);
+	
 	List<Map<String, Object>> obtenerDatosFacturasPorPeriodoFacturado(Date periodoFacturado);
 
 	List<Factura> findByPeriodoFacturado(Date periodoFacturado);
