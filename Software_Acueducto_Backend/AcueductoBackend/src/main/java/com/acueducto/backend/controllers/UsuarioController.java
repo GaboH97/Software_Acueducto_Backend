@@ -122,10 +122,6 @@ public class UsuarioController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
-		if(usuarioService.findByUsuario(usuario.getUsuario())!=null) {
-			response.put("mensaje", "El usuario con nombre '"+usuario.getUsuario()+"' ya existe");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 
 		try {
 			usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
