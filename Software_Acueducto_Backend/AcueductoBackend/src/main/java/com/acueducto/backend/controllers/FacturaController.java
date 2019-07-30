@@ -108,9 +108,11 @@ public class FacturaController {
 	@PostMapping("/facturas")
 	public ResponseEntity<?> createFactura(@Valid @RequestBody Factura factura) {
 		Map<String, Object> response = new HashMap<String, Object>();
-		
+		System.out.println("Aquí");
 		Factura ultFac = facturaService
-				.findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(factura.getPredio().getNumeroMatricula());
+				.findFirstByPredioNumeroMatriculaOrderByPeriodoFacturado(factura.getPredio().getNumeroMatricula());		
+		
+		System.out.println("Acá");
 
 		if (ultFac != null) {
 			Date now = new Date();

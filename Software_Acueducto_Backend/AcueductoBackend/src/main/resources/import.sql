@@ -36,15 +36,15 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 /*INSERT PREDIOS*/
 
 
---  insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7353','El rodeo',1 , 5.845627782261896, -73.58027710913451, 4,'2069701923');
+ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7353','El rodeo',1 , 5.845627782261896, -73.58027710913451, 4,'2069701923');
 
---  insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7354','Uberrimo',1 , 5.846627782261896, -73.59027710913451, 4, '2069701923');
+ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7354','Uberrimo',1 , 5.846627782261896, -73.59027710913451, 4, '2069701923');
 
---  insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7355','Ubate',1 ,5.847627782261896, -73.60027710913451, 4, '7003262474');
+ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7355','Ubate',1 ,5.847627782261896, -73.60027710913451, 4, '7003262474');
 
---  insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7356','La colorada',2 , 5.848627782261896, -73.65027710913451, 5, '7003262474');
+ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7356','La colorada',2 , 5.848627782261896, -73.65027710913451, 5, '7003262474');
 
---  insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7357','El placer',2 , 5.849627782261896, -73.56027710913451, 6, '5292677642');
+ insert into predios (numero_matricula, nombre, estrato, latitud, longitud, lugar_id, suscriptor_cedula) values ('080-7357','El placer',2 , 5.849627782261896, -73.56027710913451, 6, '5292677642');
 
 
 
@@ -58,32 +58,36 @@ insert into suscriptores (cedula, nombre, apellido, estado, estado_cuenta, fecha
 
 /*INSERT FACTURAS*/
 
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-02');
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-01-20','2018-01-04','2018-01-03','PA','080-7353', '2019-01-01');
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7354', '2018-12-02');
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-01-20','2018-02-04',NULL,'VE','080-7354', '2018-01-02');
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'VE','080-7355', '2019-06-02');
---  insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-07-20','2018-08-05',NULL,'VE','080-7355', '2019-06-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7353', '2018-12-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-01-20','2018-01-04','2018-01-03','PA','080-7353', '2019-01-01');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-12-20','2018-01-04','2018-01-03','PA','080-7354', '2018-12-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2018-01-20','2018-02-04',NULL,'VE','080-7354', '2018-01-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'VE','080-7355', '2019-06-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-07-20','2018-08-05',NULL,'VE','080-7355', '2019-06-02');
+ insert into FACTURAS (fecha_emision, fecha_maximo_pago, fecha_pago, estado_factura, predio_numero_matricula, periodo_facturado) values ('2019-06-20','2018-07-05',NULL,'VE','080-7356', '2019-06-02');
+
 
 
 /*INSERT TARIFAS*/
 
--- insert into TARIFAS (descripcion, valor_tarifa) values ('Valor metro cúbico', 500);
--- insert into TARIFAS (descripcion, valor_tarifa) values ('Jornal',  27604);
--- insert into TARIFAS (descripcion, valor_tarifa) values ('Concesión Corpoboyacá', 5000);
--- insert into TARIFAS (descripcion, valor_tarifa) values ('Compra de predio planta de tratamiento', 50000);
--- insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión', 25000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Valor metro cúbico', 500);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Jornal',  27604);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Concesión Corpoboyacá', 5000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Compra de predio planta de tratamiento', 50000);
+insert into TARIFAS (descripcion, valor_tarifa) values ('Cobro por reconexión', 25000);
 
 /*INSERT DETALLES_FACTURA*/
 
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (1,1,1,500,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (1,2,1,27604,27604);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (2,1,1,500,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (3,1,2,1000,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (4,1,2,1000,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (5,1,2,1000,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (6,1,5,2500,500);
---  insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (6,2,1,27604,27604);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (1,1,1,500,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (1,2,1,27604,27604);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (2,1,1,500,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (3,1,2,1000,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (4,1,2,1000,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (5,1,2,1000,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (6,1,5,2500,500);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (6,2,1,27604,27604);
+ insert into DETALLES_FACTURA (factura_id, tarifa_id, cantidad, valor, valor_unitario) values (7,2,1,27604,27604);
+
 
 insert into ROLES (nombre) values ('ROLE_ADMIN');
 insert into ROLES (nombre) values ('ROLE_FONTANERO');

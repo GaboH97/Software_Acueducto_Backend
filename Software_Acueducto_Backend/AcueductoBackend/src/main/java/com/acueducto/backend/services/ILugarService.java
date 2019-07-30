@@ -2,6 +2,7 @@ package com.acueducto.backend.services;
 
 import java.util.List;
 
+import com.acueducto.backend.models.customEntities.ReporteVereda;
 import com.acueducto.backend.models.entity.Lugar;
 
 public interface ILugarService {
@@ -19,4 +20,6 @@ public interface ILugarService {
 	public List<Lugar> findByTipo(String tipo);
 
 	int numeroPrediosAsociados(int id);
+
+	List<ReporteVereda> obtenerRecaudosPorVereda();
 }

@@ -6,11 +6,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.acueducto.backend.models.dao.ILugarDAO;
+
 @SpringBootApplication
 public class AcueductoBackendApplication implements CommandLineRunner {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private ILugarDAO iLugarDAO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AcueductoBackendApplication.class, args);
@@ -18,10 +23,11 @@ public class AcueductoBackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String password = "12345";
-		for (int i = 0; i < 4; i++) {
-			System.out.println(passwordEncoder.encode(password));
-		}
+		iLugarDAO.obtenerReporteRecaudosVereda().forEach(r ->{
+			System.out.println(r.getNombreVereda());
+			System.out.println(r.getTotalRecaudo());
+
+		});
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.acueducto.backend.models.customEntities.ReporteVereda;
 import com.acueducto.backend.models.dao.ILugarDAO;
 import com.acueducto.backend.models.entity.Lugar;
 
@@ -51,6 +52,11 @@ public class LugarService implements ILugarService {
 	@Override
 	public int numeroPrediosAsociados(int id) {
 		return lugarDAO.numeroPrediosAsociados(id);
+	}
+	
+	@Override
+	public List<ReporteVereda> obtenerRecaudosPorVereda(){
+		return lugarDAO.obtenerReporteRecaudosVereda();
 	}
 
 }

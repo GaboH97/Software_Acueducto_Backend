@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.acueducto.backend.models.customEntities.ReporteVereda;
 import com.acueducto.backend.models.entity.Lugar;
 import com.acueducto.backend.models.entity.Suscriptor;
 import com.acueducto.backend.services.ILugarService;
@@ -138,6 +139,11 @@ public class LugaresController {
 	@GetMapping("/lugares/tipo/{tipo}")
 	public @ResponseBody List<Lugar> findByTipo(@PathVariable String tipo) {
 		return lugarService.findByTipo(tipo);
+	}
+	
+	@GetMapping("lugares/recaudos")
+	public @ResponseBody List<ReporteVereda> obtenerReporteRecaudoPorVereda(){
+		return lugarService.obtenerRecaudosPorVereda();
 	}
 	
 }
