@@ -16,4 +16,6 @@ public interface ISuscriptorDAO extends CrudRepository<Suscriptor, String>{
 	public List<Suscriptor> findByEstadoCuenta(String estadoCuenta);
 
 	public Long countByEstado(String string);
+
+	public List<Suscriptor> findByApellidoStartingWithIgnoreCase(String nombreOrApellido);
 }

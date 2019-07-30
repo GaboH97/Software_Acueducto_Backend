@@ -58,7 +58,6 @@ public class Predio implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumns({ @JoinColumn(name = "predio_lugar_id", referencedColumnName = "lugar_id"),
 			@JoinColumn(name = "predio_numero_matricula", referencedColumnName = "numero_matricula") })
-	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
 	private List<HistorialPredio> historialPredio;
 

@@ -115,4 +115,9 @@ public class SuscriptorService implements ISuscriptorService {
 		return suscriptorDAO.countByEstado("A");
 	}
 
+	@Override
+	public List<Suscriptor> findByNombreOrApellido(String nombreOrApellido) {
+		return suscriptorDAO.findByApellidoStartingWithIgnoreCase(nombreOrApellido);
+	}
+
 }

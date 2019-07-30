@@ -26,4 +26,6 @@ public interface ISuscriptorService {
 
 	public Long obtenerNumeroSuscriptoresActivos();
 
+	public List<Suscriptor> findByNombreOrApellido(String nombreOrApellido);
+
 }

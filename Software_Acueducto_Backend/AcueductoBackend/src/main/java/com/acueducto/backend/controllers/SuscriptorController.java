@@ -48,10 +48,16 @@ public class SuscriptorController {
 	@Autowired
 	private ISuscriptorService suscriptorService;
 	
-	@Secured({"ROLE_ADMIN","ROLE_FONTANERO","ROLE_TESORERO"})
 	@GetMapping("/suscriptores")
 	public @ResponseBody List<Suscriptor> findAll() {
 		return suscriptorService.findAll();
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@GetMapping("/suscriptores/search/{nombreOrApellido}")
+	public @ResponseBody List<Suscriptor> findByNombreOrApellido(@PathVariable String nombreOrApellido){
+		System.out.println("ESTE ES "+nombreOrApellido);
+		return suscriptorService.findByNombreOrApellido(nombreOrApellido);
 	}
 	
 	@Secured({"ROLE_ADMIN"})

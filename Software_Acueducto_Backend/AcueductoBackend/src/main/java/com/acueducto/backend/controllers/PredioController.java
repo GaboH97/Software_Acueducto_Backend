@@ -115,7 +115,7 @@ public class PredioController {
 				predioService.save(predio);
 			} catch (DataAccessException e) {
 
-				response.put("mensaje", "Error al hacer registro en la base de datos");
+				response.put("mensaje", "El predio con nombre '"+predio.getNombre()+"' ya existe");
 				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
