@@ -17,6 +17,6 @@ public interface ILugarDAO extends CrudRepository<Lugar, Integer>{
 	@Query("select count(p) from Predio p where p.vereda.id=?1 ")
 	public int numeroPrediosAsociados(int id);
 	
-	@Query(nativeQuery = true, value = "SELECT VEREDA AS nombreVereda, SUM(Z.TOTAL) AS totalRecaudo FROM (SELECT F.ID, SUM(D.valor) AS TOTAL, L.NOMBRE AS VEREDA FROM FACTURAS F JOIN DETALLES_FACTURA D ON F.ID = D.FACTURA_ID JOIN PREDIOS P ON P.NUMERO_MATRICULA = F.PREDIO_NUMERO_MATRICULA JOIN LUGARES L ON P.LUGAR_ID = L.ID GROUP BY F.ID) Z GROUP BY VEREDA")
+	@Query(nativeQuery = true, value = "SELECT VEREDA AS nombreVereda, SUM(Z.TOTAL) AS totalRecaudo FROM (SELECT F.ID, SUM(D.valor) AS TOTAL, L.NOMBRE AS VEREDA FROM FACTURAS F JOIN DETALLES_FACTURA D ON F.ID = D.FACTURA_ID JOIN PREDIOS P ON P.NUMERO_MATRICULA = F.PREDIO_NUMERO_MATRICULA JOIN LUGARES L ON P.LUGAR_ID = L.ID WHERE F.ESTADO_FACTURA = 'PA' GROUP BY F.ID) Z GROUP BY VEREDA")
 	public List<ReporteVereda> obtenerReporteRecaudosVereda();
 }
